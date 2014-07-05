@@ -1,0 +1,170 @@
+# depslib dependency file v1.0
+1404570982 source:d:\dev\game\main.cpp
+	<iostream>
+	"geometry/Geometry.h"
+	"geometry/Noise.h"
+	"luatables/luatables.h"
+	"luatables/luatables.cc"
+	"include/Root.h"
+	"include/Configuration.h"
+
+1404490070 d:\dev\game\geometry\geometry.h
+	<vector>
+	<cmath>
+	<utility>
+	<functional>
+	"include/Shape.h"
+	"include/Shape2.h"
+	"include/Vec2.h"
+	"include/Vec3.h"
+	"include/Rectangle.h"
+	"include/Cuboid.h"
+	"include/Circle.h"
+	"include/Cylinder.h"
+	"include/LineSegment.h"
+	"include/Triangle.h"
+	"include/Polygon.h"
+	"include/Mesh.h"
+	"include/Intersections.h"
+	"src/Shape.cpp"
+	"src/Shape2.cpp"
+	"src/Vec2.cpp"
+	"src/Vec3.cpp"
+	"src/Rectangle.cpp"
+	"src/Cuboid.cpp"
+	"src/Circle.cpp"
+	"src/Cylinder.cpp"
+	"src/LineSegment.cpp"
+	"src/Triangle.cpp"
+	"src/Polygon.cpp"
+	"src/Mesh.cpp"
+	"src/Intersections.cpp"
+
+1403883979 d:\dev\game\geometry\include\shape.h
+
+1403900121 d:\dev\game\geometry\include\shape2.h
+
+1403980487 d:\dev\game\geometry\include\vec2.h
+
+1403900624 d:\dev\game\geometry\include\vec3.h
+
+1403900624 d:\dev\game\geometry\include\rectangle.h
+
+1403900624 d:\dev\game\geometry\include\cuboid.h
+
+1403900624 d:\dev\game\geometry\include\circle.h
+
+1403900624 d:\dev\game\geometry\include\cylinder.h
+
+1403900624 d:\dev\game\geometry\include\linesegment.h
+
+1404077710 d:\dev\game\geometry\include\triangle.h
+
+1403980081 d:\dev\game\geometry\include\polygon.h
+
+1404292910 d:\dev\game\geometry\include\mesh.h
+
+1404072684 d:\dev\game\geometry\include\intersections.h
+
+1404311390 d:\dev\game\geometry\src\shape.cpp
+
+1404311390 d:\dev\game\geometry\src\shape2.cpp
+
+1404311390 d:\dev\game\geometry\src\vec2.cpp
+
+1404311390 d:\dev\game\geometry\src\vec3.cpp
+
+1404311390 d:\dev\game\geometry\src\rectangle.cpp
+
+1404311390 d:\dev\game\geometry\src\cuboid.cpp
+
+1404311492 d:\dev\game\geometry\src\circle.cpp
+
+1404311390 d:\dev\game\geometry\src\cylinder.cpp
+
+1404311390 d:\dev\game\geometry\src\linesegment.cpp
+
+1404311390 d:\dev\game\geometry\src\triangle.cpp
+
+1404490781 d:\dev\game\geometry\src\polygon.cpp
+
+1404311390 d:\dev\game\geometry\src\mesh.cpp
+
+1404490882 d:\dev\game\geometry\src\intersections.cpp
+
+1404560490 d:\dev\game\geometry\noise.h
+	<cmath>
+	"include/SimplexNoise.h"
+	"src/SimplexNoise.cpp"
+
+1404560402 d:\dev\game\geometry\include\simplexnoise.h
+
+1404560842 d:\dev\game\geometry\src\simplexnoise.cpp
+
+1404303139 d:\dev\game\luatables\luatables.h
+	<iostream>
+	<assert.h>
+	<cstdlib>
+	<string>
+	<vector>
+
+1404303114 d:\dev\game\luatables\luatables.cc
+	"luatables.h"
+	<assert.h>
+	<iostream>
+	<cstdlib>
+	<vector>
+	<sstream>
+	<cmath>
+	<lua.h>
+	<lauxlib.h>
+	<lualib.h>
+	<stdio.h>
+	<direct.h>
+	<unistd.h>
+
+1404576887 d:\dev\game\include\root.h
+
+1404570448 d:\dev\game\include\configuration.h
+	<lua.h>
+	<string>
+	"../luatables/luatables.h"
+
+1404570825 source:d:\dev\game\src\configuration.cpp
+	"Configuration.h"
+
+1404579219 source:d:\dev\game\src\root.cpp
+	<iostream>
+	<vector>
+	<string>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_image.h>
+	<allegro5/allegro_ttf.h>
+	"Root.h"
+	"Configuration.h"
+	"Assets.h"
+	"SpritesheetDatabase.h"
+
+1404578870 source:d:\dev\game\src\assets.cpp
+	"Assets.h"
+
+1404574340 d:\dev\game\include\assets.h
+	<vector>
+	<string>
+	<windows.h>
+
+1404579368 d:\dev\game\include\spritesheetdatabase.h
+	<vector>
+	<map>
+	<string>
+	<allegro5/allegro.h>
+
+1404578908 source:d:\dev\game\src\spritesheetdatabase.cpp
+	<iostream>
+	<vector>
+	<string>
+	"SpritesheetDatabase.h"
+	"Root.h"
+	"Assets.h"
+
