@@ -51,13 +51,13 @@ double degreesToRadians(const double degrees)
     return degrees / (180 / PI);
 }
 template<class T>
-T& min(T& a, T& b)
+T min(const T& a, const T& b)
 {
     if(a < b) return a;
     return b;
 }
 template<class T>
-T& max(T& a, T& b)
+T max(const T& a, const T& b)
 {
     if(a > b) return a;
     return b;

@@ -2,11 +2,20 @@
 #define NOISE_H_INCLUDED
 
 #include <cmath>
+#include <random>
+#include <algorithm>
+#include <functional>
 
 namespace Noise
 {
-    const double PI = 3.14159265358979323846;
-    const double INV_PI = 0.31830988618379067154;
+const double PI = 3.14159265358979323846;
+const double INV_PI = 0.31830988618379067154;
+template<class T>
+T max(const T& a, const T& b)
+{
+    if(a > b) return a;
+    return b;
+}
 template <class T>
 int fastFloor( const T x )
 {
@@ -16,9 +25,10 @@ int fastFloor( const T x )
 template <class T> class SimplexNoise;
 
 #include "include/SimplexNoise.h"
-
+#include "include/CellNoise.h"
 
 #include "src/SimplexNoise.cpp"
+#include "src/CellNoise.cpp"
 
 }
 

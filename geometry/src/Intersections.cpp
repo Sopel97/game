@@ -235,7 +235,7 @@ bool Intersections::intersection(const Polygon<T>& a, const Vec2<T>& b)
     };
     size_t vertexCount = a.size();
     const Vec2<T>* currentVertex = &(a.vertices[vertexCount - 1]);
-    int totalQuadrantDelta = 0;
+    int totalQuadrantCrossDelta = 0;
     for(size_t i = 0; i < vertexCount; ++i)
     {
         const Vec2<T>* nextVertex = &(a.vertices[i]);
@@ -245,25 +245,25 @@ bool Intersections::intersection(const Polygon<T>& a, const Vec2<T>& b)
         int currentVertexQuadrant = determineQuadrant(*currentVertex, b);
         int nextVertexQuadrant = determineQuadrant(*nextVertex, b);
 
-        int quadrantDelta = nextVertexQuadrant - currentVertexQuadrant;
-        switch(quadrantDelta)
+        int quadrantCrossDelta = nextVertexQuadrant - currentVertexQuadrant;
+        switch(quadrantCrossDelta)
         {
             case 2:
             case -2:
-                if( (nextVertex->x - ( ( (nextVertex->y - b.y) * (currentVertex->x - nextVertex->x) ) / (currentVertex->y - nextVertex->y) ) ) < b.x) quadrantDelta = -quadrantDelta;
+                if( (nextVertex->x - ( ( (nextVertex->y - b.y) * (currentVertex->x - nextVertex->x) ) / (currentVertex->y - nextVertex->y) ) ) < b.x) quadrantCrossDelta = -quadrantCrossDelta;
                 break;
             case 3:
-                quadrantDelta = -1;
+                quadrantCrossDelta = -1;
                 break;
             case -3:
-                quadrantDelta = 1;
+                quadrantCrossDelta = 1;
                 break;
         }
 
-        totalQuadrantDelta += quadrantDelta;
+        totalQuadrantCrossDelta += quadrantCrossDelta;
         currentVertex = nextVertex;
     }
-    return totalQuadrantDelta == 4 || totalQuadrantDelta == -4;
+    return totalQuadrantCrossDelta == 4 || totalQuadrantCrossDelta == -4;
 }
 template <class T>
 bool Intersections::intersection(const Vec2<T>& a, const Polygon<T>& b)
