@@ -4,6 +4,7 @@
 #include "geometry/Noise.h"
 #include "luatables/luatables.h"
 #include "luatables/luatables.cc"
+#include "array2/Array2.cpp"
 
 using namespace Geo;
 using namespace Noise;

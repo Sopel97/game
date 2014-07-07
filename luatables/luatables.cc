@@ -65,7 +65,6 @@ std::string get_file_directory (const char* filename) {
 	if (result == "")
 		result = "./";
 #if defined (WIN32) || defined (_WIN32)
-#warning get_file_directory() not yet tested under Windows!
 	else if (result.substr(1,2) != ":\\")
 		result = string(".\\") + result;
 #else
@@ -436,10 +435,12 @@ std::vector<LuaKey> LuaTableNode::keys() {
 			if (lua_isnumber(luaTable->L, -2)) {
 				double number = lua_tonumber (luaTable->L, -2);
 				double frac;
+#pragma GCC diagnostic ignored "-Wfloat-equal"
 				if (modf (number, &frac) == 0) {
 					LuaKey key (static_cast<int>(number));
 					result.push_back (key);
 				}
+#pragma GCC diagnostic pop
 			} else if (lua_isstring (luaTable->L, -2)) {
 				LuaKey key (lua_tostring(luaTable->L, -2));
 				result.push_back (key);

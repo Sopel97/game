@@ -44,6 +44,9 @@
 		<Linker>
 			<Add library="lib\lua5.1.lib" />
 		</Linker>
+		<Unit filename="array2/Array2.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="include/Assets.h" />
 		<Unit filename="include/Configuration.h" />
 		<Unit filename="include/Root.h" />
