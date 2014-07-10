@@ -1,6 +1,6 @@
 #ifndef POLYGON_H_INCLUDED
 #define POLYGON_H_INCLUDED
-
+using std::size_t;
 template <class T>
 class Polygon : public Shape2<T>
 {

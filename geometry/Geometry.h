@@ -23,6 +23,8 @@
                             |          \
                            \/           _|
 */
+namespace
+{
 namespace Geo
 {
 /*   UTILITY   */
@@ -30,13 +32,13 @@ const double PI = 3.14159265359;
 
 double invSqrt(double number)
 {
-    int64_t i;
+    long long int i;
     double x2, y;
     const double threehalfs = 1.5F;
 
     x2 = number * 0.5F;
     y  = number;
-    i  = * ( int64_t * ) &y;
+    i  = * ( long long int * ) &y;
     i  = 0x5fe6eb50c7b537a9LL - ( i >> 1 );
     y  = * ( double * ) &i;
     y  = y * ( threehalfs - ( x2 * y * y ) );
@@ -81,7 +83,6 @@ template <class T> class Polygon;
 template<class T> class Mesh;
 
 class Intersections;
-//class Physics;
 
 /*         HEADERS         */
 #include "include/Shape.h"
@@ -98,7 +99,6 @@ class Intersections;
 #include "include/Mesh.h"
 
 #include "include/Intersections.h"
-//#include "include/Physics.h"
 
 /*         SOURCE         */
 #include "src/Shape.cpp"
@@ -115,8 +115,7 @@ class Intersections;
 #include "src/Mesh.cpp"
 
 #include "src/Intersections.cpp"
-//#include "src/Physics.cpp"
 
 }
-
+}
 #endif // GEOMETRY_H_INCLUDED

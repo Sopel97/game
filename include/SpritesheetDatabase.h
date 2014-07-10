@@ -13,10 +13,13 @@ public:
     virtual ~SpritesheetDatabase();
 
     ALLEGRO_BITMAP* getSpritesheetById(const int id);
-    ALLEGRO_BITMAP* getSpritesheetByName(const std::string name);
-    int getSpritesheetIdByName(const std::string name);
+    ALLEGRO_BITMAP* getSpritesheetByName(const std::string& name);
+    int getSpritesheetIdByName(const std::string& name);
+    void addSpritesheet(const std::string& path);
+    void load();
 protected:
 private:
+    int m_lastId;
     std::vector<ALLEGRO_BITMAP*> m_spritesheets;
     std::map<std::string, int> m_spritesheetsMap;
 };

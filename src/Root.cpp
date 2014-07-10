@@ -11,6 +11,7 @@
 #include "Configuration.h"
 #include "Assets.h"
 #include "SpritesheetDatabase.h"
+#include "TileDatabase.h"
 
 Root::Root()
 {
@@ -18,7 +19,8 @@ Root::Root()
 
 Root::~Root()
 {
-
+    delete m_spritesheetDatabase;
+    delete m_assets;
 }
 
 Root& Root::instance()
@@ -34,10 +36,18 @@ void Root::start()
     al_init_font_addon();
     al_init_ttf_addon();
     al_install_keyboard();
-    al_create_display(1280, 1024);
+    al_create_display(1024, 768);
 
+    /* Initializing assets */
     m_assets = new Assets();
+
+    /* Initializing spritesheets */
     m_spritesheetDatabase = new SpritesheetDatabase();
+    m_spritesheetDatabase->load();
+
+    /* Initializing tiles */
+    m_tileDatabase = new TileDatabase();
+    m_tileDatabase->load();
 
     for(;;)
     {
@@ -61,4 +71,8 @@ Assets* Root::assets() const
 SpritesheetDatabase* Root::spritesheetDatabase() const
 {
     return m_spritesheetDatabase;
+}
+TileDatabase* Root::tileDatabase() const
+{
+    return m_tileDatabase;
 }

@@ -14,6 +14,7 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
+					<Add directory="include/tiles" />
 				</Compiler>
 				<Linker>
 					<Add library="lib\liballegro_dialog-5.0.9-mt-debug.a" />
@@ -31,6 +32,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add directory="include" />
+					<Add directory="include/tiles" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -47,15 +49,118 @@
 		<Unit filename="array2/Array2.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="geometry/Geometry.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/Noise.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/CellNoise.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Circle.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Cuboid.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Cylinder.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Intersections.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/LineSegment.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Mesh.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Polygon.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Rectangle.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Shape.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Shape2.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/SimplexNoise.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Triangle.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Vec2.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/include/Vec3.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/CellNoise.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Circle.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Cuboid.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Cylinder.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Intersections.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/LineSegment.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Mesh.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Polygon.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Rectangle.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Shape.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Shape2.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/SimplexNoise.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Triangle.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Vec2.cpp">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="geometry/src/Vec3.cpp">
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="include/Assets.h" />
 		<Unit filename="include/Configuration.h" />
 		<Unit filename="include/Root.h" />
 		<Unit filename="include/SpritesheetDatabase.h" />
+		<Unit filename="include/TileDatabase.h" />
+		<Unit filename="include/tiles/StaticTileData.h" />
+		<Unit filename="include/tiles/Tile.h" />
+		<Unit filename="luatables/luatables.cc" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Assets.cpp" />
 		<Unit filename="src/Configuration.cpp" />
 		<Unit filename="src/Root.cpp" />
 		<Unit filename="src/SpritesheetDatabase.cpp" />
+		<Unit filename="src/TileDatabase.cpp" />
+		<Unit filename="src/tiles/StaticTileData.cpp" />
+		<Unit filename="src/tiles/Tile.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

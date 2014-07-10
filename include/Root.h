@@ -3,6 +3,7 @@
 
 class Assets;
 class SpritesheetDatabase;
+class TileDatabase;
 
 class Root
 {
@@ -12,6 +13,7 @@ public:
 
     Assets* assets() const;
     SpritesheetDatabase* spritesheetDatabase() const;
+    TileDatabase* tileDatabase() const;
 
     void start();
 
@@ -20,6 +22,7 @@ private:
     Root();
     Assets* m_assets;
     SpritesheetDatabase* m_spritesheetDatabase;
+    TileDatabase* m_tileDatabase;
 };
 
 #endif // ROOT_H

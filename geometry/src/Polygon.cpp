@@ -67,7 +67,7 @@ template <class T>
 Polygon<T> Polygon<T>::operator-(const Vec2<T>& v) const
 {
     Polygon newPolygon(*this);
-    newPolygon = v;
+    newPolygon -= v;
     return newPolygon;
 }
 template <class T>
@@ -93,7 +93,7 @@ void Polygon<T>::add(const std::vector<T>& v)
 template <class T>
 void Polygon<T>::add(const Polygon<T>& p)
 {
-    vertices.add(p.vertices);
+    add(p.vertices);
 }
 template <class T>
 void Polygon<T>::add(const std::initializer_list<Vec2<T>>& list)
