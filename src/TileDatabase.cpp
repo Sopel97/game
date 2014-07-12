@@ -2,7 +2,9 @@
 
 TileDatabase::TileDatabase()
 {
-    m_lastId = 0;
+    m_lastId = 1;
+    m_tiles.push_back(nullptr); //reserved for air tile
+    m_tilesMap.insert(std::pair<std::string, int>("null", 0));
 }
 TileDatabase::~TileDatabase()
 {

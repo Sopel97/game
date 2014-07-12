@@ -1,0 +1,5 @@
+Basic tiles will be registerd at tile database at compile time (they have no static tile data nor id, it's only template with methods)
+Actual tile types will be loaded from assets and made on base tiles templates (base tile name in tile asset identifies name of template tile) Static tile data is loaded for every type.
+Tiles for use in world will be produced (copied) from tile types when needed by id or name.
+
+Same system will be made for other world objects which will be loaded from assets.

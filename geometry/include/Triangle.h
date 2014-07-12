@@ -38,4 +38,5 @@ typedef Triangle<double> TriangleD;
 typedef Triangle<float> TriangleF;
 typedef Triangle<int> TriangleI;
 
+#include "../src/Triangle.cpp"
 #endif // TRIANGLE_H_INCLUDED

@@ -12,6 +12,7 @@
 #include "Assets.h"
 #include "SpritesheetDatabase.h"
 #include "TileDatabase.h"
+#include "World.h"
 
 Root::Root()
 {
@@ -19,8 +20,11 @@ Root::Root()
 
 Root::~Root()
 {
+    delete m_world;
+    delete m_tileDatabase;
     delete m_spritesheetDatabase;
     delete m_assets;
+    //deiniting allegro stuff
 }
 
 Root& Root::instance()
@@ -36,7 +40,12 @@ void Root::start()
     al_init_font_addon();
     al_init_ttf_addon();
     al_install_keyboard();
+    al_install_mouse();
+
     al_create_display(1024, 768);
+    drawTimer = al_create_timer(1.0 / FPS);
+    tickTimer = al_create_timer(1.0 / TPS);
+    fpsLimit = false;
 
     /* Initializing assets */
     m_assets = new Assets();
@@ -49,16 +58,49 @@ void Root::start()
     m_tileDatabase = new TileDatabase();
     m_tileDatabase->load();
 
+    /* Creating world */
+    m_world = new World(512, 128); //size is temporary
+
+    al_start_timer(tickTimer);
+    al_start_timer(drawTimer);
+    int framesThisSecond = 0;
+    int ticksThisSecond = 0;
+    int lastTicks = al_get_timer_count(tickTimer);
+    int lastFPSTicks = al_get_timer_count(drawTimer);
     for(;;)
     {
-        ALLEGRO_KEYBOARD_STATE keyboardState;
-        al_get_keyboard_state(&keyboardState);
-        if(al_key_down(&keyboardState, ALLEGRO_KEY_ESCAPE))
-        {
+        ALLEGRO_KEYBOARD_STATE currentKeyboardState;
+        al_get_keyboard_state(&currentKeyboardState);
+        int nowTicks = al_get_timer_count(tickTimer);
+        int nowDrawTicks = al_get_timer_count(drawTimer);
 
+        if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_ESCAPE))
+        {
             break;
         }
-        al_draw_bitmap(m_spritesheetDatabase->getSpritesheetByName("dirt.png"), 32, 32, 0);
+        if(nowTicks != lastTicks && !(nowTicks % TPS))
+        {
+            currentFps = framesThisSecond;
+            framesThisSecond = 0;
+            currentTps = ticksThisSecond;
+            ticksThisSecond = 0;
+            std::cout << "FPS: " << currentFps << "\nTPS: " << currentTps << "\n\n";
+        }
+        if(nowTicks != lastTicks)
+        {
+            lastTicks = nowTicks;
+            ++ticks;
+            ++ticksThisSecond;
+
+            m_world->update();
+        }
+        if(nowDrawTicks != lastFPSTicks || !fpsLimit)
+        {
+            lastFPSTicks = nowDrawTicks;
+            ++framesThisSecond;
+
+            m_world->draw();
+        }
         al_flip_display();
     }
 }
@@ -75,4 +117,9 @@ SpritesheetDatabase* Root::spritesheetDatabase() const
 TileDatabase* Root::tileDatabase() const
 {
     return m_tileDatabase;
+}
+
+World* Root::world() const
+{
+    return m_world;
 }

@@ -38,5 +38,6 @@ public:
 typedef Circle<double> CircleD;
 typedef Circle<float> CircleF;
 typedef Circle<int> CircleI;
+#include "../src/Circle.cpp"
 
 #endif // CIRCLE_H_INCLUDED

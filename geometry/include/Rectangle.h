@@ -43,4 +43,5 @@ typedef Rectangle<double> RectangleD;
 typedef Rectangle<float> RectangleF;
 typedef Rectangle<int> RectangleI;
 
+#include "../src/Rectangle.cpp"
 #endif // RECTANGLE_H_INCLUDED

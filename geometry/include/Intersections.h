@@ -102,5 +102,6 @@ public:
 private:
     Intersections() {}
 };
+#include "../src/Intersections.cpp"
 
 #endif // INTERSECTIONS_H_INCLUDED

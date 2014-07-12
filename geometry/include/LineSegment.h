@@ -40,4 +40,5 @@ typedef LineSegment<double> LineSegmentD;
 typedef LineSegment<float> LineSegmentF;
 typedef LineSegment<int> LineSegmentI;
 
+#include "../src/LineSegment.cpp"
 #endif // LINESEGMENT_H_INCLUDED

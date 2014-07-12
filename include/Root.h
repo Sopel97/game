@@ -4,6 +4,8 @@
 class Assets;
 class SpritesheetDatabase;
 class TileDatabase;
+class World;
+struct ALLEGRO_TIMER;
 
 class Root
 {
@@ -15,6 +17,8 @@ public:
     SpritesheetDatabase* spritesheetDatabase() const;
     TileDatabase* tileDatabase() const;
 
+    World* world() const;
+
     void start();
 
 protected:
@@ -23,6 +27,18 @@ private:
     Assets* m_assets;
     SpritesheetDatabase* m_spritesheetDatabase;
     TileDatabase* m_tileDatabase;
+
+    World* m_world;
+
+    const int FPS = 120;
+    bool fpsLimit;
+    const int TPS = 60;
+    int currentFps;
+    int currentTps;
+
+    ALLEGRO_TIMER* drawTimer;
+    ALLEGRO_TIMER* tickTimer;
+    unsigned long long int ticks;
 };
 
 #endif // ROOT_H

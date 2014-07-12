@@ -23,32 +23,30 @@
                             |          \
                            \/           _|
 */
-namespace
-{
 namespace Geo
 {
 /*   UTILITY   */
 const double PI = 3.14159265359;
 
-double invSqrt(double number)
+inline double invSqrt(double number)
 {
-    long long int i;
+    int64_t i;
     double x2, y;
     const double threehalfs = 1.5F;
 
     x2 = number * 0.5F;
     y  = number;
-    i  = * ( long long int * ) &y;
+    i  = * ( int64_t * ) &y;
     i  = 0x5fe6eb50c7b537a9LL - ( i >> 1 );
     y  = * ( double * ) &i;
     y  = y * ( threehalfs - ( x2 * y * y ) );
     return y;
 }
-double radiansToDegrees(const double radians)
+inline double radiansToDegrees(const double radians)
 {
     return radians * (180 / PI);
 }
-double degreesToRadians(const double degrees)
+inline double degreesToRadians(const double degrees)
 {
     return degrees / (180 / PI);
 }
@@ -64,7 +62,7 @@ T max(const T& a, const T& b)
     if(a > b) return a;
     return b;
 }
-double clamp(int a, int mi, int ma)
+inline double clamp(int a, int mi, int ma)
 {
     return max(min(a,ma),mi);
 }
@@ -101,6 +99,7 @@ class Intersections;
 #include "include/Intersections.h"
 
 /*         SOURCE         */
+/*
 #include "src/Shape.cpp"
 #include "src/Shape2.cpp"
 #include "src/Vec2.cpp"
@@ -115,7 +114,6 @@ class Intersections;
 #include "src/Mesh.cpp"
 
 #include "src/Intersections.cpp"
-
-}
+*/
 }
 #endif // GEOMETRY_H_INCLUDED

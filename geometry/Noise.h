@@ -5,8 +5,6 @@
 #include <random>
 #include <algorithm>
 #include <functional>
-namespace
-{
 namespace Noise
 {
 const double PI = 3.14159265358979323846;
@@ -27,11 +25,10 @@ template <class T> class SimplexNoise;
 
 #include "include/SimplexNoise.h"
 #include "include/CellNoise.h"
-
+/*
 #include "src/SimplexNoise.cpp"
 #include "src/CellNoise.cpp"
-
-}
+*/
 }
 
 #endif // NOISE_H_INCLUDED

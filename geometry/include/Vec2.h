@@ -53,4 +53,5 @@ typedef Vec2<double> Vec2D;
 typedef Vec2<float> Vec2F;
 typedef Vec2<int> Vec2I;
 
+#include "../src/Vec2.cpp"
 #endif // Vec2_H_INCLUDED

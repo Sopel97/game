@@ -45,4 +45,7 @@ private:
 
 typedef CellNoise<double> CellNoiseD;
 typedef CellNoise<float> CellNoiseF;
+
+#include "../src/CellNoise.cpp"
+
 #endif // CELLNOISE_H_INCLUDED

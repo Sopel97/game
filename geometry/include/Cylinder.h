@@ -32,5 +32,6 @@ public:
 typedef Cylinder<double> CylinderD;
 typedef Cylinder<float> CylinderF;
 typedef Cylinder<int> CylinderI;
+#include "../src/Cylinder.cpp"
 
 #endif // CYLINDER_H_INCLUDED

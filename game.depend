@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1404938499 source:d:\dev\game\main.cpp
+1405029451 source:d:\dev\game\main.cpp
 	<iostream>
 	"geometry/Geometry.h"
 	"include/Root.h"
 
-1404938745 d:\dev\game\geometry\geometry.h
+1405029272 d:\dev\game\geometry\geometry.h
 	<vector>
 	<cmath>
 	<utility>
@@ -36,37 +36,51 @@
 	"src/Mesh.cpp"
 	"src/Intersections.cpp"
 
-1404937588 d:\dev\game\geometry\include\shape.h
+1405028144 d:\dev\game\geometry\include\shape.h
+	"../src/Shape.cpp"
 
-1404718952 d:\dev\game\geometry\include\shape2.h
+1405028144 d:\dev\game\geometry\include\shape2.h
+	"../src/Shape2.cpp"
 
-1404718952 d:\dev\game\geometry\include\vec2.h
+1405028144 d:\dev\game\geometry\include\vec2.h
+	"../src/Vec2.cpp"
 
-1404718952 d:\dev\game\geometry\include\vec3.h
+1405028144 d:\dev\game\geometry\include\vec3.h
+	"../src/Vec3.cpp"
 
-1404718952 d:\dev\game\geometry\include\rectangle.h
+1405028144 d:\dev\game\geometry\include\rectangle.h
+	"../src/Rectangle.cpp"
 
-1404718952 d:\dev\game\geometry\include\cuboid.h
+1405028144 d:\dev\game\geometry\include\cuboid.h
+	"../src/Cuboid.cpp"
 
-1404718952 d:\dev\game\geometry\include\circle.h
+1405028144 d:\dev\game\geometry\include\circle.h
+	"../src/Circle.cpp"
 
-1404718952 d:\dev\game\geometry\include\cylinder.h
+1405028144 d:\dev\game\geometry\include\cylinder.h
+	"../src/Cylinder.cpp"
 
-1404718952 d:\dev\game\geometry\include\linesegment.h
+1405028144 d:\dev\game\geometry\include\linesegment.h
+	"../src/LineSegment.cpp"
 
-1404718952 d:\dev\game\geometry\include\triangle.h
+1405028144 d:\dev\game\geometry\include\triangle.h
+	"../src/Triangle.cpp"
 
-1404938571 d:\dev\game\geometry\include\polygon.h
+1405028144 d:\dev\game\geometry\include\polygon.h
+	"../src/Polygon.cpp"
 
-1404718952 d:\dev\game\geometry\include\mesh.h
+1405028144 d:\dev\game\geometry\include\mesh.h
+	"../src/Mesh.cpp"
 
-1404718952 d:\dev\game\geometry\include\intersections.h
+1405028144 d:\dev\game\geometry\include\intersections.h
+	"../src/Intersections.cpp"
 
 1404938336 d:\dev\game\geometry\src\shape.cpp
 
 1404938336 d:\dev\game\geometry\src\shape2.cpp
 
-1404938336 d:\dev\game\geometry\src\vec2.cpp
+1405028258 d:\dev\game\geometry\src\vec2.cpp
+	"../include/Intersections.h"
 
 1404938336 d:\dev\game\geometry\src\vec3.cpp
 
@@ -124,7 +138,7 @@
 	<direct.h>
 	<unistd.h>
 
-1405014447 d:\dev\game\include\root.h
+1405172088 d:\dev\game\include\root.h
 
 1404718952 d:\dev\game\include\configuration.h
 	<lua.h>
@@ -134,7 +148,7 @@
 1404718952 source:d:\dev\game\src\configuration.cpp
 	"Configuration.h"
 
-1405008564 source:d:\dev\game\src\root.cpp
+1405172088 source:d:\dev\game\src\root.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -146,6 +160,8 @@
 	"Configuration.h"
 	"Assets.h"
 	"SpritesheetDatabase.h"
+	"TileDatabase.h"
+	"World.h"
 
 1405008564 source:d:\dev\game\src\assets.cpp
 	"Assets.h"
@@ -161,7 +177,7 @@
 	<string>
 	<allegro5/allegro.h>
 
-1405008564 source:d:\dev\game\src\spritesheetdatabase.cpp
+1405168896 source:d:\dev\game\src\spritesheetdatabase.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -180,16 +196,17 @@
 1405007384 source:d:\dev\game\src\tiles\statictiledata.cpp
 	"StaticTileData.h"
 
-1405013856 source:d:\dev\game\src\tiles\tile.cpp
+1405169134 source:d:\dev\game\src\tiles\tile.cpp
 	"Tile.h"
 
 1405007384 d:\dev\game\include\tiles\statictiledata.h
 	<string>
 	"../Configuration.h"
 
-1405013856 d:\dev\game\include\tiles\tile.h
+1405170275 d:\dev\game\include\tiles\tile.h
 	<string>
 	"../../geometry/Geometry.h"
+	"World.h"
 	"../Configuration.h"
 	"StaticTileData.h"
 
@@ -208,7 +225,7 @@
 	<direct.h>
 	<unistd.h>
 
-1405013856 source:d:\dev\game\src\tiledatabase.cpp
+1405168896 source:d:\dev\game\src\tiledatabase.cpp
 	"TileDatabase.h"
 
 1405013856 d:\dev\game\include\tiledatabase.h
@@ -218,4 +235,21 @@
 	"Root.h"
 	"Assets.h"
 	"Tile.h"
+
+1405028983 d:\dev\game\geometry\geometry.cpp
+
+1405168895 source:d:\dev\game\src\array2.cpp
+	"Array2.h"
+
+1405168911 d:\dev\game\include\array2.h
+	<vector>
+	<utility>
+
+1405171573 d:\dev\game\include\world.h
+	<vector>
+	"Array2.h"
+
+1405171984 source:d:\dev\game\src\world.cpp
+	<iostream>
+	"World.h"
 

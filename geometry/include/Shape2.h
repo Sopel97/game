@@ -25,4 +25,5 @@ typedef Shape2<double> Shape2D;
 typedef Shape2<float> Shape2F;
 typedef Shape2<int> Shape2I;
 
+#include "../src/Shape2.cpp"
 #endif // Shape2_H_INCLUDED

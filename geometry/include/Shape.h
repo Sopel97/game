@@ -14,4 +14,5 @@ typedef Shape<double> ShapeD;
 typedef Shape<float> ShapeF;
 typedef Shape<int> ShapeI;
 
+#include "../src/Shape.cpp"
 #endif // SHAPE_H_INCLUDED

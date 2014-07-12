@@ -1,3 +1,4 @@
+#include "../include/Intersections.h"
 template <class T>
 Vec2<T>::Vec2()
 {

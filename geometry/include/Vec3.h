@@ -44,4 +44,5 @@ typedef Vec3<double> Vec3D;
 typedef Vec3<float> Vec3F;
 typedef Vec3<int> Vec3I;
 
+#include "../src/Vec3.cpp"
 #endif // Vec3_H_INCLUDED

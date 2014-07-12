@@ -46,9 +46,6 @@
 		<Linker>
 			<Add library="lib\lua5.1.lib" />
 		</Linker>
-		<Unit filename="array2/Array2.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="geometry/Geometry.h">
 			<Option target="Release" />
 		</Unit>
@@ -145,20 +142,38 @@
 		<Unit filename="geometry/src/Vec3.cpp">
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="include/Assets.h" />
-		<Unit filename="include/Configuration.h" />
-		<Unit filename="include/Root.h" />
-		<Unit filename="include/SpritesheetDatabase.h" />
-		<Unit filename="include/TileDatabase.h" />
-		<Unit filename="include/tiles/StaticTileData.h" />
-		<Unit filename="include/tiles/Tile.h" />
+		<Unit filename="include/Array2.h" />
+		<Unit filename="include/Assets.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/Configuration.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/Root.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/SpritesheetDatabase.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/TileDatabase.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/World.h" />
+		<Unit filename="include/tiles/StaticTileData.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/tiles/Tile.h">
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="luatables/luatables.cc" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Array2.cpp" />
 		<Unit filename="src/Assets.cpp" />
 		<Unit filename="src/Configuration.cpp" />
 		<Unit filename="src/Root.cpp" />
 		<Unit filename="src/SpritesheetDatabase.cpp" />
 		<Unit filename="src/TileDatabase.cpp" />
+		<Unit filename="src/World.cpp" />
 		<Unit filename="src/tiles/StaticTileData.cpp" />
 		<Unit filename="src/tiles/Tile.cpp" />
 		<Extensions>

@@ -49,4 +49,5 @@ public:
     bool intersects(const S& shape);
 };
 
+#include "../src/Mesh.cpp"
 #endif // MESH_H_INCLUDED

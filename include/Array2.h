@@ -1,5 +1,9 @@
+#ifndef ARRAY2_H
+#define ARRAY2_H
+
 #include <vector>
 #include <utility>
+using std::size_t;
 
 template <class T>
 class Array2
@@ -231,3 +235,7 @@ private:
     size_t m_sizeX;
     size_t m_sizeY;
 };
+
+
+
+#endif // ARRAY2_H

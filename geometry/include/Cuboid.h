@@ -34,5 +34,6 @@ public:
 typedef Cuboid<double> CuboidD;
 typedef Cuboid<float> CuboidF;
 typedef Cuboid<int> CuboidI;
+#include "../src/Cuboid.cpp"
 
 #endif // CUBOID_H_INCLUDED
