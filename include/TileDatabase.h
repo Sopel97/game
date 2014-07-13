@@ -13,7 +13,7 @@ public:
     TileDatabase();
     virtual ~TileDatabase();
 
-    void addBaseTile(const std::string& name, Tile* tile);
+    void addBaseTile(Tile* tile, const std::string& name);
     Tile* getBaseTile(const std::string& name);
 
     Tile* getTileById(int id);

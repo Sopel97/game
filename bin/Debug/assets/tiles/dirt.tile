@@ -1,0 +1,9 @@
+dirtTile = {
+
+	baseTileName = "BasicSolidTile",
+	name = "Dirt",
+	spritesheet = "dirt.png"
+
+}
+
+return dirtTile

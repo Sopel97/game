@@ -1,11 +1,22 @@
 #include <iostream>
 #include "World.h"
+#include "Root.h"
+#include "TileDatabase.h"
 
 World::World(int width, int height) :
     m_width(width),
     m_height(height)
 {
-
+    m_tiles = Array2<Tile*>(width, height);
+    Root& root = Root::instance();
+    for(int x = 0; x < width; ++x)
+    {
+        for(int y = 0; y < height; ++y)
+        {
+            Tile* tile = root.tileDatabase()->getTileByName("Dirt");
+            m_tiles[x][y] = tile->clone();
+        }
+    }
 }
 
 World::~World()
@@ -55,11 +66,12 @@ bool World::placeTile(Tile* tile, int x, int y)
 
 void World::draw()
 {
-    //std::cout << "draw\n";
+    std::vector<ALLEGRO_VERTEX> xxx; //can't think of a name
+    m_tiles[3][4]->draw(this, xxx, 3, 4);
 }
 void World::update()
 {
-    //std::cout << "update\n";
+    m_tiles[5][4]->update(this, 5, 4);
 }
 void World::doRandomTileUpdate()
 {

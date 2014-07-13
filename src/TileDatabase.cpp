@@ -17,7 +17,7 @@ TileDatabase::~TileDatabase()
         delete staticTileData;
     }
 }
-void TileDatabase::addBaseTile(const std::string& name, Tile* tile)
+void TileDatabase::addBaseTile(Tile* tile, const std::string& name)
 {
     m_baseTiles.insert(std::pair<std::string, Tile*>(name, tile));
 }
@@ -50,14 +50,16 @@ void TileDatabase::addTile(const std::string& path)
 {
     std::string fileName = "assets\\tiles\\" + path;
 
-    Configuration tileConfig(path);
+    Configuration tileConfig(fileName);
     std::string baseTileName = tileConfig["baseTileName"].getDefault<std::string>("");
     std::string name = tileConfig["name"].getDefault<std::string>("");
     if(baseTileName == "" || baseTileName == "") return;
 
-    StaticTileData* staticTileData = new StaticTileData(tileConfig, m_lastId);
+    Tile* baseTile = getBaseTile(baseTileName);
 
-    m_tiles.push_back(getBaseTile(baseTileName)->create(tileConfig, staticTileData));
+    StaticTileData* staticTileData = baseTile->createStaticTileData(tileConfig, m_lastId);
+
+    m_tiles.push_back(baseTile->create(tileConfig, staticTileData));
     m_tilesMap.insert(std::pair<std::string, int>(name, m_lastId));
 
     std::cout << "  - Loaded " << path << '\n';

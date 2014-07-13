@@ -39,6 +39,8 @@ private:
     ALLEGRO_TIMER* drawTimer;
     ALLEGRO_TIMER* tickTimer;
     unsigned long long int ticks;
+
+    void addBaseTilesToDatabase();
 };
 
 #endif // ROOT_H

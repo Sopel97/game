@@ -3,3 +3,6 @@ Actual tile types will be loaded from assets and made on base tiles templates (b
 Tiles for use in world will be produced (copied) from tile types when needed by id or name.
 
 Same system will be made for other world objects which will be loaded from assets.
+
+
+!!!IMPORTANT!!!   Inner border of the tile must be made of 4 8x8 corners (4 variants each, no border, border from one side, border from second side, corner border) and be built dynamically instead of 16x16 versions.

@@ -1,6 +1,6 @@
 #ifndef ARRAY2_H
 #define ARRAY2_H
-
+#include <iostream>
 #include <vector>
 #include <utility>
 using std::size_t;
@@ -34,7 +34,7 @@ public:
             m_dataStripe(stripe.m_dataStripe),
             m_size(stripe.m_size)
         {
-
+            stripe.m_dataStripe = nullptr;
         }
         ~Stripe()
         {
@@ -48,6 +48,7 @@ public:
         {
             m_dataStripe = stripe.m_dataStripe;
             m_size = stripe.m_size;
+            stripe.m_dataStripe = nullptr;
             return *this;
         }
         Stripe& operator= (const Stripe& stripe)
@@ -138,7 +139,7 @@ public:
         m_sizeX(array.m_sizeX),
         m_sizeY(array.m_sizeY)
     {
-
+        array.m_data = nullptr;
     }
     ~Array2()
     {
@@ -159,6 +160,8 @@ public:
         m_data = std::move(array.m_data);
         m_sizeX = array.m_sizeX;
         m_sizeY = array.m_sizeY;
+
+        array.m_data = nullptr;
         return *this;
     }
     Array2& operator= (const Array2<T>& arrayCopy)

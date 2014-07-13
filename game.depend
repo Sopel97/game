@@ -138,7 +138,7 @@
 	<direct.h>
 	<unistd.h>
 
-1405172088 d:\dev\game\include\root.h
+1405264867 d:\dev\game\include\root.h
 
 1404718952 d:\dev\game\include\configuration.h
 	<lua.h>
@@ -148,7 +148,7 @@
 1404718952 source:d:\dev\game\src\configuration.cpp
 	"Configuration.h"
 
-1405172088 source:d:\dev\game\src\root.cpp
+1405264889 source:d:\dev\game\src\root.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -162,6 +162,7 @@
 	"SpritesheetDatabase.h"
 	"TileDatabase.h"
 	"World.h"
+	"BasicSolidTile.h"
 
 1405008564 source:d:\dev\game\src\assets.cpp
 	"Assets.h"
@@ -193,8 +194,11 @@
 	<vector>
 	<utility>
 
-1405007384 source:d:\dev\game\src\tiles\statictiledata.cpp
+1405265414 source:d:\dev\game\src\tiles\statictiledata.cpp
+	<string>
 	"StaticTileData.h"
+	"Root.h"
+	"SpritesheetDatabase.h"
 
 1405169134 source:d:\dev\game\src\tiles\tile.cpp
 	"Tile.h"
@@ -203,8 +207,10 @@
 	<string>
 	"../Configuration.h"
 
-1405170275 d:\dev\game\include\tiles\tile.h
+1405264583 d:\dev\game\include\tiles\tile.h
 	<string>
+	<vector>
+	<allegro5/allegro_primitives.h>
 	"../../geometry/Geometry.h"
 	"World.h"
 	"../Configuration.h"
@@ -225,10 +231,10 @@
 	<direct.h>
 	<unistd.h>
 
-1405168896 source:d:\dev\game\src\tiledatabase.cpp
+1405266299 source:d:\dev\game\src\tiledatabase.cpp
 	"TileDatabase.h"
 
-1405013856 d:\dev\game\include\tiledatabase.h
+1405264867 d:\dev\game\include\tiledatabase.h
 	<vector>
 	<map>
 	"../luatables/luatables.h"
@@ -241,7 +247,8 @@
 1405168895 source:d:\dev\game\src\array2.cpp
 	"Array2.h"
 
-1405168911 d:\dev\game\include\array2.h
+1405267244 d:\dev\game\include\array2.h
+	<iostream>
 	<vector>
 	<utility>
 
@@ -249,7 +256,18 @@
 	<vector>
 	"Array2.h"
 
-1405171984 source:d:\dev\game\src\world.cpp
+1405266375 source:d:\dev\game\src\world.cpp
 	<iostream>
 	"World.h"
+	"Root.h"
+	"TileDatabase.h"
+
+1405264493 source:d:\dev\game\src\tiles\basicsolidtile.cpp
+	"BasicSolidTile.h"
+
+1405264583 d:\dev\game\include\tiles\basicsolidtile.h
+	<vector>
+	<allegro5/allegro_primitives.h>
+	"Tile.h"
+	"StaticTileData.h"
 

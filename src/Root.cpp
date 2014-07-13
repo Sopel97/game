@@ -14,6 +14,8 @@
 #include "TileDatabase.h"
 #include "World.h"
 
+#include "BasicSolidTile.h"
+
 Root::Root()
 {
 }
@@ -56,6 +58,7 @@ void Root::start()
 
     /* Initializing tiles */
     m_tileDatabase = new TileDatabase();
+    addBaseTilesToDatabase();
     m_tileDatabase->load();
 
     /* Creating world */
@@ -122,4 +125,9 @@ TileDatabase* Root::tileDatabase() const
 World* Root::world() const
 {
     return m_world;
+}
+
+void Root::addBaseTilesToDatabase()
+{
+    m_tileDatabase->addBaseTile(new BasicSolidTile(), "BasicSolidTile");
 }

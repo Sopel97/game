@@ -159,6 +159,7 @@
 			<Option target="Release" />
 		</Unit>
 		<Unit filename="include/World.h" />
+		<Unit filename="include/tiles/BasicSolidTile.h" />
 		<Unit filename="include/tiles/StaticTileData.h">
 			<Option target="Release" />
 		</Unit>
@@ -174,6 +175,7 @@
 		<Unit filename="src/SpritesheetDatabase.cpp" />
 		<Unit filename="src/TileDatabase.cpp" />
 		<Unit filename="src/World.cpp" />
+		<Unit filename="src/tiles/BasicSolidTile.cpp" />
 		<Unit filename="src/tiles/StaticTileData.cpp" />
 		<Unit filename="src/tiles/Tile.cpp" />
 		<Extensions>
