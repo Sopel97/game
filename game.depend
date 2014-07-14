@@ -138,7 +138,7 @@
 	<direct.h>
 	<unistd.h>
 
-1405264867 d:\dev\game\include\root.h
+1405359636 d:\dev\game\include\root.h
 
 1404718952 d:\dev\game\include\configuration.h
 	<lua.h>
@@ -148,7 +148,7 @@
 1404718952 source:d:\dev\game\src\configuration.cpp
 	"Configuration.h"
 
-1405333211 source:d:\dev\game\src\root.cpp
+1405359608 source:d:\dev\game\src\root.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -231,16 +231,16 @@
 	<direct.h>
 	<unistd.h>
 
-1405266299 source:d:\dev\game\src\tiledatabase.cpp
+1405359206 source:d:\dev\game\src\tiledatabase.cpp
 	"TileDatabase.h"
-
-1405264867 d:\dev\game\include\tiledatabase.h
-	<vector>
-	<map>
-	"../luatables/luatables.h"
 	"Root.h"
 	"Assets.h"
 	"Tile.h"
+
+1405359219 d:\dev\game\include\tiledatabase.h
+	<vector>
+	<map>
+	"../luatables/luatables.h"
 
 1405028983 d:\dev\game\geometry\geometry.cpp
 
@@ -252,19 +252,23 @@
 	<vector>
 	<utility>
 
-1405332308 d:\dev\game\include\world.h
+1405359206 d:\dev\game\include\world.h
 	<vector>
 	"../geometry/Geometry.h"
 	"Array2.h"
 
-1405333111 source:d:\dev\game\src\world.cpp
+1405359421 source:d:\dev\game\src\world.cpp
 	<iostream>
+	<cstdlib>
+	<algorithm>
+	"Util.h"
 	"World.h"
 	"Root.h"
 	"TileDatabase.h"
 	"SpritesheetDatabase.h"
+	"Tile.h"
 
-1405334771 source:d:\dev\game\src\tiles\basicsolidtile.cpp
+1405359520 source:d:\dev\game\src\tiles\basicsolidtile.cpp
 	"BasicSolidTile.h"
 
 1405332998 d:\dev\game\include\tiles\basicsolidtile.h
@@ -272,4 +276,9 @@
 	<allegro5/allegro_primitives.h>
 	"Tile.h"
 	"StaticTileData.h"
+
+1405358904 source:d:\dev\game\src\util.cpp
+	"Util.h"
+
+1405358904 d:\dev\game\include\util.h
 

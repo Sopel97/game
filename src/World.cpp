@@ -1,8 +1,14 @@
 #include <iostream>
+
+#include <cstdlib>
+#include <algorithm>
+
+#include "Util.h"
 #include "World.h"
 #include "Root.h"
 #include "TileDatabase.h"
 #include "SpritesheetDatabase.h"
+#include "Tile.h"
 
 World::World(int width, int height) :
     m_width(width),
@@ -14,7 +20,10 @@ World::World(int width, int height) :
     {
         for(int y = 0; y < height; ++y)
         {
-            Tile* tile = root.tileDatabase()->getTileByName("Dirt");
+            Tile* tile = nullptr;
+            int r = rand()%2;
+            if(r == 0) tile = root.tileDatabase()->getTileByName("Dirt");
+            else if(r == 1) tile = root.tileDatabase()->getTileByName("Stone");
             m_tiles[x][y] = tile->clone();
         }
     }
@@ -35,7 +44,8 @@ int World::height()
 }
 Tile* World::getTile(int x, int y)
 {
-    return m_tiles[x][y];
+    if(y < 0 || y >= m_height) return nullptr;
+    return m_tiles[Util::mod(x,m_width)][y];
 }
 std::vector<Tile*> World::getTiles(int x, int y, int tilesHorizontal, int tilesVertical)
 {
@@ -69,23 +79,54 @@ bool World::placeTile(Tile* tile, int x, int y)
 void World::draw()
 {
     Root& root = Root::instance();
-    std::vector<ALLEGRO_VERTEX> toDraw; //can't think of a name
-
+    SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
+    int windowWidth = root.windowWidth();
+    int windowHeight = root.windowHeight();
     Vec2F worldCoordsTopLeft = screenToWorld(Vec2F(0.0, 0.0));
-    Vec2F worldCoordsBottomRight = screenToWorld(Vec2F(1024.0, 768.0));
-    int firstTileX = worldCoordsTopLeft.x/16.0f;
-    int firstTileY = worldCoordsTopLeft.y/16.0f;
+    Vec2F worldCoordsBottomRight = screenToWorld(Vec2F(windowWidth, windowHeight)); //make ot so it takes from window size
+    int firstTileX = Util::fastFloor(worldCoordsTopLeft.x/16.0f);
+    int firstTileY = Util::fastFloor(worldCoordsTopLeft.y/16.0f);
 
-    int lastTileX = worldCoordsBottomRight.x/16.0f+1;
-    int lastTileY = worldCoordsBottomRight.y/16.0f+1;
+    int lastTileX = Util::fastFloor(worldCoordsBottomRight.x/16.0f+1.0f);
+    int lastTileY = Util::fastFloor(worldCoordsBottomRight.y/16.0f+1.0f);
+
+    struct DrawableTile
+    {
+        Tile* tile;
+        int spritesheetId;
+        int x;
+        int y;
+    };
+
+    std::vector<DrawableTile> drawableTiles;
+    drawableTiles.reserve((lastTileX-firstTileX+1)*(lastTileY-firstTileY+1));
     for(int x = firstTileX; x <= lastTileX; ++x)
     {
         for(int y = firstTileY; y <= lastTileY; ++y)
         {
-            getTile(x,y)->drawInner(this, toDraw, x, y);
+            Tile* tile = getTile(x,y);
+            if(!tile) continue;
+            drawableTiles.push_back(DrawableTile{tile, tile->spritesheetId(), x, y});
         }
     }
-    al_draw_prim(&(toDraw[0]), NULL, root.spritesheetDatabase()->getSpritesheetByName("dirt.png"), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+    std::sort(drawableTiles.begin(), drawableTiles.end(), [](const DrawableTile& lhs, const DrawableTile& rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
+
+    std::vector<ALLEGRO_VERTEX> toDraw;
+    toDraw.reserve(10000);
+    int lastSpritesheetId = drawableTiles[0].spritesheetId;
+    for(DrawableTile& tile : drawableTiles)
+    {
+        int currentSpritesheetId = tile.spritesheetId;
+        if(currentSpritesheetId != lastSpritesheetId)
+        {
+            al_draw_prim(&(toDraw[0]), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+            toDraw.clear();
+            toDraw.reserve(10000);
+            lastSpritesheetId = currentSpritesheetId;
+        }
+        tile.tile->drawInner(this, toDraw, tile.x, tile.y);
+    }
+    if(toDraw.size()) al_draw_prim(&(toDraw[0]), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 }
 void World::update()
 {
@@ -110,4 +151,8 @@ Vec2F World::worldToScreen(const Vec2F& world)
 Vec2F World::camera() const
 {
     return m_camera;
+}
+void World::moveCamera(const Vec2F& diff)
+{
+    m_camera += diff;
 }

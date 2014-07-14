@@ -1,4 +1,7 @@
 #include "TileDatabase.h"
+#include "Root.h"
+#include "Assets.h"
+#include "Tile.h"
 
 TileDatabase::TileDatabase()
 {

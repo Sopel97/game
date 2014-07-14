@@ -4,6 +4,7 @@
 #include <vector>
 #include "../geometry/Geometry.h"
 #include "Array2.h"
+
 using namespace Geo;
 class Tile;
 
@@ -30,6 +31,8 @@ public:
     Vec2F screenToWorld(const Vec2F& screen);
     Vec2F worldToScreen(const Vec2F& world);
     Vec2F camera() const;
+
+    void moveCamera(const Vec2F& diff);
 protected:
 private:
     int m_width;

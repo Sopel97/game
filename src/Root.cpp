@@ -45,10 +45,12 @@ void Root::start()
     al_install_keyboard();
     al_install_mouse();
 
-    al_create_display(1024, 768);
-    drawTimer = al_create_timer(1.0 / FPS);
-    tickTimer = al_create_timer(1.0 / TPS);
-    fpsLimit = false;
+    m_windowWidth = 1024;
+    m_windowHeight = 768;
+    al_create_display(m_windowWidth, m_windowHeight);
+    m_drawTimer = al_create_timer(1.0 / FPS);
+    m_tickTimer = al_create_timer(1.0 / TPS);
+    m_fpsLimit = false;
 
     /* Initializing assets */
     m_assets = new Assets();
@@ -65,18 +67,18 @@ void Root::start()
     /* Creating world */
     m_world = new World(512, 128); //size is temporary
 
-    al_start_timer(tickTimer);
-    al_start_timer(drawTimer);
+    al_start_timer(m_tickTimer);
+    al_start_timer(m_drawTimer);
     int framesThisSecond = 0;
     int ticksThisSecond = 0;
-    int lastTicks = al_get_timer_count(tickTimer);
-    int lastFPSTicks = al_get_timer_count(drawTimer);
+    int lastTicks = al_get_timer_count(m_tickTimer);
+    int lastFPSTicks = al_get_timer_count(m_drawTimer);
     for(;;)
     {
         ALLEGRO_KEYBOARD_STATE currentKeyboardState;
         al_get_keyboard_state(&currentKeyboardState);
-        int nowTicks = al_get_timer_count(tickTimer);
-        int nowDrawTicks = al_get_timer_count(drawTimer);
+        int nowTicks = al_get_timer_count(m_tickTimer);
+        int nowDrawTicks = al_get_timer_count(m_drawTimer);
 
         if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_ESCAPE))
         {
@@ -84,21 +86,40 @@ void Root::start()
         }
         if(nowTicks != lastTicks && !(nowTicks % TPS))
         {
-            currentFps = framesThisSecond;
+            m_currentFps = framesThisSecond;
             framesThisSecond = 0;
-            currentTps = ticksThisSecond;
+            m_currentTps = ticksThisSecond;
             ticksThisSecond = 0;
-            std::cout << "FPS: " << currentFps << "\nTPS: " << currentTps << "\n\n";
+
+            std::cout << "FPS: " << m_currentFps << "\nTPS: " << m_currentTps << "\n\n";
         }
         if(nowTicks != lastTicks)
         {
             lastTicks = nowTicks;
-            ++ticks;
+            ++m_ticks;
             ++ticksThisSecond;
+
+
+            if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_LEFT))
+            {
+                m_world->moveCamera(Vec2F(-2.5, 0));
+            }
+            if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_RIGHT))
+            {
+                m_world->moveCamera(Vec2F(2.5, 0));
+            }
+            if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_UP))
+            {
+                m_world->moveCamera(Vec2F(0, -2.5));
+            }
+            if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_DOWN))
+            {
+                m_world->moveCamera(Vec2F(0, 2.5));
+            }
 
             m_world->update();
         }
-        if(nowDrawTicks != lastFPSTicks || !fpsLimit)
+        if(nowDrawTicks != lastFPSTicks || !m_fpsLimit)
         {
             lastFPSTicks = nowDrawTicks;
             ++framesThisSecond;
@@ -131,4 +152,13 @@ World* Root::world() const
 void Root::addBaseTilesToDatabase()
 {
     m_tileDatabase->addBaseTile(new BasicSolidTile(), "BasicSolidTile");
+}
+
+int Root::windowWidth() const
+{
+    return m_windowWidth;
+}
+int Root::windowHeight() const
+{
+    return m_windowHeight;
 }

@@ -21,6 +21,9 @@ public:
 
     void start();
 
+    int windowWidth() const;
+    int windowHeight() const;
+
 protected:
 private:
     Root();
@@ -30,15 +33,19 @@ private:
 
     World* m_world;
 
-    const int FPS = 120;
-    bool fpsLimit;
+    const int FPS = 60;
     const int TPS = 60;
-    int currentFps;
-    int currentTps;
 
-    ALLEGRO_TIMER* drawTimer;
-    ALLEGRO_TIMER* tickTimer;
-    unsigned long long int ticks;
+    bool m_fpsLimit;
+    int m_currentFps;
+    int m_currentTps;
+
+    int m_windowWidth;
+    int m_windowHeight;
+
+    ALLEGRO_TIMER* m_drawTimer;
+    ALLEGRO_TIMER* m_tickTimer;
+    unsigned long long int m_ticks;
 
     void addBaseTilesToDatabase();
 };

@@ -4,9 +4,12 @@
 #include <vector>
 #include <map>
 #include "../luatables/luatables.h"
-#include "Root.h"
-#include "Assets.h"
-#include "Tile.h"
+
+class Root;
+class Assets;
+class Tile;
+class StaticTileData;
+
 class TileDatabase
 {
 public:
