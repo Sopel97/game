@@ -1,4 +1,4 @@
-dirtTile = {
+stoneTile = {
 
 	baseTileName = "BasicSolidTile",
 	name = "Stone",
@@ -9,4 +9,4 @@ dirtTile = {
 
 }
 
-return dirtTile
+return stoneTile
