@@ -23,8 +23,8 @@ public:
     virtual std::string name() const;
     virtual StaticTileData* staticTileData() const;
 
-    virtual void draw(World* world, std::vector<ALLEGRO_VERTEX>& drawDefinition, int x, int y) = 0;
-    virtual void drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& drawDefinition, int x, int y) = 0;
+    virtual void drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y) = 0;
+    virtual void drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y, int outX, int outY) = 0;
     virtual void update(World* world, int x, int y) = 0;
     virtual void randomUpdate(World* world, int x, int y) = 0;
     virtual void constantUpdate(World* world, int x, int y) = 0;

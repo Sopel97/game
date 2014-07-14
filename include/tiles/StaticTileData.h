@@ -17,6 +17,9 @@ protected:
     int m_id;
     int m_spritesheetId;
     std::string m_name;
+    int m_borderPrecendence;
+    bool m_hasInnerBorder;
+    bool m_hasOuterBorder;
 private:
 };
 

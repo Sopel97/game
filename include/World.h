@@ -2,7 +2,9 @@
 #define WORLD_H
 
 #include <vector>
+#include "../geometry/Geometry.h"
 #include "Array2.h"
+using namespace Geo;
 class Tile;
 
 class World
@@ -25,11 +27,16 @@ public:
     void doRandomTileUpdate();
     void doConstantTileUpdate();
 
+    Vec2F screenToWorld(const Vec2F& screen);
+    Vec2F worldToScreen(const Vec2F& world);
+    Vec2F camera() const;
 protected:
 private:
     int m_width;
     int m_height;
     Array2<Tile*> m_tiles;
+
+    Vec2F m_camera;
 };
 
 #endif // WORLD_H

@@ -22,6 +22,7 @@
 					<Add library="lib\liballegro_image-5.0.9-mt-debug.a" />
 					<Add library="lib\liballegro_ttf-5.0.9-mt-debug.a" />
 					<Add library="lib\liballegro-5.0.9-mt-debug.a" />
+					<Add library="lib\liballegro_primitives-5.0.9-mt-debug.a" />
 				</Linker>
 			</Target>
 			<Target title="Release">

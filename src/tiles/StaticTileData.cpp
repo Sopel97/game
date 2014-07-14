@@ -12,6 +12,10 @@ StaticTileData::StaticTileData(Configuration& config, int id) :
     std::string spritesheetName = config["spritesheet"].getDefault<std::string>("empty.png");
     m_spritesheetId = root.spritesheetDatabase()->getSpritesheetIdByName(spritesheetName);
     m_name = config["name"].getDefault<std::string>("No Name");
+    m_borderPrecendence = config["borderPrecedence"].getDefault<int>(0);
+    m_hasInnerBorder = config["hasInnerBorder"].getDefault<bool>(false);
+    m_hasOuterBorder = config["hasOuterBorder"].getDefault<bool>(false);
+
 }
 
 StaticTileData::~StaticTileData()

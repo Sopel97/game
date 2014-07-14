@@ -2,6 +2,7 @@
 #include "World.h"
 #include "Root.h"
 #include "TileDatabase.h"
+#include "SpritesheetDatabase.h"
 
 World::World(int width, int height) :
     m_width(width),
@@ -17,6 +18,7 @@ World::World(int width, int height) :
             m_tiles[x][y] = tile->clone();
         }
     }
+    m_camera = Vec2F(154,154);
 }
 
 World::~World()
@@ -66,8 +68,24 @@ bool World::placeTile(Tile* tile, int x, int y)
 
 void World::draw()
 {
-    std::vector<ALLEGRO_VERTEX> xxx; //can't think of a name
-    m_tiles[3][4]->draw(this, xxx, 3, 4);
+    Root& root = Root::instance();
+    std::vector<ALLEGRO_VERTEX> toDraw; //can't think of a name
+
+    Vec2F worldCoordsTopLeft = screenToWorld(Vec2F(0.0, 0.0));
+    Vec2F worldCoordsBottomRight = screenToWorld(Vec2F(1024.0, 768.0));
+    int firstTileX = worldCoordsTopLeft.x/16.0f;
+    int firstTileY = worldCoordsTopLeft.y/16.0f;
+
+    int lastTileX = worldCoordsBottomRight.x/16.0f+1;
+    int lastTileY = worldCoordsBottomRight.y/16.0f+1;
+    for(int x = firstTileX; x <= lastTileX; ++x)
+    {
+        for(int y = firstTileY; y <= lastTileY; ++y)
+        {
+            getTile(x,y)->drawInner(this, toDraw, x, y);
+        }
+    }
+    al_draw_prim(&(toDraw[0]), NULL, root.spritesheetDatabase()->getSpritesheetByName("dirt.png"), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 }
 void World::update()
 {
@@ -80,4 +98,16 @@ void World::doRandomTileUpdate()
 void World::doConstantTileUpdate()
 {
 
+}
+Vec2F World::screenToWorld(const Vec2F& screen)
+{
+    return screen+m_camera;
+}
+Vec2F World::worldToScreen(const Vec2F& world)
+{
+    return world-m_camera;
+}
+Vec2F World::camera() const
+{
+    return m_camera;
 }

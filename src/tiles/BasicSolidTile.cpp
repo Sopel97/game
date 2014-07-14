@@ -15,17 +15,28 @@ BasicSolidTile::~BasicSolidTile()
 
 }
 
-void BasicSolidTile::draw(World* world, std::vector<ALLEGRO_VERTEX>& drawDefinition, int x, int y)
+void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y)
 {
-    std::cout << "draw\n";
+    Vec2F screenCoords = world->worldToScreen(Vec2F(x * 16, y * 16));
+    ALLEGRO_COLOR color = al_map_rgb(128, 128, 128);
+
+    /* triangle vertices are added clockwise. Top left and bottom right triangle. */
+    /*                x                       y                       z  u        v       color */
+    toDraw.push_back({screenCoords.x        , screenCoords.y        , 0, 48     , 0     , color});
+    toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, 48 + 16, 0     , color});
+    toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, 48     , 0 + 16, color});
+    toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y + 16.0f, 0, 48 + 16, 0 + 16, color});
+    toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, 48 + 16, 0     , color});
+    toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, 48     , 0 + 16, color});
+    return;
 }
-void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& drawDefinition, int x, int y)
+void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y, int outX, int outY)
 {
-    std::cout << "draw outer\n";
+
 }
 void BasicSolidTile::update(World* world, int x, int y)
 {
-    std::cout << "update\n";
+
 }
 void BasicSolidTile::randomUpdate(World* world, int x, int y)
 {

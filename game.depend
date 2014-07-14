@@ -148,7 +148,7 @@
 1404718952 source:d:\dev\game\src\configuration.cpp
 	"Configuration.h"
 
-1405264889 source:d:\dev\game\src\root.cpp
+1405333211 source:d:\dev\game\src\root.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -194,7 +194,7 @@
 	<vector>
 	<utility>
 
-1405265414 source:d:\dev\game\src\tiles\statictiledata.cpp
+1405332279 source:d:\dev\game\src\tiles\statictiledata.cpp
 	<string>
 	"StaticTileData.h"
 	"Root.h"
@@ -203,11 +203,11 @@
 1405169134 source:d:\dev\game\src\tiles\tile.cpp
 	"Tile.h"
 
-1405007384 d:\dev\game\include\tiles\statictiledata.h
+1405332279 d:\dev\game\include\tiles\statictiledata.h
 	<string>
 	"../Configuration.h"
 
-1405264583 d:\dev\game\include\tiles\tile.h
+1405332998 d:\dev\game\include\tiles\tile.h
 	<string>
 	<vector>
 	<allegro5/allegro_primitives.h>
@@ -252,20 +252,22 @@
 	<vector>
 	<utility>
 
-1405171573 d:\dev\game\include\world.h
+1405332308 d:\dev\game\include\world.h
 	<vector>
+	"../geometry/Geometry.h"
 	"Array2.h"
 
-1405266375 source:d:\dev\game\src\world.cpp
+1405333111 source:d:\dev\game\src\world.cpp
 	<iostream>
 	"World.h"
 	"Root.h"
 	"TileDatabase.h"
+	"SpritesheetDatabase.h"
 
-1405264493 source:d:\dev\game\src\tiles\basicsolidtile.cpp
+1405334771 source:d:\dev\game\src\tiles\basicsolidtile.cpp
 	"BasicSolidTile.h"
 
-1405264583 d:\dev\game\include\tiles\basicsolidtile.h
+1405332998 d:\dev\game\include\tiles\basicsolidtile.h
 	<vector>
 	<allegro5/allegro_primitives.h>
 	"Tile.h"

@@ -31,8 +31,8 @@ public:
     BasicSolidTile(const BasicSolidTile& other);
     virtual ~BasicSolidTile();
 
-    virtual void draw(World* world, std::vector<ALLEGRO_VERTEX>& drawDefinition, int x, int y);
-    virtual void drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& drawDefinition, int x, int y);
+    virtual void drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y);
+    virtual void drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y, int outX, int outY);
     virtual void update(World* world, int x, int y);
     virtual void randomUpdate(World* world, int x, int y);
     virtual void constantUpdate(World* world, int x, int y);
