@@ -32,3 +32,15 @@ std::string Tile::name() const
 {
     return m_staticTileData->name();
 }
+int Tile::borderPrecedence() const
+{
+    return m_staticTileData->borderPrecedence();
+}
+bool Tile::hasInnerBorder() const
+{
+    return m_staticTileData->hasInnerBorder();
+}
+bool Tile::hasOuterBorder() const
+{
+    return m_staticTileData->hasOuterBorder();
+}

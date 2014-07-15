@@ -10,9 +10,12 @@ public:
     StaticTileData(Configuration& config, int id);
     virtual ~StaticTileData();
 
-    int id() const;
-    int spritesheetId() const;
-    std::string name() const;
+    virtual int id() const;
+    virtual int spritesheetId() const;
+    virtual std::string name() const;
+    virtual int borderPrecedence() const;
+    virtual bool hasInnerBorder() const;
+    virtual bool hasOuterBorder() const;
 protected:
     int m_id;
     int m_spritesheetId;

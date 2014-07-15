@@ -35,3 +35,16 @@ std::string StaticTileData::name() const
 {
     return m_name;
 }
+
+int StaticTileData::borderPrecedence() const
+{
+    return m_borderPrecendence;
+}
+bool StaticTileData::hasInnerBorder() const
+{
+    return m_hasInnerBorder;
+}
+bool StaticTileData::hasOuterBorder() const
+{
+    return m_hasOuterBorder;
+}

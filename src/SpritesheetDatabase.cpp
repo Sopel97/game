@@ -21,7 +21,8 @@ SpritesheetDatabase::~SpritesheetDatabase()
 void SpritesheetDatabase::addSpritesheet(const std::string& path)
 {
     std::string fileName = "assets\\gfx\\" + path;
-    m_spritesheets.push_back(al_load_bitmap(fileName.c_str()));
+    ALLEGRO_BITMAP* spritesheet = al_load_bitmap(fileName.c_str());
+    m_spritesheets.push_back(spritesheet);
     m_spritesheetsMap.insert(std::pair<std::string, int>(path, m_lastId));
     std::cout << "  - Loaded " << path << '\n';
 

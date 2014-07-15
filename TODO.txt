@@ -5,4 +5,5 @@ Tiles for use in world will be produced (copied) from tile types when needed by 
 Same system will be made for other world objects which will be loaded from assets.
 
 
-!!!IMPORTANT!!!   Inner border of the tile must be made of 4 8x8 corners (4 variants each, no border, border from one side, border from second side, corner border) and be built dynamically instead of 16x16 versions.
+!!! MAY BE IMPORTANT !!! drawing tiles may be too slow, think of a way to speed up drawing tiles in the tiles' drawing methods and consider making buffer for map and update it (move when camera moves, redraw/draw tiles which appear due to moving or need redraw) when needed. This should increase performance by a lot, but may be problematic to maintain later.
+

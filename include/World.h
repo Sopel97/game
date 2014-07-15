@@ -19,6 +19,7 @@ public:
 
     Tile* getTile(int x, int y);
     std::vector<Tile*> getTiles(int x, int y, int tilesHorizontal, int tilesVertical);
+    Array2<Tile*> getTiles2(int x, int y, int tilesHorizontal, int tilesVertical);
 
     void setTile(Tile* tile, int x, int y);  //setting tile doesn't check if it's possible
     bool placeTile(Tile* tile, int x, int y);

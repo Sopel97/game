@@ -65,6 +65,20 @@ std::vector<Tile*> World::getTiles(int x, int y, int tilesHorizontal, int tilesV
     return tiles;
 }
 
+Array2<Tile*> World::getTiles2(int x, int y, int tilesHorizontal, int tilesVertical)
+{
+    Array2<Tile*> tiles(tilesHorizontal, tilesVertical);
+    for(int xx = 0;xx < tilesHorizontal;++xx)
+    {
+        for(int yy = 0;yy < tilesVertical;++yy)
+        {
+            Tile* currentTile = getTile(xx+x, yy+y);
+            tiles[xx][yy] = currentTile;
+        }
+    }
+    return tiles;
+}
+
 void World::setTile(Tile* tile, int x, int y)
 {
     m_tiles[x][y] = tile;
@@ -114,6 +128,7 @@ void World::draw()
     std::vector<ALLEGRO_VERTEX> toDraw;
     toDraw.reserve(10000);
     int lastSpritesheetId = drawableTiles[0].spritesheetId;
+
     for(DrawableTile& tile : drawableTiles)
     {
         int currentSpritesheetId = tile.spritesheetId;
