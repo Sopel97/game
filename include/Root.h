@@ -5,6 +5,8 @@ class Assets;
 class SpritesheetDatabase;
 class TileDatabase;
 class World;
+
+struct ALLEGRO_DISPLAY;
 struct ALLEGRO_TIMER;
 
 class Root
@@ -21,6 +23,8 @@ public:
 
     void start();
 
+    ALLEGRO_DISPLAY* display() const;
+
     int windowWidth() const;
     int windowHeight() const;
 
@@ -32,6 +36,8 @@ private:
     TileDatabase* m_tileDatabase;
 
     World* m_world;
+
+    ALLEGRO_DISPLAY* m_display;
 
     const int FPS = 60;
     const int TPS = 60;

@@ -11,6 +11,10 @@ TileDatabase::TileDatabase()
 }
 TileDatabase::~TileDatabase()
 {
+    for(std::pair<std::string, Tile*> baseTile : m_baseTiles)
+    {
+        delete baseTile.second;
+    }
     for(Tile* tile : m_tiles)
     {
         delete tile;

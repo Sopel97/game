@@ -1,0 +1,11 @@
+dirtTile = {
+
+	baseTileName = "BasicSolidTile",
+	name = "Dirt",
+	spritesheet = "dirt.png",
+	borderPrecedence = 4,
+	hasInnerBorder = true,
+	hasOuterBorder = true
+}
+
+return dirtTile

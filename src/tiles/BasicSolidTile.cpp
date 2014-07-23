@@ -17,7 +17,7 @@ BasicSolidTile::~BasicSolidTile()
 
 void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y)
 {
-    Vec2F screenCoords = world->worldToScreen(Vec2F(x * 16, y * 16));
+    Vec2I screenCoords = Util::fastFloor(world->worldToScreen(Vec2F(x * 16, y * 16)));
     ALLEGRO_COLOR color = al_map_rgb(255, 255, 255);
 
     Array2<Tile*> neighbours;

@@ -1,0 +1,12 @@
+stoneTile = {
+
+	baseTileName = "BasicSolidTile",
+	name = "Stone",
+	spritesheet = "stone.png",
+	borderPrecedence = 8,
+	hasInnerBorder = true,
+	hasOuterBorder = true
+
+}
+
+return stoneTile

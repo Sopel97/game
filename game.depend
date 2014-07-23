@@ -282,3 +282,473 @@
 
 1405358904 d:\dev\game\include\util.h
 
+1404718952 source:e:\dev\game\luatables\luatables.cc
+	"luatables.h"
+	<assert.h>
+	<iostream>
+	<cstdlib>
+	<vector>
+	<sstream>
+	<cmath>
+	<lua.h>
+	<lauxlib.h>
+	<lualib.h>
+	<stdio.h>
+	<direct.h>
+	<unistd.h>
+
+1404718952 e:\dev\game\luatables\luatables.h
+	<iostream>
+	<assert.h>
+	<cstdlib>
+	<string>
+	<vector>
+
+1405029452 source:e:\dev\game\main.cpp
+	<iostream>
+	"geometry/Geometry.h"
+	"include/Root.h"
+
+1405029274 e:\dev\game\geometry\geometry.h
+	<vector>
+	<cmath>
+	<utility>
+	<functional>
+	"include/Shape.h"
+	"include/Shape2.h"
+	"include/Vec2.h"
+	"include/Vec3.h"
+	"include/Rectangle.h"
+	"include/Cuboid.h"
+	"include/Circle.h"
+	"include/Cylinder.h"
+	"include/LineSegment.h"
+	"include/Triangle.h"
+	"include/Polygon.h"
+	"include/Mesh.h"
+	"include/Intersections.h"
+	"src/Shape.cpp"
+	"src/Shape2.cpp"
+	"src/Vec2.cpp"
+	"src/Vec3.cpp"
+	"src/Rectangle.cpp"
+	"src/Cuboid.cpp"
+	"src/Circle.cpp"
+	"src/Cylinder.cpp"
+	"src/LineSegment.cpp"
+	"src/Triangle.cpp"
+	"src/Polygon.cpp"
+	"src/Mesh.cpp"
+	"src/Intersections.cpp"
+
+1405028146 e:\dev\game\geometry\include\shape.h
+	"../src/Shape.cpp"
+
+1404938338 e:\dev\game\geometry\src\shape.cpp
+
+1405028146 e:\dev\game\geometry\include\shape2.h
+	"../src/Shape2.cpp"
+
+1404938338 e:\dev\game\geometry\src\shape2.cpp
+
+1405028146 e:\dev\game\geometry\include\vec2.h
+	"../src/Vec2.cpp"
+
+1405028260 e:\dev\game\geometry\src\vec2.cpp
+	"../include/Intersections.h"
+
+1405028146 e:\dev\game\geometry\include\intersections.h
+	"../src/Intersections.cpp"
+
+1404938338 e:\dev\game\geometry\src\intersections.cpp
+
+1405028146 e:\dev\game\geometry\include\vec3.h
+	"../src/Vec3.cpp"
+
+1404938338 e:\dev\game\geometry\src\vec3.cpp
+
+1405028146 e:\dev\game\geometry\include\rectangle.h
+	"../src/Rectangle.cpp"
+
+1404938338 e:\dev\game\geometry\src\rectangle.cpp
+
+1405028146 e:\dev\game\geometry\include\cuboid.h
+	"../src/Cuboid.cpp"
+
+1404938338 e:\dev\game\geometry\src\cuboid.cpp
+
+1405028146 e:\dev\game\geometry\include\circle.h
+	"../src/Circle.cpp"
+
+1404938338 e:\dev\game\geometry\src\circle.cpp
+
+1405028146 e:\dev\game\geometry\include\cylinder.h
+	"../src/Cylinder.cpp"
+
+1404938338 e:\dev\game\geometry\src\cylinder.cpp
+
+1405028146 e:\dev\game\geometry\include\linesegment.h
+	"../src/LineSegment.cpp"
+
+1404938338 e:\dev\game\geometry\src\linesegment.cpp
+
+1405028146 e:\dev\game\geometry\include\triangle.h
+	"../src/Triangle.cpp"
+
+1404938338 e:\dev\game\geometry\src\triangle.cpp
+
+1405028146 e:\dev\game\geometry\include\polygon.h
+	"../src/Polygon.cpp"
+
+1404938338 e:\dev\game\geometry\src\polygon.cpp
+
+1405028146 e:\dev\game\geometry\include\mesh.h
+	"../src/Mesh.cpp"
+
+1404938338 e:\dev\game\geometry\src\mesh.cpp
+
+1405359638 e:\dev\game\include\root.h
+
+1405168896 source:e:\dev\game\src\array2.cpp
+	"Array2.h"
+
+1405267246 e:\dev\game\include\array2.h
+	<iostream>
+	<vector>
+	<utility>
+
+1405008566 source:e:\dev\game\src\assets.cpp
+	"Assets.h"
+
+1405008566 e:\dev\game\include\assets.h
+	<vector>
+	<string>
+	<windows.h>
+
+1404718952 source:e:\dev\game\src\configuration.cpp
+	"Configuration.h"
+
+1404718952 e:\dev\game\include\configuration.h
+	<lua.h>
+	<string>
+	"../luatables/luatables.h"
+
+1405370164 source:e:\dev\game\src\spritesheetdatabase.cpp
+	<iostream>
+	<vector>
+	<string>
+	"SpritesheetDatabase.h"
+	"Root.h"
+	"Assets.h"
+
+1405014308 e:\dev\game\include\spritesheetdatabase.h
+	<vector>
+	<map>
+	<string>
+	<allegro5/allegro.h>
+
+1405428382 source:e:\dev\game\src\tiles\basicsolidtile.cpp
+	"BasicSolidTile.h"
+
+1405333000 e:\dev\game\include\tiles\basicsolidtile.h
+	<vector>
+	<allegro5/allegro_primitives.h>
+	"Tile.h"
+	"StaticTileData.h"
+
+1405422506 e:\dev\game\include\tiles\tile.h
+	<string>
+	<vector>
+	<allegro5/allegro_primitives.h>
+	"../../geometry/Geometry.h"
+	"World.h"
+	"../Configuration.h"
+	"StaticTileData.h"
+
+1405422506 e:\dev\game\include\world.h
+	<vector>
+	"../geometry/Geometry.h"
+	"Array2.h"
+
+1405422506 e:\dev\game\include\tiles\statictiledata.h
+	<string>
+	"../Configuration.h"
+
+1405422506 source:e:\dev\game\src\tiles\statictiledata.cpp
+	<string>
+	"StaticTileData.h"
+	"Root.h"
+	"SpritesheetDatabase.h"
+
+1405422524 source:e:\dev\game\src\tiles\tile.cpp
+	"Tile.h"
+
+1405358906 source:e:\dev\game\src\util.cpp
+	"Util.h"
+
+1405358906 e:\dev\game\include\util.h
+
+1405422942 source:e:\dev\game\src\world.cpp
+	<iostream>
+	<cstdlib>
+	<algorithm>
+	"Util.h"
+	"World.h"
+	"Root.h"
+	"TileDatabase.h"
+	"SpritesheetDatabase.h"
+	"Tile.h"
+
+1405359220 e:\dev\game\include\tiledatabase.h
+	<vector>
+	<map>
+	"../luatables/luatables.h"
+
+1404718952 source:c:\win\programy\codeblocks\game\luatables\luatables.cc
+	"luatables.h"
+	<assert.h>
+	<iostream>
+	<cstdlib>
+	<vector>
+	<sstream>
+	<cmath>
+	<lua.h>
+	<lauxlib.h>
+	<lualib.h>
+	<stdio.h>
+	<direct.h>
+	<unistd.h>
+
+1404718952 c:\win\programy\codeblocks\game\luatables\luatables.h
+	<iostream>
+	<assert.h>
+	<cstdlib>
+	<string>
+	<vector>
+
+1405029452 source:c:\win\programy\codeblocks\game\main.cpp
+	<iostream>
+	"geometry/Geometry.h"
+	"include/Root.h"
+
+1405029274 c:\win\programy\codeblocks\game\geometry\geometry.h
+	<vector>
+	<cmath>
+	<utility>
+	<functional>
+	"include/Shape.h"
+	"include/Shape2.h"
+	"include/Vec2.h"
+	"include/Vec3.h"
+	"include/Rectangle.h"
+	"include/Cuboid.h"
+	"include/Circle.h"
+	"include/Cylinder.h"
+	"include/LineSegment.h"
+	"include/Triangle.h"
+	"include/Polygon.h"
+	"include/Mesh.h"
+	"include/Intersections.h"
+	"src/Shape.cpp"
+	"src/Shape2.cpp"
+	"src/Vec2.cpp"
+	"src/Vec3.cpp"
+	"src/Rectangle.cpp"
+	"src/Cuboid.cpp"
+	"src/Circle.cpp"
+	"src/Cylinder.cpp"
+	"src/LineSegment.cpp"
+	"src/Triangle.cpp"
+	"src/Polygon.cpp"
+	"src/Mesh.cpp"
+	"src/Intersections.cpp"
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\shape.h
+	"../src/Shape.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\shape.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\shape2.h
+	"../src/Shape2.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\shape2.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\vec2.h
+	"../src/Vec2.cpp"
+
+1405028260 c:\win\programy\codeblocks\game\geometry\src\vec2.cpp
+	"../include/Intersections.h"
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\intersections.h
+	"../src/Intersections.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\intersections.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\vec3.h
+	"../src/Vec3.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\vec3.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\rectangle.h
+	"../src/Rectangle.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\rectangle.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\cuboid.h
+	"../src/Cuboid.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\cuboid.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\circle.h
+	"../src/Circle.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\circle.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\cylinder.h
+	"../src/Cylinder.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\cylinder.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\linesegment.h
+	"../src/LineSegment.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\linesegment.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\triangle.h
+	"../src/Triangle.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\triangle.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\polygon.h
+	"../src/Polygon.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\polygon.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\mesh.h
+	"../src/Mesh.cpp"
+
+1404938338 c:\win\programy\codeblocks\game\geometry\src\mesh.cpp
+
+1405799807 c:\win\programy\codeblocks\game\include\root.h
+
+1405168896 source:c:\win\programy\codeblocks\game\src\array2.cpp
+	"Array2.h"
+
+1405267246 c:\win\programy\codeblocks\game\include\array2.h
+	<iostream>
+	<vector>
+	<utility>
+
+1405008566 source:c:\win\programy\codeblocks\game\src\assets.cpp
+	"Assets.h"
+
+1405008566 c:\win\programy\codeblocks\game\include\assets.h
+	<vector>
+	<string>
+	<windows.h>
+
+1404718952 source:c:\win\programy\codeblocks\game\src\configuration.cpp
+	"Configuration.h"
+
+1404718952 c:\win\programy\codeblocks\game\include\configuration.h
+	<lua.h>
+	<string>
+	"../luatables/luatables.h"
+
+1405862017 source:c:\win\programy\codeblocks\game\src\root.cpp
+	<iostream>
+	<vector>
+	<string>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_image.h>
+	<allegro5/allegro_ttf.h>
+	"Root.h"
+	"Configuration.h"
+	"Assets.h"
+	"SpritesheetDatabase.h"
+	"TileDatabase.h"
+	"World.h"
+	"BasicSolidTile.h"
+
+1405014308 c:\win\programy\codeblocks\game\include\spritesheetdatabase.h
+	<vector>
+	<map>
+	<string>
+	<allegro5/allegro.h>
+
+1405359220 c:\win\programy\codeblocks\game\include\tiledatabase.h
+	<vector>
+	<map>
+	"../luatables/luatables.h"
+
+1405871904 c:\win\programy\codeblocks\game\include\world.h
+	<vector>
+	"../geometry/Geometry.h"
+	"Util.h"
+	"Array2.h"
+	<allegro5/allegro_primitives.h>
+
+1405333000 c:\win\programy\codeblocks\game\include\tiles\basicsolidtile.h
+	<vector>
+	<allegro5/allegro_primitives.h>
+	"Tile.h"
+	"StaticTileData.h"
+
+1405422506 c:\win\programy\codeblocks\game\include\tiles\tile.h
+	<string>
+	<vector>
+	<allegro5/allegro_primitives.h>
+	"../../geometry/Geometry.h"
+	"World.h"
+	"../Configuration.h"
+	"StaticTileData.h"
+
+1405422506 c:\win\programy\codeblocks\game\include\tiles\statictiledata.h
+	<string>
+	"../Configuration.h"
+
+1405370164 source:c:\win\programy\codeblocks\game\src\spritesheetdatabase.cpp
+	<iostream>
+	<vector>
+	<string>
+	"SpritesheetDatabase.h"
+	"Root.h"
+	"Assets.h"
+
+1405848843 source:c:\win\programy\codeblocks\game\src\tiles\basicsolidtile.cpp
+	"BasicSolidTile.h"
+
+1405422506 source:c:\win\programy\codeblocks\game\src\tiles\statictiledata.cpp
+	<string>
+	"StaticTileData.h"
+	"Root.h"
+	"SpritesheetDatabase.h"
+
+1405422524 source:c:\win\programy\codeblocks\game\src\tiles\tile.cpp
+	"Tile.h"
+
+1405358906 source:c:\win\programy\codeblocks\game\src\util.cpp
+	"Util.h"
+
+1405848834 c:\win\programy\codeblocks\game\include\util.h
+	<allegro5/allegro5.h>
+	"../geometry/Geometry.h"
+
+1405863371 source:c:\win\programy\codeblocks\game\src\world.cpp
+	<iostream>
+	<cstdlib>
+	<algorithm>
+	"Util.h"
+	"World.h"
+	"Root.h"
+	"TileDatabase.h"
+	"SpritesheetDatabase.h"
+	"Tile.h"
+
+1405774375 source:c:\win\programy\codeblocks\game\src\tiledatabase.cpp
+	"TileDatabase.h"
+	"Root.h"
+	"Assets.h"
+	"Tile.h"
+

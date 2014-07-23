@@ -3,7 +3,9 @@
 
 #include <vector>
 #include "../geometry/Geometry.h"
+#include "Util.h"
 #include "Array2.h"
+#include <allegro5/allegro_primitives.h>
 
 using namespace Geo;
 class Tile;
@@ -25,6 +27,9 @@ public:
     bool placeTile(Tile* tile, int x, int y);
 
     void draw();
+    void drawMissingForegroundTiles();
+    void drawForegroundTileBuffer();
+    void drawFromLayerToScreen(ALLEGRO_BITMAP* layer);
     void update();
     void doRandomTileUpdate();
     void doConstantTileUpdate();
@@ -34,13 +39,38 @@ public:
     Vec2F camera() const;
 
     void moveCamera(const Vec2F& diff);
+    float distance(const Vec2F& a, const Vec2F& b); /* a.x and b.x must be in range <0, m_width> */
+    Vec2F way(const Vec2F& from, const Vec2F& to); /* from.x and to.x must be in range <0, m_width> */
 protected:
 private:
-    int m_width;
+
+    struct DrawableTile
+    {
+        Tile* tile;
+        int spritesheetId;
+        int x;
+        int y;
+    };
+
+    struct DrawableTileBorder
+    {
+        Tile* tile;
+        int spritesheetId;
+        int x;
+        int y;
+        int destX;
+        int destY;
+    };
+    ALLEGRO_BITMAP* m_forgroundTileLayer;
+    Util::BitmapShifter* m_bitmapShifter;
+    int m_width; //this is world width in tiles. To get world width in pixels this value needs to be multiplied by 16
     int m_height;
     Array2<Tile*> m_tiles;
 
     Vec2F m_camera;
+    Vec2F m_cameraAtLastRedraw;
+
+    std::vector<DrawableTile> m_foregroundTileBuffer; //TODO: drawing functions (currently done only in drawMissingTiles) must put drawables to proper list and then they have to be drawn in main drawing function
 };
 
 #endif // WORLD_H

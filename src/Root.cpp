@@ -26,6 +26,9 @@ Root::~Root()
     delete m_tileDatabase;
     delete m_spritesheetDatabase;
     delete m_assets;
+
+    al_destroy_timer(m_drawTimer);
+    al_destroy_timer(m_tickTimer);
     //deiniting allegro stuff
 }
 
@@ -47,7 +50,7 @@ void Root::start()
 
     m_windowWidth = 1024;
     m_windowHeight = 768;
-    al_create_display(m_windowWidth, m_windowHeight);
+    m_display = al_create_display(m_windowWidth, m_windowHeight);
     m_drawTimer = al_create_timer(1.0 / FPS);
     m_tickTimer = al_create_timer(1.0 / TPS);
     m_fpsLimit = false;
@@ -82,7 +85,7 @@ void Root::start()
 
         if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_ESCAPE))
         {
-            break;
+            return;
         }
         if(nowTicks != lastTicks && !(nowTicks % TPS))
         {
@@ -99,24 +102,44 @@ void Root::start()
             ++m_ticks;
             ++ticksThisSecond;
 
+/* low camera speed */
 
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_LEFT))
             {
-                m_world->moveCamera(Vec2F(-2.5, 0));
+                m_world->moveCamera(Vec2F(-2.3, 0));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_RIGHT))
             {
-                m_world->moveCamera(Vec2F(2.5, 0));
+                m_world->moveCamera(Vec2F(2.3, 0));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_UP))
             {
-                m_world->moveCamera(Vec2F(0, -2.5));
+                m_world->moveCamera(Vec2F(0, -2.3));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_DOWN))
             {
-                m_world->moveCamera(Vec2F(0, 2.5));
+                m_world->moveCamera(Vec2F(0, 2.3));
             }
 
+/* high camera speed */
+/*
+            if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_LEFT))
+            {
+                m_world->moveCamera(Vec2F(-20.3, 0));
+            }
+            if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_RIGHT))
+            {
+                m_world->moveCamera(Vec2F(20.3, 0));
+            }
+            if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_UP))
+            {
+                m_world->moveCamera(Vec2F(0, -20.3));
+            }
+            if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_DOWN))
+            {
+                m_world->moveCamera(Vec2F(0, 20.3));
+            }
+*/
             m_world->update();
         }
         if(nowDrawTicks != lastFPSTicks || !m_fpsLimit)
@@ -161,4 +184,9 @@ int Root::windowWidth() const
 int Root::windowHeight() const
 {
     return m_windowHeight;
+}
+
+ALLEGRO_DISPLAY* Root::display() const
+{
+    return m_display;
 }
