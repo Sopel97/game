@@ -12,7 +12,7 @@ public:
     Triangle(const Triangle<T>& t);
     Triangle(Triangle<T>&& t);
     Triangle<T>& operator =(const Triangle<T>& t);
-    Triangle<T>& operator =(Triangle<T>&& t);
+    Triangle<T>& operator =(Triangle<T> && t);
 
     Triangle<T> operator +(const Vec2<T>& p) const;
     Triangle<T>& operator +=(const Vec2<T>& p);

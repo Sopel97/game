@@ -21,7 +21,7 @@ Polygon<T>::Polygon(std::vector<Vec2<T>>&& v)
 template <class T>
 Polygon<T>::Polygon(Vec2<T>* v, size_t count)
 {
-    vertices.assign(v, v+count);
+    vertices.assign(v, v + count);
 }
 template <class T>
 Polygon<T>::Polygon(const Polygon<T>& p)
@@ -144,12 +144,12 @@ template <class T>
 Mesh<LineSegment<T>> Polygon<T>::outline() const
 {
     Mesh<LineSegment<T>> outline;
-    int vertexCount = vertices.size()-1;
-    for(int i = 0; i<vertexCount;++i)
+    int vertexCount = vertices.size() - 1;
+    for(int i = 0; i < vertexCount; ++i)
     {
-        outline.add(LineSegment<T>({vertices[i]},{vertices[i+1]}));
+        outline.add(LineSegment<T>({vertices[i]}, {vertices[i + 1]}));
     }
-    outline.add(LineSegment<T>(vertices[vertexCount],vertices[0]));
+    outline.add(LineSegment<T>(vertices[vertexCount], vertices[0]));
     return outline;
 }
 

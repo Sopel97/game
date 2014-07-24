@@ -15,7 +15,7 @@ public:
     Mesh(Mesh<T>&& m);
 
     Mesh<T>& operator=(const Mesh<T>& m);
-    Mesh<T>& operator=(Mesh<T>&& m);
+    Mesh<T>& operator=(Mesh<T> && m);
 
     template <class VectorType>
     Mesh<T> operator+(const VectorType& v) const;

@@ -20,19 +20,19 @@ T CellNoise<T>::rawNoise1(const T x)
 
     for(int xx = -1; xx <= 1; ++xx)
     {
-            int currentSegmentX = segmentX + xx;
+        int currentSegmentX = segmentX + xx;
 
-            T lastRandom = lcgRandom(hash((unsigned int)(currentSegmentX), seed, seed*seed));
+        T lastRandom = lcgRandom(hash((unsigned int)(currentSegmentX), seed, seed * seed));
 
-            unsigned int numberFeaturePoints = probLookup(lastRandom);
-            for (unsigned int i = 0; i < numberFeaturePoints; ++i)
-            {
-                lastRandom = lcgRandom(lastRandom);
-                T xxx = (T)lastRandom / (T)0xFFFFFFFFu + (T)currentSegmentX;
+        unsigned int numberFeaturePoints = probLookup(lastRandom);
+        for (unsigned int i = 0; i < numberFeaturePoints; ++i)
+        {
+            lastRandom = lcgRandom(lastRandom);
+            T xxx = (T)lastRandom / (T)0xFFFFFFFFu + (T)currentSegmentX;
 
-                T distance = fabs(x-xxx); //since distance in 1 dimension is always this
-                distances.push_back(distance);
-            }
+            T distance = fabs(x - xxx); //since distance in 1 dimension is always this
+            distances.push_back(distance);
+        }
     }
     std::sort(distances.begin(), distances.end());
     T result = computeResult(distances);
@@ -92,30 +92,30 @@ T CellNoise<T>::rawNoise3(const T x, const T y, const T z)
     {
         for(int yy = -1; yy <= 1; ++yy)
         {
-        for(int zz = -1; zz <= 1; ++zz)
-        {
-            int currentCubeX = cubeX + xx;
-            int currentCubeY = cubeY + yy;
-            int currentCubeZ = cubeZ + zz;
-
-            T lastRandom = lcgRandom(hash((unsigned int)(currentCubeX), (unsigned int)(currentCubeY), (unsigned int) (currentCubeZ+seed)));
-
-            unsigned int numberFeaturePoints = probLookup(lastRandom);
-            for (unsigned int i = 0; i < numberFeaturePoints; ++i)
+            for(int zz = -1; zz <= 1; ++zz)
             {
-                lastRandom = lcgRandom(lastRandom);
-                T xxx = (T)lastRandom / (T)0xFFFFFFFFu + (T)currentCubeX;
+                int currentCubeX = cubeX + xx;
+                int currentCubeY = cubeY + yy;
+                int currentCubeZ = cubeZ + zz;
 
-                lastRandom = lcgRandom(lastRandom);
-                T yyy = (T)lastRandom / (T)0xFFFFFFFFu + (T)currentCubeY;
+                T lastRandom = lcgRandom(hash((unsigned int)(currentCubeX), (unsigned int)(currentCubeY), (unsigned int) (currentCubeZ + seed)));
 
-                lastRandom = lcgRandom(lastRandom);
-                T zzz = (T)lastRandom / (T)0xFFFFFFFFu + (T)currentCubeZ;
+                unsigned int numberFeaturePoints = probLookup(lastRandom);
+                for (unsigned int i = 0; i < numberFeaturePoints; ++i)
+                {
+                    lastRandom = lcgRandom(lastRandom);
+                    T xxx = (T)lastRandom / (T)0xFFFFFFFFu + (T)currentCubeX;
 
-                T distance = distance3(x, y, z, xxx, yyy, zzz);
-                distances.push_back(distance);
+                    lastRandom = lcgRandom(lastRandom);
+                    T yyy = (T)lastRandom / (T)0xFFFFFFFFu + (T)currentCubeY;
+
+                    lastRandom = lcgRandom(lastRandom);
+                    T zzz = (T)lastRandom / (T)0xFFFFFFFFu + (T)currentCubeZ;
+
+                    T distance = distance3(x, y, z, xxx, yyy, zzz);
+                    distances.push_back(distance);
+                }
             }
-        }
         }
     }
     std::sort(distances.begin(), distances.end());

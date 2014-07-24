@@ -39,7 +39,7 @@ Vec2<T>& Vec2<T>::operator=(const Vec2<T>& v1)
     return *this;
 }
 template <class T>
-Vec2<T>& Vec2<T>::operator=(Vec2<T>&& v1)
+Vec2<T>& Vec2<T>::operator=(Vec2<T> && v1)
 {
     x = v1.x;
     y = v1.y;

@@ -21,15 +21,15 @@ public:
     template <class T>
     static inline int mod(const T& value, const T& div)
     {
-        int r = value%div;
-        if(r<0) r+=div;
+        int r = value % div;
+        if(r < 0) r += div;
         return r;
     }
     template <class T>
     static inline float mod(const float value, const T& div)
     {
         float r = fmod(value, div);
-        if(r<0) r+=div;
+        if(r < 0) r += div;
         return r;
     }
 
@@ -52,9 +52,10 @@ public:
         void shift(ALLEGRO_BITMAP* bitmap, int x, int y, ALLEGRO_COLOR color)
         {
             al_set_target_bitmap(m_swapBuffer);
-            al_clear_to_color(color); //seems to not use alpha
 
             al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO);
+
+            al_clear_to_color(color); //seems to not use alpha
 
             al_draw_bitmap(bitmap, x, y, 0);
             al_set_target_bitmap(bitmap);
@@ -72,8 +73,8 @@ public:
 
 protected:
 private:
-    Util(){}
-    virtual ~Util(){}
+    Util() {}
+    virtual ~Util() {}
 
 };
 

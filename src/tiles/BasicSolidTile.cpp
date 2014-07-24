@@ -22,7 +22,7 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
 
     Array2<Tile*> neighbours;
     Array2<int> precedences(3, 3);
-    neighbours = world->getTiles2(x-1, y-1, 3, 3);
+    neighbours = world->getTiles2(x - 1, y - 1, 3, 3);
     for(int x = 0; x < 3; ++x)
     {
         for(int y = 0; y < 3; ++y)
@@ -44,7 +44,7 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         textureY = 32.0f;
         unsigned char topLeft = (inner(precedences[0][0]) << 2) | (inner(precedences[1][0]) << 1) | (inner(precedences[0][1]));
         if(topLeft == 4) textureY += 32.0f;
-        else textureY += (topLeft&3) * 8.0f;
+        else textureY += (topLeft & 3) * 8.0f;
 
 
         toDraw.push_back({screenCoords.x       , screenCoords.y       , 0, textureX    , textureY    , color});
@@ -60,7 +60,7 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         textureY = 32.0f;
         unsigned char topRight = (inner(precedences[2][0]) << 2) | (inner(precedences[1][0]) << 1) | (inner(precedences[2][1]));
         if(topRight == 4) textureY += 32.0f;
-        else textureY += (topRight&3) * 8.0f;
+        else textureY += (topRight & 3) * 8.0f;
 
         toDraw.push_back({screenCoords.x       , screenCoords.y       , 0, textureX    , textureY    , color});
         toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
@@ -76,7 +76,7 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         textureY = 32.0f;
         unsigned char bottomLeft = (inner(precedences[0][2]) << 2) | (inner(precedences[1][2]) << 1) | (inner(precedences[0][1]));
         if(bottomLeft == 4) textureY += 32.0f;
-        else textureY += (bottomLeft&3) * 8.0f;
+        else textureY += (bottomLeft & 3) * 8.0f;
 
         toDraw.push_back({screenCoords.x       , screenCoords.y       , 0, textureX    , textureY    , color});
         toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
@@ -91,7 +91,7 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         textureY = 32.0f;
         unsigned char bottomRight = (inner(precedences[2][2]) << 2) | (inner(precedences[1][2]) << 1) | (inner(precedences[2][1]));
         if(bottomRight == 4) textureY += 32.0f;
-        else textureY += (bottomRight&3) * 8.0f;
+        else textureY += (bottomRight & 3) * 8.0f;
 
         toDraw.push_back({screenCoords.x       , screenCoords.y       , 0, textureX    , textureY    , color});
         toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});

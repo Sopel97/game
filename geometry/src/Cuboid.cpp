@@ -13,7 +13,7 @@ template <class T>
 Cuboid<T>::Cuboid(const Vec3<T>& p1, const T width, const T height, const T depth)
 {
     topLeft = p1;
-    bottomRight = p1+Vec3<T>(width, height, depth);
+    bottomRight = p1 + Vec3<T>(width, height, depth);
 }
 template <class T>
 Cuboid<T>::Cuboid(const Cuboid<T>& c)
@@ -71,17 +71,17 @@ Cuboid<T>& Cuboid<T>::operator -=(const Vec3<T>& v)
 template <class T>
 T Cuboid<T>::width() const
 {
-    return bottomRight.x-topLeft.x;
+    return bottomRight.x - topLeft.x;
 }
 template <class T>
 T Cuboid<T>::height() const
 {
-    return bottomRight.y-topLeft.y;
+    return bottomRight.y - topLeft.y;
 }
 template <class T>
 T Cuboid<T>::depth() const
 {
-    return bottomRight.z-topLeft.z;
+    return bottomRight.z - topLeft.z;
 }
 template <class T>
 void Cuboid<T>::transform(std::function<void(Cuboid<T>&)>& func)

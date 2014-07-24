@@ -12,7 +12,7 @@ public:
     Cuboid(const Cuboid<T>& c);
     Cuboid(Cuboid<T>&& c);
     Cuboid<T>& operator =(const Cuboid<T>& c);
-    Cuboid<T>& operator =(Cuboid<T>&& c);
+    Cuboid<T>& operator =(Cuboid<T> && c);
 
 
     Cuboid<T> operator +(const Vec3<T>& v) const;

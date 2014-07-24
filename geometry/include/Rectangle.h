@@ -12,7 +12,7 @@ public:
     Rectangle(const Rectangle<T>& r);
     Rectangle(Rectangle<T>&& r);
     Rectangle<T>& operator =(const Rectangle<T>& r);
-    Rectangle<T>& operator =(Rectangle<T>&& r);
+    Rectangle<T>& operator =(Rectangle<T> && r);
 
 
     Rectangle<T> operator +(const Vec2<T>& v) const;

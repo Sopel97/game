@@ -27,8 +27,11 @@ Root::~Root()
     delete m_spritesheetDatabase;
     delete m_assets;
 
-    al_destroy_timer(m_drawTimer);
-    al_destroy_timer(m_tickTimer);
+    if(al_is_system_installed()) //allegro deinitializes itself before global destructors are called. Without this check allegro crashes.
+    {
+        al_destroy_timer(m_drawTimer);
+        al_destroy_timer(m_tickTimer);
+    }
     //deiniting allegro stuff
 }
 

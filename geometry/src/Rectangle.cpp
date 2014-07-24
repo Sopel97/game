@@ -14,7 +14,7 @@ template <class T>
 Rectangle<T>::Rectangle(const Vec2<T>& p1, const T width, const T height)
 {
     topLeft = p1;
-    bottomRight = p1+Vec2<T>(width, height);
+    bottomRight = p1 + Vec2<T>(width, height);
 }
 template <class T>
 Rectangle<T>::Rectangle(const Rectangle<T>& r)
@@ -70,12 +70,12 @@ Rectangle<T>& Rectangle<T>::operator -=(const Vec2<T>& v)
 template <class T>
 T Rectangle<T>::width() const
 {
-    return bottomRight.x-topLeft.x;
+    return bottomRight.x - topLeft.x;
 }
 template <class T>
 T Rectangle<T>::height() const
 {
-    return bottomRight.y-topLeft.y;
+    return bottomRight.y - topLeft.y;
 }
 
 template <class T>
@@ -112,7 +112,8 @@ void Rectangle<T>::transform(std::function<void(Rectangle<T>&)>& func)
 template <class T>
 Mesh<LineSegment<T>> Rectangle<T>::outline() const
 {
-    return Mesh<LineSegment<T>>({
+    return Mesh<LineSegment<T>>(
+    {
         LineSegment<T>(Vec2<T>(topLeft), Vec2<T>(bottomRight.x, topLeft.y)),
         LineSegment<T>(Vec2<T>(topLeft), Vec2<T>(topLeft.x, bottomRight.y)),
         LineSegment<T>(Vec2<T>(bottomRight), Vec2<T>(bottomRight.x, topLeft.y)),

@@ -13,9 +13,12 @@ SpritesheetDatabase::SpritesheetDatabase()
 
 SpritesheetDatabase::~SpritesheetDatabase()
 {
-    for(ALLEGRO_BITMAP* bitmap : m_spritesheets)
+    if(al_is_system_installed()) //allegro deinitializes itself before global destructors are called. Without this check allegro crashes.
     {
-        al_destroy_bitmap(bitmap);
+        for(ALLEGRO_BITMAP* bitmap : m_spritesheets)
+        {
+            al_destroy_bitmap(bitmap);
+        }
     }
 }
 void SpritesheetDatabase::addSpritesheet(const std::string& path)

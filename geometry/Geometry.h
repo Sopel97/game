@@ -64,7 +64,7 @@ T max(const T& a, const T& b)
 }
 inline double clamp(int a, int mi, int ma)
 {
-    return max(min(a,ma),mi);
+    return max(min(a, ma), mi);
 }
 /*   UTILITY END  */
 template <class T> class Shape;

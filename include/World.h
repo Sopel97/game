@@ -25,6 +25,7 @@ public:
 
     void setTile(Tile* tile, int x, int y);  //setting tile doesn't check if it's possible
     bool placeTile(Tile* tile, int x, int y);
+    bool inWorldRange(int x, int y);
 
     void draw();
     void drawMissingForegroundTiles();

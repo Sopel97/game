@@ -21,7 +21,7 @@ Mesh<T>::Mesh(const std::initializer_list<T>& list)
 template <class T>
 Mesh<T>::Mesh(T* e, size_t count)
 {
-    elements.assign(e, e+count);
+    elements.assign(e, e + count);
 }
 template <class T>
 Mesh<T>::Mesh(const Mesh<T>& m)

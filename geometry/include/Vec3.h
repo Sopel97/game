@@ -14,7 +14,7 @@ public:
     Vec3(Vec3<T>&& v);
 
     Vec3<T>& operator=(const Vec3<T>& v1);
-    Vec3<T>& operator=(Vec3<T>&& v1);
+    Vec3<T>& operator=(Vec3<T> && v1);
 
     Vec3<T> operator+(const Vec3<T>& v1) const;
     Vec3<T> operator-(const Vec3<T>& v1) const;

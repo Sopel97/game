@@ -13,7 +13,7 @@ public:
     LineSegment(LineSegment<T>&& s);
 
     LineSegment<T>& operator=(const LineSegment<T>& s);
-    LineSegment<T>& operator=(LineSegment<T>&& s);
+    LineSegment<T>& operator=(LineSegment<T> && s);
 
     LineSegment<T> operator+(const Vec2<T>& v) const;
     LineSegment<T>& operator+=(const Vec2<T>& v);

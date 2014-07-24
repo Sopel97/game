@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1405029451 source:d:\dev\game\main.cpp
+1405029452 source:d:\dev\game\main.cpp
 	<iostream>
 	"geometry/Geometry.h"
 	"include/Root.h"
 
-1405029272 d:\dev\game\geometry\geometry.h
+1406212593 d:\dev\game\geometry\geometry.h
 	<vector>
 	<cmath>
 	<utility>
@@ -36,71 +36,71 @@
 	"src/Mesh.cpp"
 	"src/Intersections.cpp"
 
-1405028144 d:\dev\game\geometry\include\shape.h
+1405028146 d:\dev\game\geometry\include\shape.h
 	"../src/Shape.cpp"
 
-1405028144 d:\dev\game\geometry\include\shape2.h
+1405028146 d:\dev\game\geometry\include\shape2.h
 	"../src/Shape2.cpp"
 
-1405028144 d:\dev\game\geometry\include\vec2.h
+1406212593 d:\dev\game\geometry\include\vec2.h
 	"../src/Vec2.cpp"
 
-1405028144 d:\dev\game\geometry\include\vec3.h
+1406212593 d:\dev\game\geometry\include\vec3.h
 	"../src/Vec3.cpp"
 
-1405028144 d:\dev\game\geometry\include\rectangle.h
+1406212593 d:\dev\game\geometry\include\rectangle.h
 	"../src/Rectangle.cpp"
 
-1405028144 d:\dev\game\geometry\include\cuboid.h
+1406212594 d:\dev\game\geometry\include\cuboid.h
 	"../src/Cuboid.cpp"
 
-1405028144 d:\dev\game\geometry\include\circle.h
+1406212594 d:\dev\game\geometry\include\circle.h
 	"../src/Circle.cpp"
 
-1405028144 d:\dev\game\geometry\include\cylinder.h
+1406212594 d:\dev\game\geometry\include\cylinder.h
 	"../src/Cylinder.cpp"
 
-1405028144 d:\dev\game\geometry\include\linesegment.h
+1406212594 d:\dev\game\geometry\include\linesegment.h
 	"../src/LineSegment.cpp"
 
-1405028144 d:\dev\game\geometry\include\triangle.h
+1406212593 d:\dev\game\geometry\include\triangle.h
 	"../src/Triangle.cpp"
 
-1405028144 d:\dev\game\geometry\include\polygon.h
+1406212593 d:\dev\game\geometry\include\polygon.h
 	"../src/Polygon.cpp"
 
-1405028144 d:\dev\game\geometry\include\mesh.h
+1406212594 d:\dev\game\geometry\include\mesh.h
 	"../src/Mesh.cpp"
 
-1405028144 d:\dev\game\geometry\include\intersections.h
+1405028146 d:\dev\game\geometry\include\intersections.h
 	"../src/Intersections.cpp"
 
-1404938336 d:\dev\game\geometry\src\shape.cpp
+1404938338 d:\dev\game\geometry\src\shape.cpp
 
-1404938336 d:\dev\game\geometry\src\shape2.cpp
+1404938338 d:\dev\game\geometry\src\shape2.cpp
 
-1405028258 d:\dev\game\geometry\src\vec2.cpp
+1406212594 d:\dev\game\geometry\src\vec2.cpp
 	"../include/Intersections.h"
 
-1404938336 d:\dev\game\geometry\src\vec3.cpp
+1404938338 d:\dev\game\geometry\src\vec3.cpp
 
-1404938336 d:\dev\game\geometry\src\rectangle.cpp
+1406212593 d:\dev\game\geometry\src\rectangle.cpp
 
-1404938337 d:\dev\game\geometry\src\cuboid.cpp
+1406212593 d:\dev\game\geometry\src\cuboid.cpp
 
-1404938337 d:\dev\game\geometry\src\circle.cpp
+1404938338 d:\dev\game\geometry\src\circle.cpp
 
-1404938336 d:\dev\game\geometry\src\cylinder.cpp
+1404938338 d:\dev\game\geometry\src\cylinder.cpp
 
-1404938336 d:\dev\game\geometry\src\linesegment.cpp
+1404938338 d:\dev\game\geometry\src\linesegment.cpp
 
-1404938336 d:\dev\game\geometry\src\triangle.cpp
+1406212594 d:\dev\game\geometry\src\triangle.cpp
 
-1404938336 d:\dev\game\geometry\src\polygon.cpp
+1406212593 d:\dev\game\geometry\src\polygon.cpp
 
-1404938336 d:\dev\game\geometry\src\mesh.cpp
+1406212593 d:\dev\game\geometry\src\mesh.cpp
 
-1404938336 d:\dev\game\geometry\src\intersections.cpp
+1404938338 d:\dev\game\geometry\src\intersections.cpp
 
 1404667633 d:\dev\game\geometry\noise.h
 	<cmath>
@@ -138,7 +138,7 @@
 	<direct.h>
 	<unistd.h>
 
-1405359636 d:\dev\game\include\root.h
+1405799808 d:\dev\game\include\root.h
 
 1404718952 d:\dev\game\include\configuration.h
 	<lua.h>
@@ -148,7 +148,7 @@
 1404718952 source:d:\dev\game\src\configuration.cpp
 	"Configuration.h"
 
-1405428744 source:d:\dev\game\src\root.cpp
+1406212486 source:d:\dev\game\src\root.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -164,21 +164,21 @@
 	"World.h"
 	"BasicSolidTile.h"
 
-1405008564 source:d:\dev\game\src\assets.cpp
+1405008566 source:d:\dev\game\src\assets.cpp
 	"Assets.h"
 
-1405008564 d:\dev\game\include\assets.h
+1405008566 d:\dev\game\include\assets.h
 	<vector>
 	<string>
 	<windows.h>
 
-1405014307 d:\dev\game\include\spritesheetdatabase.h
+1405014308 d:\dev\game\include\spritesheetdatabase.h
 	<vector>
 	<map>
 	<string>
 	<allegro5/allegro.h>
 
-1405370162 source:d:\dev\game\src\spritesheetdatabase.cpp
+1406212486 source:d:\dev\game\src\spritesheetdatabase.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -194,20 +194,20 @@
 	<vector>
 	<utility>
 
-1405422504 source:d:\dev\game\src\tiles\statictiledata.cpp
+1405422506 source:d:\dev\game\src\tiles\statictiledata.cpp
 	<string>
 	"StaticTileData.h"
 	"Root.h"
 	"SpritesheetDatabase.h"
 
-1405422522 source:d:\dev\game\src\tiles\tile.cpp
+1405422524 source:d:\dev\game\src\tiles\tile.cpp
 	"Tile.h"
 
-1405422504 d:\dev\game\include\tiles\statictiledata.h
+1405422506 d:\dev\game\include\tiles\statictiledata.h
 	<string>
 	"../Configuration.h"
 
-1405422504 d:\dev\game\include\tiles\tile.h
+1405422506 d:\dev\game\include\tiles\tile.h
 	<string>
 	<vector>
 	<allegro5/allegro_primitives.h>
@@ -231,33 +231,35 @@
 	<direct.h>
 	<unistd.h>
 
-1405359206 source:d:\dev\game\src\tiledatabase.cpp
+1405774376 source:d:\dev\game\src\tiledatabase.cpp
 	"TileDatabase.h"
 	"Root.h"
 	"Assets.h"
 	"Tile.h"
 
-1405359219 d:\dev\game\include\tiledatabase.h
+1405359220 d:\dev\game\include\tiledatabase.h
 	<vector>
 	<map>
 	"../luatables/luatables.h"
 
 1405028983 d:\dev\game\geometry\geometry.cpp
 
-1405168895 source:d:\dev\game\src\array2.cpp
+1405168896 source:d:\dev\game\src\array2.cpp
 	"Array2.h"
 
-1405267244 d:\dev\game\include\array2.h
+1405267246 d:\dev\game\include\array2.h
 	<iostream>
 	<vector>
 	<utility>
 
-1405422504 d:\dev\game\include\world.h
+1406212593 d:\dev\game\include\world.h
 	<vector>
 	"../geometry/Geometry.h"
+	"Util.h"
 	"Array2.h"
+	<allegro5/allegro_primitives.h>
 
-1405422941 source:d:\dev\game\src\world.cpp
+1406211480 source:d:\dev\game\src\world.cpp
 	<iostream>
 	<cstdlib>
 	<algorithm>
@@ -268,19 +270,21 @@
 	"SpritesheetDatabase.h"
 	"Tile.h"
 
-1405428381 source:d:\dev\game\src\tiles\basicsolidtile.cpp
+1405848844 source:d:\dev\game\src\tiles\basicsolidtile.cpp
 	"BasicSolidTile.h"
 
-1405332998 d:\dev\game\include\tiles\basicsolidtile.h
+1405333000 d:\dev\game\include\tiles\basicsolidtile.h
 	<vector>
 	<allegro5/allegro_primitives.h>
 	"Tile.h"
 	"StaticTileData.h"
 
-1405358904 source:d:\dev\game\src\util.cpp
+1405358906 source:d:\dev\game\src\util.cpp
 	"Util.h"
 
-1405358904 d:\dev\game\include\util.h
+1406212593 d:\dev\game\include\util.h
+	<allegro5/allegro5.h>
+	"../geometry/Geometry.h"
 
 1404718952 source:e:\dev\game\luatables\luatables.cc
 	"luatables.h"

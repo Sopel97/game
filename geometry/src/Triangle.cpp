@@ -108,7 +108,8 @@ void Triangle<T>::transform(std::function<void(Triangle<T>&)>& func)
 template <class T>
 Mesh<LineSegment<T>> Triangle<T>::outline() const
 {
-    return Mesh<LineSegment<T>>({
+    return Mesh<LineSegment<T>>(
+    {
         LineSegment<T>(vertices[0], vertices[1]),
         LineSegment<T>(vertices[1], vertices[2]),
         LineSegment<T>(vertices[2], vertices[0])

@@ -13,7 +13,7 @@ public:
     Circle(const Circle<T>& c);
     Circle(Circle<T>&& c);
     Circle& operator =(const Circle<T>& c);
-    Circle& operator =(Circle<T>&& c);
+    Circle& operator =(Circle<T> && c);
 
     Circle<T> operator +(const Vec2<T>& v) const;
     Circle<T>& operator +=(const Vec2<T>& v);

@@ -14,7 +14,7 @@ public:
     Cylinder(const Cylinder<T>& c);
     Cylinder(Cylinder<T>&& c);
     Cylinder<T>& operator =(const Cylinder<T>& c);
-    Cylinder<T>& operator =(Cylinder<T>&& c);
+    Cylinder<T>& operator =(Cylinder<T> && c);
 
     Cylinder<T> operator +(const Vec3<T>& v) const;
     Cylinder<T>& operator +=(const Vec3<T>& v);

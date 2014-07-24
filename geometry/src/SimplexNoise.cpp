@@ -487,9 +487,9 @@ template <class T>
 T SimplexNoise<T>::periodicRangedOctaveNoise1(const T x, const int octaves, const T persistence, const T scale, const T lowerBound, const T higherBound, const T xPeriod) const
 {
     T xx = fmod(x, xPeriod);
-    T r = xPeriod*0.5*INV_PI;
-    T angle = xx/xPeriod*2.*PI;
-    xx = cos(angle)*r;
-    T yy = sin(angle)*r;
+    T r = xPeriod * 0.5 * INV_PI;
+    T angle = xx / xPeriod * 2.*PI;
+    xx = cos(angle) * r;
+    T yy = sin(angle) * r;
     return rangedOctaveNoise2(xx, yy, octaves, persistence, scale, lowerBound, higherBound);
 }

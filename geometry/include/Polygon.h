@@ -15,7 +15,7 @@ public:
     Polygon(Polygon<T>&& p);
 
     Polygon<T>& operator=(const Polygon<T>& p);
-    Polygon<T>& operator=(Polygon<T>&& p);
+    Polygon<T>& operator=(Polygon<T> && p);
 
     Polygon<T> operator+(const Vec2<T>& v) const;
     Polygon<T>& operator+=(const Vec2<T>& v);
