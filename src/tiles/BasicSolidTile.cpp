@@ -19,7 +19,7 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
 {
     Vec2I screenCoords = Util::fastFloor(world->worldToScreen(Vec2F(x * 16, y * 16)));
     ALLEGRO_COLOR color = al_map_rgb(255, 255, 255);
-
+    /* we dont do inner borders anymore
     Array2<Tile*> neighbours;
     Array2<int> precedences(3, 3);
     neighbours = world->getTiles2(x - 1, y - 1, 3, 3);
@@ -39,7 +39,7 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
     auto inner = [&currentTilePrecedence] (int p) -> bool {return (p < 0 && p != currentTilePrecedence); };
     if(hasInnerBorder())
     {
-        /* inner top left */
+        // inner top left
         textureX = 0.0f;
         textureY = 32.0f;
         unsigned char topLeft = (inner(precedences[0][0]) << 2) | (inner(precedences[1][0]) << 1) | (inner(precedences[0][1]));
@@ -54,7 +54,7 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
         toDraw.push_back({screenCoords.x       , screenCoords.y + 8.0f, 0, textureX    , textureY + 8, color});
 
-        /* inner top right */
+        // inner top right
         screenCoords.x += 8.0f;
         textureX = 8.0f;
         textureY = 32.0f;
@@ -69,7 +69,7 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
         toDraw.push_back({screenCoords.x       , screenCoords.y + 8.0f, 0, textureX    , textureY + 8, color});
 
-        /* inner bottom left */
+        // inner bottom left
         screenCoords.x -= 8.0f;
         screenCoords.y += 8.0f;
         textureX = 16.0f;
@@ -85,7 +85,7 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
         toDraw.push_back({screenCoords.x       , screenCoords.y + 8.0f, 0, textureX    , textureY + 8, color});
 
-        /* inner bottom right */
+        // inner bottom right
         screenCoords.x += 8.0f;
         textureX = 24.0f;
         textureY = 32.0f;
@@ -104,7 +104,16 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
     {
         //drawing solid center?
     }
+    */
 
+    float textureX = 0.0f;
+    float textureY = 0.0f;
+    toDraw.push_back({screenCoords.x        , screenCoords.y        , 0, textureX     , textureY     , color});
+    toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, textureX + 16, textureY     , color});
+    toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, textureX     , textureY + 16, color});
+    toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y + 16.0f, 0, textureX + 16, textureY + 16, color});
+    toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, textureX + 16, textureY     , color});
+    toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, textureX     , textureY + 16, color});
     return;
 }
 void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y, int outX, int outY)

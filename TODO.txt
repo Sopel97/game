@@ -5,5 +5,16 @@ Tiles for use in world will be produced (copied) from tile types when needed by 
 Same system will be made for other world objects which will be loaded from assets.
 
 
-!!! MAY BE IMPORTANT !!! drawing tiles may be too slow, think of a way to speed up drawing tiles in the tiles' drawing methods and consider making buffer for map and update it (move when camera moves, redraw/draw tiles which appear due to moving or need redraw) when needed. This should increase performance by a lot, but may be problematic to maintain later.
+clear_to_color seems to not work properly with aplha, try using prim drawing instead
 
+Drawing of foreground tile borders.
+For every appearing tile every unique neighbour draws border on it.
+
+field in StaticTileData for information if tile is solid or not
+
+RandomlySpreadingSolidTile class for tiles that randomly spread (like grass) with customizable range, probablity (in average gameticks/spread), required neighbour (certain tiles, only solids, nonsolids), allowed targets of spread (in similar format as required neighbour)
+
+Background layer with separate tile drawing functions (sprites stay the same) (every tile at background should not have inner border and have outer border only with air)
+darkened at drawing by constant factor
+
+!!! we no longer do inner borders. Only outer borders will be present.

@@ -97,7 +97,7 @@ bool World::placeTile(Tile* tile, int x, int y)
 }
 bool World::inWorldRange(int x, int y)
 {
-    return (y >= 0 && y < m_width);
+    return (y >= 0 && y < m_height);
 }
 void World::drawForegroundTileBuffer()
 {
