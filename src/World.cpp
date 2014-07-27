@@ -29,6 +29,7 @@ World::World(int width, int height) :
     }
     m_camera = Vec2F(154, 154);
     m_forgroundTileLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
+    m_forgroundBorderLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
     m_bitmapShifter = new Util::BitmapShifter(root.display(), root.windowWidth(), root.windowHeight());
     m_cameraAtLastRedraw = m_camera - Vec2F(100000, 100000); //so it draw every tile first time
 }
@@ -106,7 +107,7 @@ void World::drawForegroundTileBuffer()
 
     ALLEGRO_DISPLAY* currentDisplay = root.display();
     al_set_target_bitmap(m_forgroundTileLayer);
-    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO);
+    //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO); //may not be needed
 
     std::sort(m_foregroundTileBuffer.begin(), m_foregroundTileBuffer.end(), [](const DrawableTile & lhs, const DrawableTile & rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
 
@@ -129,7 +130,7 @@ void World::drawForegroundTileBuffer()
     if(toDraw.size()) al_draw_prim(&(toDraw[0]), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 
     al_set_target_bitmap(al_get_backbuffer(currentDisplay));
-    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
+    //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 }
 void World::drawFromLayerToScreen(ALLEGRO_BITMAP* layer)
 {
@@ -169,10 +170,138 @@ void World::drawMissingForegroundTiles()
             // some ties are not necesserily drawn
             Tile* tile = getTile(x, y);
             if(!tile) continue;
-            if(!(x <= firstTileToExcludeX || x >= lastTileToExcludeX || y <= firstTileToExcludeY || y >= lastTileToExcludeY)) continue;
+            if(!(x <= firstTileToExcludeX || x >= lastTileToExcludeX || y <= firstTileToExcludeY || y >= lastTileToExcludeY))
+            {
+                y = lastTileToExcludeY-1;
+                continue;
+            }
             m_foregroundTileBuffer.push_back(DrawableTile {tile, tile->spritesheetId(), x, y});
         }
     }
+}
+void World::drawMissingForgroundBorders()
+{
+    Root& root = Root::instance();
+    SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
+    int windowWidth = root.windowWidth();
+    int windowHeight = root.windowHeight();
+    Vec2F worldCoordsTopLeft = screenToWorld(Vec2F(0.0, 0.0));
+    Vec2F worldCoordsBottomRight = screenToWorld(Vec2F(windowWidth, windowHeight));
+    int firstTileX = Util::fastFloor(worldCoordsTopLeft.x / 16.0f);
+    int firstTileY = Util::fastFloor(worldCoordsTopLeft.y / 16.0f);
+
+    int lastTileX = Util::fastFloor(worldCoordsBottomRight.x / 16.0f);
+    int lastTileY = Util::fastFloor(worldCoordsBottomRight.y / 16.0f);
+
+    int firstTileToExcludeX = Util::fastFloor(m_cameraAtLastRedraw.x / 16.0f);
+    int firstTileToExcludeY = Util::fastFloor(m_cameraAtLastRedraw.y / 16.0f);
+
+    int lastTileToExcludeX = Util::fastFloor((m_cameraAtLastRedraw.x + windowWidth) / 16.0f);
+    int lastTileToExcludeY = Util::fastFloor((m_cameraAtLastRedraw.y + windowHeight) / 16.0f);
+
+    Vec2F cameraDiff = m_cameraAtLastRedraw - m_camera;
+
+    if(cameraDiff.x > -0.9) lastTileToExcludeX += 1000; //we dont need to draw tiles on left side when we go right etc.
+    if(cameraDiff.x < 0.9) firstTileToExcludeX -= 1000;
+    if(cameraDiff.y > -0.9) lastTileToExcludeY += 1000;
+    if(cameraDiff.y < 0.9) firstTileToExcludeY -= 1000;
+
+    for(int x = firstTileX; x <= lastTileX; ++x) //checking every tile is needed if we want to check whether tile wants an updating draw.
+    {
+        for(int y = firstTileY; y <= lastTileY; ++y)
+        {
+            // some ties are not necesserily drawn
+
+            Tile* tile = getTile(x, y);
+
+            if(!(x <= firstTileToExcludeX || x >= lastTileToExcludeX || y <= firstTileToExcludeY || y >= lastTileToExcludeY))
+            {
+                y = lastTileToExcludeY-1;
+                continue;
+            }
+
+            if(y < -1 || y > m_height) continue; //border has to be drawn outside of world too
+
+
+            /* to optimize */
+            std::vector<DrawableTileBorder> neighbours;
+            for(int xx = -1; xx <= 1; ++xx)
+            {
+                for(int yy = -1; yy <= 1; ++ yy)
+                {
+                    if(yy == 0 && xx == 0) continue;
+                    Tile* currentNeighbourTile = getTile(x+xx, y+yy);
+                    if(currentNeighbourTile == nullptr) continue;
+                    neighbours.push_back(DrawableTileBorder{currentNeighbourTile, currentNeighbourTile->spritesheetId(), x+xx, y+yy, tile, x, y});
+                }
+            }
+            /* to here */
+            size_t numberOfEntries = neighbours.size();
+            auto isDuplicatedLater = [&numberOfEntries, &neighbours] (int indexOfCurrent) -> bool
+            {
+                size_t index = indexOfCurrent+1;
+                if(neighbours[indexOfCurrent].tile)
+                {
+                    int id = neighbours[indexOfCurrent].tile->id();
+                    for(;index<numberOfEntries;++index)
+                    {
+                        DrawableTileBorder& entry = neighbours[index];
+                        if(entry.tile)
+                        {
+                            if(entry.tile->id() == id) return true;
+                        }
+                    }
+                }
+                else
+                {
+                    for(;index<numberOfEntries;++index)
+                    {
+                        DrawableTileBorder& entry = neighbours[index];
+                        if(entry.tile == nullptr) return true;
+                    }
+                }
+                return false;
+            };
+
+            for(size_t i = 0; i<numberOfEntries;++i)
+            {
+                if(isDuplicatedLater(i)) continue;
+                m_foregroundBorderBuffer.push_back(neighbours[i]);
+            }
+        }
+    }
+}
+void World::drawForegroundBorderBuffer()
+{
+    Root& root = Root::instance();
+    SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
+
+    ALLEGRO_DISPLAY* currentDisplay = root.display();
+    al_set_target_bitmap(m_forgroundBorderLayer);
+    //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO); //may not be needed
+
+    std::sort(m_foregroundBorderBuffer.begin(), m_foregroundBorderBuffer.end(), [](const DrawableTileBorder & lhs, const DrawableTileBorder & rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
+
+    std::vector<ALLEGRO_VERTEX> toDraw;
+    toDraw.reserve(10000);
+    int lastSpritesheetId = m_foregroundBorderBuffer[0].spritesheetId;
+
+    for(DrawableTileBorder& tile : m_foregroundBorderBuffer)
+    {
+        int currentSpritesheetId = tile.spritesheetId;
+        if(currentSpritesheetId != lastSpritesheetId)
+        {
+            al_draw_prim(&(toDraw[0]), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+            toDraw.clear();
+            toDraw.reserve(10000);
+            lastSpritesheetId = currentSpritesheetId;
+        }
+        tile.tile->drawOuter(this, toDraw, tile.x, tile.y, tile.destX, tile.destY, tile.destTile);
+    }
+    if(toDraw.size()) al_draw_prim(&(toDraw[0]), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+
+    al_set_target_bitmap(al_get_backbuffer(currentDisplay));
+    //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 }
 void World::draw() //in every drawing function coordinates need to be floored, not casted to int
 {
@@ -186,12 +315,20 @@ void World::draw() //in every drawing function coordinates need to be floored, n
     m_foregroundTileBuffer.clear();
     m_foregroundTileBuffer.reserve(10000); //need to be reserved better.
 
+    m_foregroundBorderBuffer.clear();
+    m_foregroundBorderBuffer.reserve(10000); //need to be reserved better.
+
     if(shiftX || shiftY) //we want to draw missing tiles only when it is needed
     {
         /* drawing foreground tiles */
         m_bitmapShifter->shift(m_forgroundTileLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0));
+        m_bitmapShifter->shift(m_forgroundBorderLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0)); //if this is enabled fps drops from 1500 to about 50-200. That's unacceptable.
+
         drawMissingForegroundTiles();
+        drawMissingForgroundBorders();
+
         drawForegroundTileBuffer();
+        drawForegroundBorderBuffer();
 
         m_cameraAtLastRedraw.x -= shiftX;
         m_cameraAtLastRedraw.y -= shiftY;
@@ -200,6 +337,7 @@ void World::draw() //in every drawing function coordinates need to be floored, n
     //TODO: redrawing tiles that request it
 
     drawFromLayerToScreen(m_forgroundTileLayer);
+    drawFromLayerToScreen(m_forgroundBorderLayer);
 
 }
 void World::update()

@@ -30,7 +30,12 @@ public:
     void draw();
     void drawMissingForegroundTiles();
     void drawForegroundTileBuffer();
+
+    void drawMissingForgroundBorders();
+    void drawForegroundBorderBuffer();
+
     void drawFromLayerToScreen(ALLEGRO_BITMAP* layer);
+
     void update();
     void doRandomTileUpdate();
     void doConstantTileUpdate();
@@ -59,10 +64,11 @@ private:
         int spritesheetId;
         int x;
         int y;
+
+        Tile* destTile;
         int destX;
         int destY;
     };
-    ALLEGRO_BITMAP* m_forgroundTileLayer;
     Util::BitmapShifter* m_bitmapShifter;
     int m_width; //this is world width in tiles. To get world width in pixels this value needs to be multiplied by 16
     int m_height;
@@ -71,7 +77,11 @@ private:
     Vec2F m_camera;
     Vec2F m_cameraAtLastRedraw;
 
-    std::vector<DrawableTile> m_foregroundTileBuffer; //TODO: drawing functions (currently done only in drawMissingTiles) must put drawables to proper list and then they have to be drawn in main drawing function
+    ALLEGRO_BITMAP* m_forgroundTileLayer;
+    ALLEGRO_BITMAP* m_forgroundBorderLayer;
+
+    std::vector<DrawableTile> m_foregroundTileBuffer;
+    std::vector<DrawableTileBorder> m_foregroundBorderBuffer;
 };
 
 #endif // WORLD_H

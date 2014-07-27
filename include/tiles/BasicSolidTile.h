@@ -32,7 +32,7 @@ public:
     virtual ~BasicSolidTile();
 
     virtual void drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y);
-    virtual void drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y, int outX, int outY);
+    virtual void drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y, int outX, int outY, Tile* tileOut);
     virtual void update(World* world, int x, int y);
     virtual void randomUpdate(World* world, int x, int y);
     virtual void constantUpdate(World* world, int x, int y);

@@ -27,7 +27,7 @@ public:
     virtual bool hasOuterBorder() const;
 
     virtual void drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y) = 0;
-    virtual void drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y, int outX, int outY) = 0;
+    virtual void drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y, int outX, int outY, Tile* tileOut) = 0;
     virtual void update(World* world, int x, int y) = 0;
     virtual void randomUpdate(World* world, int x, int y) = 0;
     virtual void constantUpdate(World* world, int x, int y) = 0;

@@ -7,7 +7,7 @@ Same system will be made for other world objects which will be loaded from asset
 
 clear_to_color seems to not work properly with aplha, try using prim drawing instead
 
-Drawing of foreground tile borders.
+Drawing of foreground tile borders (drawing base is done, now only setting textures' coords is left)
 For every appearing tile every unique neighbour draws border on it.
 
 field in StaticTileData for information if tile is solid or not
@@ -17,4 +17,7 @@ RandomlySpreadingSolidTile class for tiles that randomly spread (like grass) wit
 Background layer with separate tile drawing functions (sprites stay the same) (every tile at background should not have inner border and have outer border only with air)
 darkened at drawing by constant factor
 
-!!! we no longer do inner borders. Only outer borders will be present.
+!!! we no longer do inner borders. Only outer borders will be present. But we may keep something similar to draw inner parts matching outer border (for example grass would draw a bit outside and a bit inside tile). We could make it really easly if needed.
+
+al_set_target_bitmap seems slow
+better way of shifting bitmap may be needed

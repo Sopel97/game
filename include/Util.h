@@ -55,7 +55,7 @@ public:
 
             al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO);
 
-            al_clear_to_color(color); //seems to not use alpha
+            al_clear_to_color(color);
 
             al_draw_bitmap(bitmap, x, y, 0);
             al_set_target_bitmap(bitmap);

@@ -109,19 +109,19 @@ void Root::start()
 
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_LEFT))
             {
-                m_world->moveCamera(Vec2F(-2.3, 0));
+                m_world->moveCamera(Vec2F(-2.4, 0));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_RIGHT))
             {
-                m_world->moveCamera(Vec2F(2.3, 0));
+                m_world->moveCamera(Vec2F(2.4, 0));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_UP))
             {
-                m_world->moveCamera(Vec2F(0, -2.3));
+                m_world->moveCamera(Vec2F(0, -2.4));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_DOWN))
             {
-                m_world->moveCamera(Vec2F(0, 2.3));
+                m_world->moveCamera(Vec2F(0, 2.4));
             }
 
 /* high camera speed */
