@@ -322,7 +322,7 @@ void World::draw() //in every drawing function coordinates need to be floored, n
     {
         /* drawing foreground tiles */
         m_bitmapShifter->shift(m_forgroundTileLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0));
-        m_bitmapShifter->shift(m_forgroundBorderLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0)); //if this is enabled fps drops from 1500 to about 50-200. That's unacceptable.
+        m_bitmapShifter->shift(m_forgroundBorderLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0)); //when shifting fps drops from 1500 to about 50-200. That's unacceptable.
 
         drawMissingForegroundTiles();
         drawMissingForgroundBorders();

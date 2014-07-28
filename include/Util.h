@@ -1,8 +1,12 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include <iostream>
+#include <vector>
 #include <allegro5/allegro5.h>
+#include <allegro5/allegro_primitives.h>
 #include "../geometry/Geometry.h"
+
 using namespace Geo;
 class Util
 {
@@ -33,7 +37,47 @@ public:
         return r;
     }
 
+    static void outputBitmapFlagsToStream(ALLEGRO_BITMAP* bitmap, std::ostream& stream = std::cout)
+    {
+        int bitmapFlags = al_get_bitmap_flags(bitmap);
+        stream << "ALLEGRO_VIDEO_BITMAP: " << (bool)((bitmapFlags) & ALLEGRO_VIDEO_BITMAP) << '\n';
+        stream << "ALLEGRO_MEMORY_BITMAP: " << (bool)((bitmapFlags) & ALLEGRO_MEMORY_BITMAP) << '\n';
+        stream << "ALLEGRO_KEEP_BITMAP_FORMAT: " << (bool)((bitmapFlags) & ALLEGRO_KEEP_BITMAP_FORMAT) << '\n';
+        stream << "ALLEGRO_FORCE_LOCKING: " << (bool)((bitmapFlags) & ALLEGRO_FORCE_LOCKING) << '\n';
+        stream << "ALLEGRO_NO_PRESERVE_TEXTURE: " << (bool)((bitmapFlags) & ALLEGRO_NO_PRESERVE_TEXTURE) << '\n';
+        stream << "ALLEGRO_ALPHA_TEST: " << (bool)((bitmapFlags) & ALLEGRO_ALPHA_TEST) << '\n';
+        stream << "ALLEGRO_MIN_LINEAR: " << (bool)((bitmapFlags) & ALLEGRO_MIN_LINEAR) << '\n';
+        stream << "ALLEGRO_MAG_LINEAR: " << (bool)((bitmapFlags) & ALLEGRO_MAG_LINEAR) << '\n';
+        stream << "ALLEGRO_MIPMAP: " << (bool)((bitmapFlags) & ALLEGRO_MIPMAP) << '\n';
+        stream << "ALLEGRO_NO_PREMULTIPLIED_ALPHA: " << (bool)((bitmapFlags) & ALLEGRO_NO_PREMULTIPLIED_ALPHA) << '\n';
+    }
 
+    static std::vector<ALLEGRO_VERTEX> constructQuadAsTriangleList(float x1, float y1, float x2, float y2, float u1, float v1, ALLEGRO_COLOR color)
+    {
+        std::vector<ALLEGRO_VERTEX> quad;
+        float u2 = u1+x2-x1;
+        float v2 = v1+y2-y1;
+        quad.reserve(6);
+        quad.push_back({x1, y1, 0, u1, v1, color});
+        quad.push_back({x2, y1, 0, u2, v1, color});
+        quad.push_back({x1, y2, 0, u1, v2, color});
+        quad.push_back({x2, y2, 0, u2, v2, color});
+        quad.push_back({x2, y1, 0, u2, v1, color});
+        quad.push_back({x1, y2, 0, u1, v2, color});
+        return quad;
+    }
+    static std::vector<ALLEGRO_VERTEX> constructQuadAsTriangleFan(float x1, float y1, float x2, float y2, float u1, float v1, ALLEGRO_COLOR color)
+    {
+        std::vector<ALLEGRO_VERTEX> quad;
+        float u2 = u1+x2-x1;
+        float v2 = v1+y2-y1;
+        quad.reserve(4);
+        quad.push_back({x1, y1, 0, u1, v1, color});
+        quad.push_back({x2, y1, 0, u2, v1, color});
+        quad.push_back({x2, y2, 0, u2, v2, color});
+        quad.push_back({x1, y2, 0, u1, v2, color});
+        return quad;
+    }
     class BitmapShifter
     {
     public:
@@ -57,9 +101,21 @@ public:
 
             al_clear_to_color(color);
 
-            al_draw_bitmap(bitmap, x, y, 0);
+            //al_draw_bitmap(bitmap, x, y, 0); //this functions seems to be a problem. Did in other way.
+
+            int bitmapWidth = al_get_bitmap_width(bitmap);
+            int bitmapHeight = al_get_bitmap_height(bitmap);
+            std::vector<ALLEGRO_VERTEX> bitmapQuad = Util::constructQuadAsTriangleFan(x, y, x+bitmapWidth, y+bitmapHeight, 0, 0, al_map_rgb(255,255,255));
+            al_draw_prim(&(bitmapQuad[0]), nullptr, bitmap, 0, 4, ALLEGRO_PRIM_TRIANGLE_FAN);
+
             al_set_target_bitmap(bitmap);
-            al_draw_bitmap(m_swapBuffer, 0, 0, 0);
+            //al_draw_bitmap(m_swapBuffer, 0, 0, 0); //this functions seems to be a problem. Did in other way.
+
+            bitmapWidth = al_get_bitmap_width(m_swapBuffer);
+            bitmapHeight = al_get_bitmap_height(m_swapBuffer);
+            bitmapQuad = Util::constructQuadAsTriangleFan(0, 0, bitmapWidth, bitmapHeight, 0, 0, al_map_rgb(255,255,255));
+            al_draw_prim(&(bitmapQuad[0]), nullptr, m_swapBuffer, 0, 4, ALLEGRO_PRIM_TRIANGLE_FAN);
+
             al_set_target_bitmap(al_get_backbuffer(m_display));
 
             al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);

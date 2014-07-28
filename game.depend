@@ -259,7 +259,7 @@
 	"Array2.h"
 	<allegro5/allegro_primitives.h>
 
-1406488174 source:d:\dev\game\src\world.cpp
+1406564268 source:d:\dev\game\src\world.cpp
 	<iostream>
 	<cstdlib>
 	<algorithm>
@@ -282,8 +282,11 @@
 1405358906 source:d:\dev\game\src\util.cpp
 	"Util.h"
 
-1406476284 d:\dev\game\include\util.h
+1406566000 d:\dev\game\include\util.h
+	<iostream>
+	<vector>
 	<allegro5/allegro5.h>
+	<allegro5/allegro_primitives.h>
 	"../geometry/Geometry.h"
 
 1404718952 source:e:\dev\game\luatables\luatables.cc
