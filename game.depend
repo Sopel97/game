@@ -138,7 +138,7 @@
 	<direct.h>
 	<unistd.h>
 
-1405799808 d:\dev\game\include\root.h
+1406819158 d:\dev\game\include\root.h
 
 1404718952 d:\dev\game\include\configuration.h
 	<lua.h>
@@ -148,7 +148,7 @@
 1404718952 source:d:\dev\game\src\configuration.cpp
 	"Configuration.h"
 
-1406477102 source:d:\dev\game\src\root.cpp
+1406820170 source:d:\dev\game\src\root.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -162,12 +162,13 @@
 	"SpritesheetDatabase.h"
 	"TileDatabase.h"
 	"World.h"
+	"WorldGenerator.h"
 	"BasicSolidTile.h"
 
-1405008566 source:d:\dev\game\src\assets.cpp
+1406819641 source:d:\dev\game\src\assets.cpp
 	"Assets.h"
 
-1405008566 d:\dev\game\include\assets.h
+1406819641 d:\dev\game\include\assets.h
 	<vector>
 	<string>
 	<windows.h>
@@ -252,14 +253,14 @@
 	<vector>
 	<utility>
 
-1406475126 d:\dev\game\include\world.h
+1406819320 d:\dev\game\include\world.h
 	<vector>
 	"../geometry/Geometry.h"
 	"Util.h"
 	"Array2.h"
 	<allegro5/allegro_primitives.h>
 
-1406564268 source:d:\dev\game\src\world.cpp
+1406820648 source:d:\dev\game\src\world.cpp
 	<iostream>
 	<cstdlib>
 	<algorithm>
@@ -269,6 +270,7 @@
 	"TileDatabase.h"
 	"SpritesheetDatabase.h"
 	"Tile.h"
+	"WorldGenerator.h"
 
 1406488258 source:d:\dev\game\src\tiles\basicsolidtile.cpp
 	"BasicSolidTile.h"
@@ -758,4 +760,11 @@
 	"Root.h"
 	"Assets.h"
 	"Tile.h"
+
+1406819289 d:\dev\game\include\worldgenerator.h
+	"Configuration.h"
+
+1406820562 source:d:\dev\game\src\worldgenerator.cpp
+	"WorldGenerator.h"
+	"World.h"
 

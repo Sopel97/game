@@ -9,16 +9,21 @@
 #include "TileDatabase.h"
 #include "SpritesheetDatabase.h"
 #include "Tile.h"
+#include "WorldGenerator.h"
 
-World::World(int width, int height) :
-    m_width(width),
-    m_height(height)
+World::World(WorldGenerator* worldGenerator)
 {
-    m_tiles = Array2<Tile*>(width, height);
+    m_worldGenerator = worldGenerator;
+    m_width = worldGenerator->worldWidth();
+    m_height = worldGenerator->worldHeight();
+    m_tiles = Array2<Tile*>(m_width, m_height);
+
+    m_worldGenerator->generate(this);
+    // this will be in world generator
     Root& root = Root::instance();
-    for(int x = 0; x < width; ++x)
+    for(int x = 0; x < m_width; ++x)
     {
-        for(int y = 0; y < height; ++y)
+        for(int y = 0; y < m_height; ++y)
         {
             Tile* tile = nullptr;
             int r = rand() % 2;
@@ -27,7 +32,8 @@ World::World(int width, int height) :
             m_tiles[x][y] = tile->clone();
         }
     }
-    m_camera = Vec2F(154, 154);
+    //
+    m_camera = Vec2F(77, 77);
     m_forgroundTileLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
     m_forgroundBorderLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
     m_bitmapShifter = new Util::BitmapShifter(root.display(), root.windowWidth(), root.windowHeight());
@@ -342,7 +348,7 @@ void World::draw() //in every drawing function coordinates need to be floored, n
 }
 void World::update()
 {
-    m_tiles[5][4]->update(this, 5, 4);
+    //m_tiles[5][4]->update(this, 5, 4);
 }
 void World::doRandomTileUpdate()
 {
@@ -363,6 +369,10 @@ Vec2F World::worldToScreen(const Vec2F& world)
 Vec2F World::camera() const
 {
     return m_camera;
+}
+WorldGenerator* World::worldGenerator() const
+{
+    return m_worldGenerator;
 }
 void World::moveCamera(const Vec2F& diff)
 {

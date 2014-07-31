@@ -5,6 +5,7 @@ class Assets;
 class SpritesheetDatabase;
 class TileDatabase;
 class World;
+class WorldGenerator;
 
 struct ALLEGRO_DISPLAY;
 struct ALLEGRO_TIMER;
@@ -18,6 +19,8 @@ public:
     Assets* assets() const;
     SpritesheetDatabase* spritesheetDatabase() const;
     TileDatabase* tileDatabase() const;
+
+    WorldGenerator* worldGenerator() const;
 
     World* world() const;
 
@@ -34,6 +37,8 @@ private:
     Assets* m_assets;
     SpritesheetDatabase* m_spritesheetDatabase;
     TileDatabase* m_tileDatabase;
+
+    WorldGenerator* m_worldGenerator;
 
     World* m_world;
 

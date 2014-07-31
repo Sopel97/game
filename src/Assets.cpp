@@ -45,3 +45,21 @@ std::vector<std::string> Assets::tileAssets() const
     FindClose(hFind);
     return files;
 }
+
+std::vector<std::string> Assets::worldGenerators() const
+{
+    std::vector<std::string> files;
+    WIN32_FIND_DATA findFileData;
+    HANDLE hFind;
+    hFind = FindFirstFile("assets\\worldGenerators\\*.gen", &findFileData);
+    if(!(hFind == INVALID_HANDLE_VALUE))
+    {
+        files.push_back(findFileData.cFileName);
+    }
+    while(FindNextFile(hFind, &findFileData))
+    {
+        files.push_back(findFileData.cFileName);
+    }
+    FindClose(hFind);
+    return files;
+}

@@ -13,6 +13,7 @@
 #include "SpritesheetDatabase.h"
 #include "TileDatabase.h"
 #include "World.h"
+#include "WorldGenerator.h"
 
 #include "BasicSolidTile.h"
 
@@ -70,8 +71,19 @@ void Root::start()
     addBaseTilesToDatabase();
     m_tileDatabase->load();
 
+    /* World generator */
+    //temporarly it will be hardcoded world generator path/handle/id
+    std::vector<std::string> generators = m_assets->worldGenerators();
+    if(generators.empty())
+    {
+        std::cout << "No world generators found. Exiting.";
+        return;
+    }
+    Configuration worldGeneratorConfig = Configuration("assets\\worldGenerators\\" + generators[0]);
+    m_worldGenerator = new WorldGenerator(worldGeneratorConfig);
+
     /* Creating world */
-    m_world = new World(512, 128); //size is temporary
+    m_world = new World(m_worldGenerator); //size is temporary
 
     al_start_timer(m_tickTimer);
     al_start_timer(m_drawTimer);
@@ -188,7 +200,10 @@ int Root::windowHeight() const
 {
     return m_windowHeight;
 }
-
+WorldGenerator* Root::worldGenerator() const
+{
+    return m_worldGenerator;
+}
 ALLEGRO_DISPLAY* Root::display() const
 {
     return m_display;

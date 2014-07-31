@@ -7,13 +7,15 @@
 #include "Array2.h"
 #include <allegro5/allegro_primitives.h>
 
+class WorldGenerator;
+
 using namespace Geo;
 class Tile;
 
 class World
 {
 public:
-    World(int width, int height);
+    World(WorldGenerator* worldGenerator);
     virtual ~World();
 
     int width();
@@ -43,6 +45,8 @@ public:
     Vec2F screenToWorld(const Vec2F& screen);
     Vec2F worldToScreen(const Vec2F& world);
     Vec2F camera() const;
+
+    WorldGenerator* worldGenerator() const;
 
     void moveCamera(const Vec2F& diff);
     float distance(const Vec2F& a, const Vec2F& b); /* a.x and b.x must be in range <0, m_width> */
@@ -82,6 +86,8 @@ private:
 
     std::vector<DrawableTile> m_foregroundTileBuffer;
     std::vector<DrawableTileBorder> m_foregroundBorderBuffer;
+
+    WorldGenerator* m_worldGenerator;
 };
 
 #endif // WORLD_H

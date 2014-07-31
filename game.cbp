@@ -161,6 +161,7 @@
 		</Unit>
 		<Unit filename="include/Util.h" />
 		<Unit filename="include/World.h" />
+		<Unit filename="include/WorldGenerator.h" />
 		<Unit filename="include/tiles/BasicSolidTile.h" />
 		<Unit filename="include/tiles/StaticTileData.h">
 			<Option target="Release" />
@@ -178,6 +179,7 @@
 		<Unit filename="src/TileDatabase.cpp" />
 		<Unit filename="src/Util.cpp" />
 		<Unit filename="src/World.cpp" />
+		<Unit filename="src/WorldGenerator.cpp" />
 		<Unit filename="src/tiles/BasicSolidTile.cpp" />
 		<Unit filename="src/tiles/StaticTileData.cpp" />
 		<Unit filename="src/tiles/Tile.cpp" />

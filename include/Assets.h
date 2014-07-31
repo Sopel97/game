@@ -14,6 +14,7 @@ public:
     //methods for getting assets of certain types
     std::vector<std::string> graphicsAssets() const;
     std::vector<std::string> tileAssets() const;
+    std::vector<std::string> worldGenerators() const;
 protected:
 private:
 };
