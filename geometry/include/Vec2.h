@@ -10,6 +10,8 @@ public:
     Vec2();
     Vec2(T _x, T _y);
     Vec2(const std::initializer_list<T>& list);
+    template <class O>
+    Vec2(const Vec2<O>& v);
     Vec2(const Vec2<T>& v);
     Vec2(Vec2<T>&& v);
 

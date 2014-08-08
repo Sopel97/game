@@ -30,6 +30,7 @@ public:
     T rangedOctaveNoise4(const T x, const T y, const T z, const T w, const int octaves, const T persistence, const T scale, const T lowerBound, const T higherBound) const;
 
     T periodicRangedOctaveNoise1(const T x,                                  const int octaves, const T persistence, const T scale, const T lowerBound, const T higherBound, const T xPeriod) const;
+    T periodicSeededRangedOctaveNoise1(const T x, const T seed,              const int octaves, const T persistence, const T scale, const T lowerBound, const T higherBound, const T xPeriod) const; //may be temporary, will use 2d noise for seed
 
 private:
     T dot(const int* g, const T x, const T y) const { return g[0] * x + g[1] * y; }

@@ -12,12 +12,19 @@ StaticTileData::StaticTileData(Configuration& config, int id) :
     std::string spritesheetName = config["spritesheet"].getDefault<std::string>("empty.png");
     m_spritesheetId = root.spritesheetDatabase()->getSpritesheetIdByName(spritesheetName);
     m_name = config["name"].getDefault<std::string>("No Name");
-    m_borderPrecendence = config["borderPrecedence"].getDefault<int>(0);
+    m_outerBorderPrecendence = config["outerBorderPrecedence"].getDefault<int>(0);
+    m_innerBorderType = config["innerBorderType"].getDefault<int>(0);
     m_hasInnerBorder = config["hasInnerBorder"].getDefault<bool>(false);
     m_hasOuterBorder = config["hasOuterBorder"].getDefault<bool>(false);
+    m_textureOffset.x = config["textureOffset"][1].getDefault<float>(0.0f);
+    m_textureOffset.y = config["textureOffset"][2].getDefault<float>(0.0f);
 
 }
 
+StaticTileData::StaticTileData(const StaticTileData& data)
+{
+
+}
 StaticTileData::~StaticTileData()
 {
 
@@ -36,9 +43,9 @@ std::string StaticTileData::name() const
     return m_name;
 }
 
-int StaticTileData::borderPrecedence() const
+int StaticTileData::outerBorderPrecedence() const
 {
-    return m_borderPrecendence;
+    return m_outerBorderPrecendence;
 }
 bool StaticTileData::hasInnerBorder() const
 {
@@ -47,4 +54,13 @@ bool StaticTileData::hasInnerBorder() const
 bool StaticTileData::hasOuterBorder() const
 {
     return m_hasOuterBorder;
+}
+
+int StaticTileData::innerBorderType() const
+{
+    return m_innerBorderType;
+}
+Vec2F StaticTileData::textureOffset() const
+{
+    return m_textureOffset;
 }

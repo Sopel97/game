@@ -4,7 +4,6 @@
 BasicSolidTile::BasicSolidTile(Configuration& config, StaticTileData* staticTileData) :
     Tile(config, staticTileData)
 {
-
 }
 BasicSolidTile::BasicSolidTile(const BasicSolidTile& other)
 {
@@ -17,7 +16,7 @@ BasicSolidTile::~BasicSolidTile()
 
 void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y)
 {
-    Vec2I screenCoords = Util::fastFloor(world->worldToScreen(Vec2F(x * 16, y * 16)));
+    Vec2I screenCoords = Util::fastFloor(world->worldToScreen(Vec2D(x * 16.0, y * 16.0)));
     ALLEGRO_COLOR color = al_map_rgb(255, 255, 255);
     /* we dont do inner borders anymore
     Array2<Tile*> neighbours;
@@ -106,8 +105,9 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
     }
     */
 
-    float textureX = 0.0f;
-    float textureY = 0.0f;
+    Vec2F offset = textureOffset();
+    float textureX = 0.0f + offset.x;
+    float textureY = 0.0f + offset.y;
     toDraw.push_back({screenCoords.x        , screenCoords.y        , 0, textureX     , textureY     , color});
     toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, textureX + 16, textureY     , color});
     toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, textureX     , textureY + 16, color});
@@ -121,10 +121,10 @@ void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
     if(!hasOuterBorder()) return;
     if(tileOut)
     {
-        if(tileOut->borderPrecedence() <= borderPrecedence()) return;
+        if(tileOut->outerBorderPrecedence() <= outerBorderPrecedence()) return;
     }
     int currentTileId = id();
-    Vec2I screenCoords = Util::fastFloor(world->worldToScreen(Vec2F(outX * 16, outY * 16)));
+    Vec2I screenCoords = Util::fastFloor(world->worldToScreen(Vec2D(outX * 16.0, outY * 16.0)));
     ALLEGRO_COLOR color = al_map_rgb(255, 255, 255);
 
     Array2<Tile*> neighbours;
@@ -135,20 +135,20 @@ void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         for(int y = 0; y < 3; ++y)
         {
             Tile* currentTile = neighbours[x][y];
-            if(!currentTile) ids[x][y] = 0; //air has id of 0
+            if(!currentTile) ids[x][y] = 0; //air has highest precedence
             else ids[x][y] = currentTile->id();
         }
     }
     auto shouldDraw = [&currentTileId](int id) -> bool
     {
-        return id == currentTileId;
+        return currentTileId == id;
     };
     float textureX;
     float textureY;
-
+    Vec2F offset = textureOffset();
     unsigned int spriteOffset1 = shouldDraw(ids[0][1]) | (shouldDraw(ids[1][0]) << 1) | (shouldDraw(ids[2][1]) << 2) | (shouldDraw(ids[1][2]) << 3);
-    textureX = spriteOffset1 * 16.0f;
-    textureY = 0.0f;
+    textureX = spriteOffset1 * 16.0f + offset.x;
+    textureY = 0.0f + offset.y;
     if(spriteOffset1)
     {
         toDraw.push_back({screenCoords.x        , screenCoords.y        , 0, textureX     , textureY     , color});
@@ -160,8 +160,8 @@ void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
     }
 
     unsigned int spriteOffset2 = (shouldDraw(ids[0][0]) && !(spriteOffset1&3)) | ((shouldDraw(ids[2][0]) && !(spriteOffset1&6)) << 1) | ((shouldDraw(ids[2][2]) && !(spriteOffset1&12)) << 2) | ((shouldDraw(ids[0][2]) && !(spriteOffset1&9)) << 3) ;
-    textureX = spriteOffset2 * 16.0f;
-    textureY = 16.0f;
+    textureX = spriteOffset2 * 16.0f + offset.x;
+    textureY = 16.0f + offset.y;
     if(spriteOffset2)
     {
         toDraw.push_back({screenCoords.x        , screenCoords.y        , 0, textureX     , textureY     , color});

@@ -2,8 +2,9 @@ dirtTile = {
 
 	baseTileName = "BasicSolidTile",
 	name = "Dirt",
-	spritesheet = "dirt.png",
-	borderPrecedence = 4,
+	spritesheet = "assets\\gfx\\dirt.png",
+	outerBorderPrecedence = 4,
+	innerBorderType = 3,
 	hasInnerBorder = true,
 	hasOuterBorder = true
 }

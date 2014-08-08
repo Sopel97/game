@@ -5,8 +5,9 @@ Tiles for use in world will be produced (copied) from tile types when needed by 
 Same system will be made for other world objects which will be loaded from assets.
 
 
-clear_to_color seems to not work properly with aplha, try using prim drawing instead
+fixed clear_to_color seems to not work properly with aplha, try using prim drawing instead
 
+done 
 Drawing of foreground tile borders (drawing base is done, now only setting textures' coords is left)
 For every appearing tile every unique neighbour draws border on it.
 
@@ -16,8 +17,18 @@ RandomlySpreadingSolidTile class for tiles that randomly spread (like grass) wit
 
 Background layer with separate tile drawing functions (sprites stay the same) (every tile at background should not have inner border and have outer border only with air)
 darkened at drawing by constant factor
+--anotation since foreground drawing changed it may be applied also to background.
 
 !!! we no longer do inner borders. Only outer borders will be present. But we may keep something similar to draw inner parts matching outer border (for example grass would draw a bit outside and a bit inside tile). We could make it really easly if needed.
 
+fixed 
 al_set_target_bitmap seems slow
 better way of shifting bitmap may be needed
+
+!!!important!!! fixed Tiles take too much memory. It seems like every tile takes ~100B while it should 8. THis have to be resolved because map with 32M tiles takes 1.6GB of memory.
+This is not an issue anymore bit cause is not known. Now uses 600MB with 32M tiles (64bit). There may be needed some improvements in the future.
+
+!!!thought!!! Get inner border back to work but in a bit different way. It would have its own inner border type (similar to outer precedence) (so it would be able to make few tile types to be like one when drawing inner border) and it would relay only on this when drawing (similarily to outer borders). This will allow them to be inner parts of outer border (like grass rendered a bit in tile. When outer border is enables along with inner one then inner border will be done same as outer (based on outer rather than inner precedence)) or work alone without outer borders (like pipes, or bricks) (sprite can be adapted to both when needed. It may a border or something else). Big difference from older design is that tile borders have now 2 different types and they can't be used in change based on conditions (before inner borders were indicated by negative precedences and negative precedence was requiring from other tiles to not draw outer border to them. Now that tiles have those two border types separated there will be no problems described in older note.
+
+!!!important!!! fixed
+when moving camera redrawing is not precise. Sometimes it lefts (periodic) inaccurations (offs by one) with positioning. Bitmap shifting may be a reason.

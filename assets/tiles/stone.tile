@@ -2,8 +2,9 @@ stoneTile = {
 
 	baseTileName = "BasicSolidTile",
 	name = "Stone",
-	spritesheet = "stone.png",
-	borderPrecedence = 8,
+	spritesheet = "assets\\gfx\\stone.png",
+	outerBorderPrecedence = 8,
+	innerBorderType = 4,
 	hasInnerBorder = true,
 	hasOuterBorder = true
 

@@ -34,6 +34,8 @@ public:
 protected:
 private:
     Root();
+    Root(const Root& root);
+    Root(Root&& root);
     Assets* m_assets;
     SpritesheetDatabase* m_spritesheetDatabase;
     TileDatabase* m_tileDatabase;

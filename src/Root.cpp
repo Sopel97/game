@@ -52,13 +52,12 @@ void Root::start()
     al_install_keyboard();
     al_install_mouse();
 
-    m_windowWidth = 1024;
-    m_windowHeight = 768;
+    m_windowWidth = 800;
+    m_windowHeight = 600;
     m_display = al_create_display(m_windowWidth, m_windowHeight);
     m_drawTimer = al_create_timer(1.0 / FPS);
     m_tickTimer = al_create_timer(1.0 / TPS);
     m_fpsLimit = false;
-
     /* Initializing assets */
     m_assets = new Assets();
 
@@ -79,11 +78,11 @@ void Root::start()
         std::cout << "No world generators found. Exiting.";
         return;
     }
-    Configuration worldGeneratorConfig = Configuration("assets\\worldGenerators\\" + generators[0]);
+    Configuration worldGeneratorConfig = Configuration(generators[0]);
     m_worldGenerator = new WorldGenerator(worldGeneratorConfig);
 
     /* Creating world */
-    m_world = new World(m_worldGenerator); //size is temporary
+    m_world = new World(m_worldGenerator);
 
     al_start_timer(m_tickTimer);
     al_start_timer(m_drawTimer);
@@ -102,6 +101,7 @@ void Root::start()
         {
             return;
         }
+
         if(nowTicks != lastTicks && !(nowTicks % TPS))
         {
             m_currentFps = framesThisSecond;
@@ -111,6 +111,7 @@ void Root::start()
 
             std::cout << "FPS: " << m_currentFps << "\nTPS: " << m_currentTps << "\n\n";
         }
+
         if(nowTicks != lastTicks)
         {
             lastTicks = nowTicks;
@@ -121,19 +122,19 @@ void Root::start()
 
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_LEFT))
             {
-                m_world->moveCamera(Vec2F(-2.4, 0));
+                m_world->moveCamera(Vec2D(-20.4, 0));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_RIGHT))
             {
-                m_world->moveCamera(Vec2F(2.4, 0));
+                m_world->moveCamera(Vec2D(20.4, 0));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_UP))
             {
-                m_world->moveCamera(Vec2F(0, -2.4));
+                m_world->moveCamera(Vec2D(0, -20.4));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_DOWN))
             {
-                m_world->moveCamera(Vec2F(0, 2.4));
+                m_world->moveCamera(Vec2D(0, 20.4));
             }
 
 /* high camera speed */

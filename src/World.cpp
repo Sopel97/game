@@ -16,12 +16,11 @@ World::World(WorldGenerator* worldGenerator)
     m_worldGenerator = worldGenerator;
     m_width = worldGenerator->worldWidth();
     m_height = worldGenerator->worldHeight();
-    m_tiles = Array2<Tile*>(m_width, m_height);
-
+    m_tiles = Array2<Tile*>(m_width, m_height, nullptr);
     m_worldGenerator->generate(this);
     // this will be in world generator
     Root& root = Root::instance();
-    for(int x = 0; x < m_width; ++x)
+    /*for(int x = 0; x < m_width; ++x)
     {
         for(int y = 0; y < m_height; ++y)
         {
@@ -31,13 +30,13 @@ World::World(WorldGenerator* worldGenerator)
             else if(r == 1) tile = root.tileDatabase()->getTileByName("Stone");
             m_tiles[x][y] = tile->clone();
         }
-    }
+    }*/
     //
-    m_camera = Vec2F(77, 77);
-    m_forgroundTileLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
-    m_forgroundBorderLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
+    m_camera = Vec2D(77.001, 77.001);
+    m_foregroundTileLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
+    m_foregroundBorderLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
     m_bitmapShifter = new Util::BitmapShifter(root.display(), root.windowWidth(), root.windowHeight());
-    m_cameraAtLastRedraw = m_camera - Vec2F(100000, 100000); //so it draw every tile first time
+    m_cameraAtLastRedraw = Vec2I(1000000, -1000000); //so it draw every tile first time
 }
 
 World::~World()
@@ -94,12 +93,13 @@ Array2<Tile*> World::getTiles2(int x, int y, int tilesHorizontal, int tilesVerti
 
 void World::setTile(Tile* tile, int x, int y)
 {
+    if(m_tiles[x][y]) delete m_tiles[x][y];
     m_tiles[x][y] = tile;
 }
 bool World::placeTile(Tile* tile, int x, int y)
 {
-    //for now just setting tile, but needs some checking done
-    setTile(tile, x, y);
+    if(!inWorldRange(x,y)) return false;
+    setTile(tile, Util::mod(x, m_width), y);
     return true;
 }
 bool World::inWorldRange(int x, int y)
@@ -108,11 +108,12 @@ bool World::inWorldRange(int x, int y)
 }
 void World::drawForegroundTileBuffer()
 {
+    if(m_foregroundTileBuffer.empty()) return;
     Root& root = Root::instance();
     SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
 
     ALLEGRO_DISPLAY* currentDisplay = root.display();
-    al_set_target_bitmap(m_forgroundTileLayer);
+    al_set_target_bitmap(m_foregroundTileLayer);
     //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO); //may not be needed
 
     std::sort(m_foregroundTileBuffer.begin(), m_foregroundTileBuffer.end(), [](const DrawableTile & lhs, const DrawableTile & rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
@@ -142,14 +143,14 @@ void World::drawFromLayerToScreen(ALLEGRO_BITMAP* layer)
 {
     al_draw_bitmap(layer, 0, 0, 0);
 }
-void World::drawMissingForegroundTiles()
+void World::listMissingForegroundTilesToBuffer()
 {
     Root& root = Root::instance();
     SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
     int windowWidth = root.windowWidth();
     int windowHeight = root.windowHeight();
-    Vec2F worldCoordsTopLeft = screenToWorld(Vec2F(0.0, 0.0));
-    Vec2F worldCoordsBottomRight = screenToWorld(Vec2F(windowWidth, windowHeight));
+    Vec2D worldCoordsTopLeft = screenToWorld(Vec2D(0.0, 0.0));
+    Vec2D worldCoordsBottomRight = screenToWorld(Vec2D(windowWidth, windowHeight));
     int firstTileX = Util::fastFloor(worldCoordsTopLeft.x / 16.0f);
     int firstTileY = Util::fastFloor(worldCoordsTopLeft.y / 16.0f);
 
@@ -162,12 +163,12 @@ void World::drawMissingForegroundTiles()
     int lastTileToExcludeX = Util::fastFloor((m_cameraAtLastRedraw.x + windowWidth) / 16.0f);
     int lastTileToExcludeY = Util::fastFloor((m_cameraAtLastRedraw.y + windowHeight) / 16.0f);
 
-    Vec2F cameraDiff = m_cameraAtLastRedraw - m_camera;
+    Vec2D cameraDiff = Vec2D(m_cameraAtLastRedraw) - m_camera;
 
-    if(cameraDiff.x > -0.9) lastTileToExcludeX += 1000; //we dont need to draw tiles on left side when we go right etc.
-    if(cameraDiff.x < 0.9) firstTileToExcludeX -= 1000;
-    if(cameraDiff.y > -0.9) lastTileToExcludeY += 1000;
-    if(cameraDiff.y < 0.9) firstTileToExcludeY -= 1000;
+    if(cameraDiff.x > 0.0) lastTileToExcludeX += 1000; //we dont need to draw tiles on left side when we go right etc.
+    if(cameraDiff.x < 0.0) firstTileToExcludeX -= 1000;
+    if(cameraDiff.y > 0.0) lastTileToExcludeY += 1000;
+    if(cameraDiff.y < 0.0) firstTileToExcludeY -= 1000;
 
     for(int x = firstTileX; x <= lastTileX; ++x) //checking every tile is needed if we want to check whether tile wants an updating draw.
     {
@@ -185,14 +186,14 @@ void World::drawMissingForegroundTiles()
         }
     }
 }
-void World::drawMissingForgroundBorders()
+void World::listMissingForegroundBordersToBuffer()
 {
     Root& root = Root::instance();
     SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
     int windowWidth = root.windowWidth();
     int windowHeight = root.windowHeight();
-    Vec2F worldCoordsTopLeft = screenToWorld(Vec2F(0.0, 0.0));
-    Vec2F worldCoordsBottomRight = screenToWorld(Vec2F(windowWidth, windowHeight));
+    Vec2D worldCoordsTopLeft = screenToWorld(Vec2D(0.0, 0.0));
+    Vec2D worldCoordsBottomRight = screenToWorld(Vec2D(windowWidth, windowHeight));
     int firstTileX = Util::fastFloor(worldCoordsTopLeft.x / 16.0f);
     int firstTileY = Util::fastFloor(worldCoordsTopLeft.y / 16.0f);
 
@@ -205,12 +206,12 @@ void World::drawMissingForgroundBorders()
     int lastTileToExcludeX = Util::fastFloor((m_cameraAtLastRedraw.x + windowWidth) / 16.0f);
     int lastTileToExcludeY = Util::fastFloor((m_cameraAtLastRedraw.y + windowHeight) / 16.0f);
 
-    Vec2F cameraDiff = m_cameraAtLastRedraw - m_camera;
+    Vec2D cameraDiff = Vec2D(m_cameraAtLastRedraw) - m_camera;
 
-    if(cameraDiff.x > -0.9) lastTileToExcludeX += 1000; //we dont need to draw tiles on left side when we go right etc.
-    if(cameraDiff.x < 0.9) firstTileToExcludeX -= 1000;
-    if(cameraDiff.y > -0.9) lastTileToExcludeY += 1000;
-    if(cameraDiff.y < 0.9) firstTileToExcludeY -= 1000;
+    if(cameraDiff.x > -0.0) lastTileToExcludeX += 1000; //we dont need to draw tiles on left side when we go right etc.
+    if(cameraDiff.x < 0.0) firstTileToExcludeX -= 1000;
+    if(cameraDiff.y > -0.0) lastTileToExcludeY += 1000;
+    if(cameraDiff.y < 0.0) firstTileToExcludeY -= 1000;
 
     for(int x = firstTileX; x <= lastTileX; ++x) //checking every tile is needed if we want to check whether tile wants an updating draw.
     {
@@ -279,11 +280,12 @@ void World::drawMissingForgroundBorders()
 }
 void World::drawForegroundBorderBuffer()
 {
+    if(m_foregroundBorderBuffer.empty()) return;
     Root& root = Root::instance();
     SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
 
     ALLEGRO_DISPLAY* currentDisplay = root.display();
-    al_set_target_bitmap(m_forgroundBorderLayer);
+    al_set_target_bitmap(m_foregroundBorderLayer);
     //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO); //may not be needed
 
     std::sort(m_foregroundBorderBuffer.begin(), m_foregroundBorderBuffer.end(), [](const DrawableTileBorder & lhs, const DrawableTileBorder & rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
@@ -313,25 +315,26 @@ void World::draw() //in every drawing function coordinates need to be floored, n
 {
     Root& root = Root::instance();
 
-    Vec2F cameraDiff = m_cameraAtLastRedraw - m_camera;
+    Vec2I cam = Util::fastFloor(m_camera);
 
-    int shiftX = Util::fastFloor(cameraDiff.x);
-    int shiftY = Util::fastFloor(cameraDiff.y);
+    int shiftX = m_cameraAtLastRedraw.x - cam.x;
+    int shiftY = m_cameraAtLastRedraw.y - cam.y;
 
-    m_foregroundTileBuffer.clear();
-    m_foregroundTileBuffer.reserve(10000); //need to be reserved better.
-
-    m_foregroundBorderBuffer.clear();
-    m_foregroundBorderBuffer.reserve(10000); //need to be reserved better.
 
     if(shiftX || shiftY) //we want to draw missing tiles only when it is needed
     {
-        /* drawing foreground tiles */
-        m_bitmapShifter->shift(m_forgroundTileLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0));
-        m_bitmapShifter->shift(m_forgroundBorderLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0)); //when shifting fps drops from 1500 to about 50-200. That's unacceptable.
+        m_foregroundTileBuffer.clear(); //this may be needed to be out due to redrawing tiles in other place.
+        m_foregroundTileBuffer.reserve(10000); //need to be reserved better.
 
-        drawMissingForegroundTiles();
-        drawMissingForgroundBorders();
+        m_foregroundBorderBuffer.clear();
+        m_foregroundBorderBuffer.reserve(10000); //need to be reserved better.
+
+        // drawing foreground tiles
+        m_bitmapShifter->shift(m_foregroundTileLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0));
+        m_bitmapShifter->shift(m_foregroundBorderLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0));
+
+        listMissingForegroundTilesToBuffer();
+        listMissingForegroundBordersToBuffer();
 
         drawForegroundTileBuffer();
         drawForegroundBorderBuffer();
@@ -342,9 +345,8 @@ void World::draw() //in every drawing function coordinates need to be floored, n
 
     //TODO: redrawing tiles that request it
 
-    drawFromLayerToScreen(m_forgroundTileLayer);
-    drawFromLayerToScreen(m_forgroundBorderLayer);
-
+    drawFromLayerToScreen(m_foregroundTileLayer);
+    drawFromLayerToScreen(m_foregroundBorderLayer);
 }
 void World::update()
 {
@@ -358,15 +360,15 @@ void World::doConstantTileUpdate()
 {
 
 }
-Vec2F World::screenToWorld(const Vec2F& screen)
+Vec2D World::screenToWorld(const Vec2D& screen)
 {
     return screen + m_camera;
 }
-Vec2F World::worldToScreen(const Vec2F& world)
+Vec2D World::worldToScreen(const Vec2D& world)
 {
     return world - m_camera;
 }
-Vec2F World::camera() const
+Vec2D World::camera() const
 {
     return m_camera;
 }
@@ -374,14 +376,20 @@ WorldGenerator* World::worldGenerator() const
 {
     return m_worldGenerator;
 }
-void World::moveCamera(const Vec2F& diff)
+void World::moveCamera(const Vec2D& diff)
 {
     m_camera += diff;
     float xDiff = m_cameraAtLastRedraw.x - m_camera.x;
-    m_camera.x = Util::mod(m_camera.x, m_width * 16);
-    m_cameraAtLastRedraw.x = m_camera.x + xDiff;
+    float yDiff = m_cameraAtLastRedraw.y - m_camera.y;
+    double rem = m_camera.x - Util::fastFloor(m_camera.x);
+    m_camera.x = Util::mod(Util::fastFloor(m_camera.x), m_width * 16); //integer modulo
+    m_camera.x += rem;
+    if(abs(m_camera.x - (float)(int)m_camera.x) < 0.001) m_camera.x += 0.001; //drwaing seems to be wrong with close to integer camera posisitons. This seems to be helping. But reason is not known.
+    if(abs(m_camera.y - (float)(int)m_camera.y) < 0.001) m_camera.y += 0.001;
+    m_cameraAtLastRedraw.x = Util::fastFloor(m_camera.x + xDiff);
+    m_cameraAtLastRedraw.y = Util::fastFloor(m_camera.y + yDiff);
 }
-float World::distance(const Vec2F& a, const Vec2F& b)
+float World::distance(const Vec2D& a, const Vec2D& b)
 {
     float xDiff = b.x - a.x;
     if(abs(xDiff) > m_width * 16 / 2.0f) //point is closer in the other way
@@ -391,7 +399,7 @@ float World::distance(const Vec2F& a, const Vec2F& b)
     float yDiff = b.y - a.y;
     return sqrt(xDiff * xDiff + yDiff * yDiff);
 }
-Vec2F World::way(const Vec2F& from, const Vec2F& to) //may need fix and there has to be a better name
+Vec2D World::way(const Vec2D& from, const Vec2D& to) //may need fix and there has to be a better name
 {
     float xDiff = to.x - from.x;
     if(abs(xDiff) <= m_width * 16 / 2.0f)
@@ -400,10 +408,10 @@ Vec2F World::way(const Vec2F& from, const Vec2F& to) //may need fix and there ha
     }
     if(to.x < from.x)
     {
-        return to - from + Vec2F(m_width * 16, 0);
+        return to - from + Vec2D(m_width * 16, 0);
     }
     else
     {
-        return to - from - Vec2F(m_width * 16, 0);
+        return to - from - Vec2D(m_width * 16, 0);
     }
 }

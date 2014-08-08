@@ -493,3 +493,14 @@ T SimplexNoise<T>::periodicRangedOctaveNoise1(const T x, const int octaves, cons
     T yy = sin(angle) * r;
     return rangedOctaveNoise2(xx, yy, octaves, persistence, scale, lowerBound, higherBound);
 }
+
+template <class T>
+T SimplexNoise<T>::periodicSeededRangedOctaveNoise1(const T x, const T seed, const int octaves, const T persistence, const T scale, const T lowerBound, const T higherBound, const T xPeriod) const
+{
+    T xx = fmod(x, xPeriod);
+    T r = xPeriod * 0.5 * INV_PI;
+    T angle = xx / xPeriod * 2.*PI;
+    xx = cos(angle) * r;
+    T yy = sin(angle) * r;
+    return rangedOctaveNoise3(xx, yy, seed, octaves, persistence, scale, lowerBound, higherBound);
+}

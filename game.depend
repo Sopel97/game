@@ -513,7 +513,7 @@
 	<map>
 	"../luatables/luatables.h"
 
-1404718952 source:c:\win\programy\codeblocks\game\luatables\luatables.cc
+1406212594 source:c:\win\programy\codeblocks\game\luatables\luatables.cc
 	"luatables.h"
 	<assert.h>
 	<iostream>
@@ -540,7 +540,7 @@
 	"geometry/Geometry.h"
 	"include/Root.h"
 
-1405029274 c:\win\programy\codeblocks\game\geometry\geometry.h
+1406212594 c:\win\programy\codeblocks\game\geometry\geometry.h
 	<vector>
 	<cmath>
 	<utility>
@@ -582,10 +582,10 @@
 
 1404938338 c:\win\programy\codeblocks\game\geometry\src\shape2.cpp
 
-1405028146 c:\win\programy\codeblocks\game\geometry\include\vec2.h
+1407259818 c:\win\programy\codeblocks\game\geometry\include\vec2.h
 	"../src/Vec2.cpp"
 
-1405028260 c:\win\programy\codeblocks\game\geometry\src\vec2.cpp
+1407259818 c:\win\programy\codeblocks\game\geometry\src\vec2.cpp
 	"../include/Intersections.h"
 
 1405028146 c:\win\programy\codeblocks\game\geometry\include\intersections.h
@@ -593,65 +593,65 @@
 
 1404938338 c:\win\programy\codeblocks\game\geometry\src\intersections.cpp
 
-1405028146 c:\win\programy\codeblocks\game\geometry\include\vec3.h
+1406212594 c:\win\programy\codeblocks\game\geometry\include\vec3.h
 	"../src/Vec3.cpp"
 
 1404938338 c:\win\programy\codeblocks\game\geometry\src\vec3.cpp
 
-1405028146 c:\win\programy\codeblocks\game\geometry\include\rectangle.h
+1406212594 c:\win\programy\codeblocks\game\geometry\include\rectangle.h
 	"../src/Rectangle.cpp"
 
-1404938338 c:\win\programy\codeblocks\game\geometry\src\rectangle.cpp
+1406212594 c:\win\programy\codeblocks\game\geometry\src\rectangle.cpp
 
-1405028146 c:\win\programy\codeblocks\game\geometry\include\cuboid.h
+1406212596 c:\win\programy\codeblocks\game\geometry\include\cuboid.h
 	"../src/Cuboid.cpp"
 
-1404938338 c:\win\programy\codeblocks\game\geometry\src\cuboid.cpp
+1406212594 c:\win\programy\codeblocks\game\geometry\src\cuboid.cpp
 
-1405028146 c:\win\programy\codeblocks\game\geometry\include\circle.h
+1406212596 c:\win\programy\codeblocks\game\geometry\include\circle.h
 	"../src/Circle.cpp"
 
 1404938338 c:\win\programy\codeblocks\game\geometry\src\circle.cpp
 
-1405028146 c:\win\programy\codeblocks\game\geometry\include\cylinder.h
+1406212596 c:\win\programy\codeblocks\game\geometry\include\cylinder.h
 	"../src/Cylinder.cpp"
 
 1404938338 c:\win\programy\codeblocks\game\geometry\src\cylinder.cpp
 
-1405028146 c:\win\programy\codeblocks\game\geometry\include\linesegment.h
+1406212596 c:\win\programy\codeblocks\game\geometry\include\linesegment.h
 	"../src/LineSegment.cpp"
 
 1404938338 c:\win\programy\codeblocks\game\geometry\src\linesegment.cpp
 
-1405028146 c:\win\programy\codeblocks\game\geometry\include\triangle.h
+1406212594 c:\win\programy\codeblocks\game\geometry\include\triangle.h
 	"../src/Triangle.cpp"
 
-1404938338 c:\win\programy\codeblocks\game\geometry\src\triangle.cpp
+1406212596 c:\win\programy\codeblocks\game\geometry\src\triangle.cpp
 
-1405028146 c:\win\programy\codeblocks\game\geometry\include\polygon.h
+1406212594 c:\win\programy\codeblocks\game\geometry\include\polygon.h
 	"../src/Polygon.cpp"
 
-1404938338 c:\win\programy\codeblocks\game\geometry\src\polygon.cpp
+1406212594 c:\win\programy\codeblocks\game\geometry\src\polygon.cpp
 
-1405028146 c:\win\programy\codeblocks\game\geometry\include\mesh.h
+1406212596 c:\win\programy\codeblocks\game\geometry\include\mesh.h
 	"../src/Mesh.cpp"
 
-1404938338 c:\win\programy\codeblocks\game\geometry\src\mesh.cpp
+1406212594 c:\win\programy\codeblocks\game\geometry\src\mesh.cpp
 
-1405799807 c:\win\programy\codeblocks\game\include\root.h
+1407061659 c:\win\programy\codeblocks\game\include\root.h
 
 1405168896 source:c:\win\programy\codeblocks\game\src\array2.cpp
 	"Array2.h"
 
-1405267246 c:\win\programy\codeblocks\game\include\array2.h
+1407004242 c:\win\programy\codeblocks\game\include\array2.h
 	<iostream>
 	<vector>
 	<utility>
 
-1405008566 source:c:\win\programy\codeblocks\game\src\assets.cpp
+1407351104 source:c:\win\programy\codeblocks\game\src\assets.cpp
 	"Assets.h"
 
-1405008566 c:\win\programy\codeblocks\game\include\assets.h
+1407351104 c:\win\programy\codeblocks\game\include\assets.h
 	<vector>
 	<string>
 	<windows.h>
@@ -664,7 +664,7 @@
 	<string>
 	"../luatables/luatables.h"
 
-1405862017 source:c:\win\programy\codeblocks\game\src\root.cpp
+1407351104 source:c:\win\programy\codeblocks\game\src\root.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -678,6 +678,7 @@
 	"SpritesheetDatabase.h"
 	"TileDatabase.h"
 	"World.h"
+	"WorldGenerator.h"
 	"BasicSolidTile.h"
 
 1405014308 c:\win\programy\codeblocks\game\include\spritesheetdatabase.h
@@ -691,20 +692,20 @@
 	<map>
 	"../luatables/luatables.h"
 
-1405871904 c:\win\programy\codeblocks\game\include\world.h
+1407261044 c:\win\programy\codeblocks\game\include\world.h
 	<vector>
 	"../geometry/Geometry.h"
 	"Util.h"
 	"Array2.h"
 	<allegro5/allegro_primitives.h>
 
-1405333000 c:\win\programy\codeblocks\game\include\tiles\basicsolidtile.h
+1406473128 c:\win\programy\codeblocks\game\include\tiles\basicsolidtile.h
 	<vector>
 	<allegro5/allegro_primitives.h>
 	"Tile.h"
 	"StaticTileData.h"
 
-1405422506 c:\win\programy\codeblocks\game\include\tiles\tile.h
+1407417858 c:\win\programy\codeblocks\game\include\tiles\tile.h
 	<string>
 	<vector>
 	<allegro5/allegro_primitives.h>
@@ -713,11 +714,12 @@
 	"../Configuration.h"
 	"StaticTileData.h"
 
-1405422506 c:\win\programy\codeblocks\game\include\tiles\statictiledata.h
+1407417881 c:\win\programy\codeblocks\game\include\tiles\statictiledata.h
 	<string>
 	"../Configuration.h"
+	"../../geometry/Geometry.h"
 
-1405370164 source:c:\win\programy\codeblocks\game\src\spritesheetdatabase.cpp
+1407351587 source:c:\win\programy\codeblocks\game\src\spritesheetdatabase.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -725,26 +727,29 @@
 	"Root.h"
 	"Assets.h"
 
-1405848843 source:c:\win\programy\codeblocks\game\src\tiles\basicsolidtile.cpp
+1407418689 source:c:\win\programy\codeblocks\game\src\tiles\basicsolidtile.cpp
 	"BasicSolidTile.h"
 
-1405422506 source:c:\win\programy\codeblocks\game\src\tiles\statictiledata.cpp
+1407417892 source:c:\win\programy\codeblocks\game\src\tiles\statictiledata.cpp
 	<string>
 	"StaticTileData.h"
 	"Root.h"
 	"SpritesheetDatabase.h"
 
-1405422524 source:c:\win\programy\codeblocks\game\src\tiles\tile.cpp
+1407417833 source:c:\win\programy\codeblocks\game\src\tiles\tile.cpp
 	"Tile.h"
 
 1405358906 source:c:\win\programy\codeblocks\game\src\util.cpp
 	"Util.h"
 
-1405848834 c:\win\programy\codeblocks\game\include\util.h
+1407186004 c:\win\programy\codeblocks\game\include\util.h
+	<iostream>
+	<vector>
 	<allegro5/allegro5.h>
+	<allegro5/allegro_primitives.h>
 	"../geometry/Geometry.h"
 
-1405863371 source:c:\win\programy\codeblocks\game\src\world.cpp
+1407418570 source:c:\win\programy\codeblocks\game\src\world.cpp
 	<iostream>
 	<cstdlib>
 	<algorithm>
@@ -754,8 +759,9 @@
 	"TileDatabase.h"
 	"SpritesheetDatabase.h"
 	"Tile.h"
+	"WorldGenerator.h"
 
-1405774375 source:c:\win\programy\codeblocks\game\src\tiledatabase.cpp
+1407351587 source:c:\win\programy\codeblocks\game\src\tiledatabase.cpp
 	"TileDatabase.h"
 	"Root.h"
 	"Assets.h"
@@ -767,4 +773,40 @@
 1406820562 source:d:\dev\game\src\worldgenerator.cpp
 	"WorldGenerator.h"
 	"World.h"
+
+1407349757 c:\win\programy\codeblocks\game\include\worldgenerator.h
+	"Configuration.h"
+	"Util.h"
+	"Root.h"
+	"TileDatabase.h"
+	<vector>
+	<map>
+
+1407350305 source:c:\win\programy\codeblocks\game\src\worldgenerator.cpp
+	"WorldGenerator.h"
+	"World.h"
+	"Tile.h"
+	"../geometry/Noise.h"
+	<iostream>
+	<cstdlib>
+
+1405029274 c:\win\programy\codeblocks\game\geometry\noise.h
+	<cmath>
+	<random>
+	<algorithm>
+	<functional>
+	"include/SimplexNoise.h"
+	"include/CellNoise.h"
+	"src/SimplexNoise.cpp"
+	"src/CellNoise.cpp"
+
+1406986477 c:\win\programy\codeblocks\game\geometry\include\simplexnoise.h
+	"../src/SimplexNoise.cpp"
+
+1406986477 c:\win\programy\codeblocks\game\geometry\src\simplexnoise.cpp
+
+1405028146 c:\win\programy\codeblocks\game\geometry\include\cellnoise.h
+	"../src/CellNoise.cpp"
+
+1406212594 c:\win\programy\codeblocks\game\geometry\src\cellnoise.cpp
 

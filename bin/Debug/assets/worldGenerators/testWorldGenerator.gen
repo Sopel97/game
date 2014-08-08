@@ -1,8 +1,26 @@
 generator = {
 
 	width = 512,
-	height = 128
-
+	height = 128,
+	surface = {16, 36},
+	layers = {
+		-- {
+		--	layer name = "", 
+		--	lower bound min = world height, 
+		--	lower bound max = world height, 
+		--	main tile = "Dirt", 
+		--	bottom outline tile = main tile, 
+		--	bottom overflow size = 0,
+		--	bottom overflow tile = bottom outline tile,
+		--  	specific values for noise generation for layer boundary
+		--	noise octaves = 5,
+		--	noise persistance = 1,
+		--	noise scale = 0.01
+		-- }
+		{"Surface Layer", 16, 36, "Air", "Stone", nil, nil, 5, 1, 0.003},
+		{"Dirt Layer", 44, 58, "Dirt", nil, 16, nil, 5, 1, 0.008},
+		{"Stone Layer", nil, nil, "Stone", nil, nil, nil, 1, 1, 1}
+	}
 }
 
 return generator

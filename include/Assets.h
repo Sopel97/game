@@ -16,6 +16,7 @@ public:
     std::vector<std::string> tileAssets() const;
     std::vector<std::string> worldGenerators() const;
 protected:
+    std::vector<std::string> scanForFiles(const std::string& path, const std::string& finds) const;
 private:
 };
 #endif // ASSETS_H

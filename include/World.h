@@ -30,10 +30,10 @@ public:
     bool inWorldRange(int x, int y);
 
     void draw();
-    void drawMissingForegroundTiles();
+    void listMissingForegroundTilesToBuffer();
     void drawForegroundTileBuffer();
 
-    void drawMissingForgroundBorders();
+    void listMissingForegroundBordersToBuffer();
     void drawForegroundBorderBuffer();
 
     void drawFromLayerToScreen(ALLEGRO_BITMAP* layer);
@@ -42,15 +42,17 @@ public:
     void doRandomTileUpdate();
     void doConstantTileUpdate();
 
-    Vec2F screenToWorld(const Vec2F& screen);
-    Vec2F worldToScreen(const Vec2F& world);
-    Vec2F camera() const;
+    Vec2D screenToWorld(const Vec2D& screen);
+    Vec2D worldToScreen(const Vec2D& world);
+    Vec2D camera() const;
 
     WorldGenerator* worldGenerator() const;
 
-    void moveCamera(const Vec2F& diff);
-    float distance(const Vec2F& a, const Vec2F& b); /* a.x and b.x must be in range <0, m_width> */
-    Vec2F way(const Vec2F& from, const Vec2F& to); /* from.x and to.x must be in range <0, m_width> */
+    void moveCamera(const Vec2D& diff);
+    float distance(const Vec2D& a, const Vec2D& b); /* a.x and b.x must be in range <0, m_width> */
+    Vec2D way(const Vec2D& from, const Vec2D& to); /* from.x and to.x must be in range <0, m_width> */
+
+    void adjustPosition(Vec2D& pos);
 protected:
 private:
 
@@ -78,11 +80,11 @@ private:
     int m_height;
     Array2<Tile*> m_tiles;
 
-    Vec2F m_camera;
-    Vec2F m_cameraAtLastRedraw;
+    Vec2D m_camera;
+    Vec2I m_cameraAtLastRedraw;
 
-    ALLEGRO_BITMAP* m_forgroundTileLayer;
-    ALLEGRO_BITMAP* m_forgroundBorderLayer;
+    ALLEGRO_BITMAP* m_foregroundTileLayer;
+    ALLEGRO_BITMAP* m_foregroundBorderLayer;
 
     std::vector<DrawableTile> m_foregroundTileBuffer;
     std::vector<DrawableTileBorder> m_foregroundBorderBuffer;

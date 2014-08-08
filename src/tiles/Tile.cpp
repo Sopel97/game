@@ -32,9 +32,9 @@ std::string Tile::name() const
 {
     return m_staticTileData->name();
 }
-int Tile::borderPrecedence() const
+int Tile::outerBorderPrecedence() const
 {
-    return m_staticTileData->borderPrecedence();
+    return m_staticTileData->outerBorderPrecedence();
 }
 bool Tile::hasInnerBorder() const
 {
@@ -43,4 +43,13 @@ bool Tile::hasInnerBorder() const
 bool Tile::hasOuterBorder() const
 {
     return m_staticTileData->hasOuterBorder();
+}
+
+int Tile::innerBorderType() const
+{
+    return m_staticTileData->innerBorderType();
+}
+Vec2F Tile::textureOffset() const
+{
+    return m_staticTileData->textureOffset();
 }

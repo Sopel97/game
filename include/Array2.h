@@ -116,7 +116,7 @@ public:
     {
         m_data = new T[m_sizeX * m_sizeY];
     }
-    Array2(size_t sizeX, size_t sizeY, T& initValue) :
+    Array2(size_t sizeX, size_t sizeY, const T& initValue) :
         Array2(sizeX, sizeY)
     {
         size_t totalSize = m_sizeX * m_sizeY;

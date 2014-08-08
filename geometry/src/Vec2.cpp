@@ -20,6 +20,13 @@ Vec2<T>::Vec2(const std::initializer_list<T>& list)
     y = *it;
 }
 template <class T>
+template <class O>
+Vec2<T>::Vec2(const Vec2<O>& v)
+{
+    x = v.x;
+    y = v.y;
+}
+template <class T>
 Vec2<T>::Vec2(const Vec2<T>& v)
 {
     x = v.x;

@@ -15,7 +15,7 @@ public:
     static inline int fastFloor(const T& value)
     {
         int i = (int)value; /* truncate */
-        return i - ( i > value ); /* convert trunc to floor */
+        return i - ( value < 0.0 ); /* convert trunc to floor */
     }
     template <class T>
     static inline Vec2I fastFloor(const Vec2<T>& value)
@@ -78,6 +78,26 @@ public:
         quad.push_back({x1, y2, 0, u1, v2, color});
         return quad;
     }
+    template <class T>
+    class Range
+    {
+    public:
+        T min, max;
+
+        Range(T& _min, T& _max)
+        {
+            min = _min;
+            max = _max;
+        }
+        Range()
+        {
+
+        }
+    };
+    typedef Range<float> RangeF;
+    typedef Range<double> RangeD;
+    typedef Range<int> RangeI;
+
     class BitmapShifter
     {
     public:

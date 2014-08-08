@@ -22,9 +22,11 @@ public:
     virtual int spritesheetId() const;
     virtual std::string name() const;
     virtual StaticTileData* staticTileData() const;
-    virtual int borderPrecedence() const;
+    virtual int outerBorderPrecedence() const;
     virtual bool hasInnerBorder() const;
     virtual bool hasOuterBorder() const;
+    virtual int innerBorderType() const;
+    virtual Vec2F textureOffset() const;
 
     virtual void drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y) = 0;
     virtual void drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y, int outX, int outY, Tile* tileOut) = 0;
