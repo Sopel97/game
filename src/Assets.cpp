@@ -30,15 +30,15 @@ std::vector<std::string> Assets::scanForFiles(const std::string& path, const std
     std::vector<std::string> files;
     WIN32_FIND_DATA findFileData;
     HANDLE hFind;
-    std::string fullPath = path+finds;
+    std::string fullPath = path + finds;
     hFind = FindFirstFile(fullPath.c_str(), &findFileData);
     if(!(hFind == INVALID_HANDLE_VALUE))
     {
-        files.push_back(path+findFileData.cFileName);
+        files.push_back(path + findFileData.cFileName);
     }
     while(FindNextFile(hFind, &findFileData))
     {
-        files.push_back(path+findFileData.cFileName);
+        files.push_back(path + findFileData.cFileName);
     }
     FindClose(hFind);
     return files;

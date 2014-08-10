@@ -52,8 +52,8 @@ void Root::start()
     al_install_keyboard();
     al_install_mouse();
 
-    m_windowWidth = 800;
-    m_windowHeight = 600;
+    m_windowWidth = 1024;
+    m_windowHeight = 768;
     m_display = al_create_display(m_windowWidth, m_windowHeight);
     m_drawTimer = al_create_timer(1.0 / FPS);
     m_tickTimer = al_create_timer(1.0 / TPS);
@@ -118,27 +118,29 @@ void Root::start()
             ++m_ticks;
             ++ticksThisSecond;
 
-/* low camera speed */
+#define HIGH_SPEED_CAMERA
+
+#ifndef HIGH_SPEED_CAMERA
+            /* low camera speed */
 
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_LEFT))
             {
-                m_world->moveCamera(Vec2D(-20.4, 0));
+                m_world->moveCamera(Vec2D(-3, 0));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_RIGHT))
             {
-                m_world->moveCamera(Vec2D(20.4, 0));
+                m_world->moveCamera(Vec2D(3, 0));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_UP))
             {
-                m_world->moveCamera(Vec2D(0, -20.4));
+                m_world->moveCamera(Vec2D(0, -3));
             }
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_DOWN))
             {
-                m_world->moveCamera(Vec2D(0, 20.4));
+                m_world->moveCamera(Vec2D(0, 3));
             }
-
-/* high camera speed */
-/*
+#else
+            /* high camera speed */
             if(al_key_down(&currentKeyboardState, ALLEGRO_KEY_LEFT))
             {
                 m_world->moveCamera(Vec2F(-20.3, 0));
@@ -155,14 +157,15 @@ void Root::start()
             {
                 m_world->moveCamera(Vec2F(0, 20.3));
             }
-*/
+
+#endif // HIGH_SPEED_CAMERA
             m_world->update();
         }
         if(nowDrawTicks != lastFPSTicks || !m_fpsLimit)
         {
             lastFPSTicks = nowDrawTicks;
             ++framesThisSecond;
-            al_clear_to_color(al_map_rgb(64,128,255));
+            al_clear_to_color(al_map_rgb(64, 128, 255));
             m_world->draw();
             al_flip_display();
         }

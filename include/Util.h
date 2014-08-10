@@ -55,8 +55,8 @@ public:
     static std::vector<ALLEGRO_VERTEX> constructQuadAsTriangleList(float x1, float y1, float x2, float y2, float u1, float v1, ALLEGRO_COLOR color)
     {
         std::vector<ALLEGRO_VERTEX> quad;
-        float u2 = u1+x2-x1;
-        float v2 = v1+y2-y1;
+        float u2 = u1 + x2 - x1;
+        float v2 = v1 + y2 - y1;
         quad.reserve(6);
         quad.push_back({x1, y1, 0, u1, v1, color});
         quad.push_back({x2, y1, 0, u2, v1, color});
@@ -69,14 +69,21 @@ public:
     static std::vector<ALLEGRO_VERTEX> constructQuadAsTriangleFan(float x1, float y1, float x2, float y2, float u1, float v1, ALLEGRO_COLOR color)
     {
         std::vector<ALLEGRO_VERTEX> quad;
-        float u2 = u1+x2-x1;
-        float v2 = v1+y2-y1;
+        float u2 = u1 + x2 - x1;
+        float v2 = v1 + y2 - y1;
         quad.reserve(4);
         quad.push_back({x1, y1, 0, u1, v1, color});
         quad.push_back({x2, y1, 0, u2, v1, color});
         quad.push_back({x2, y2, 0, u2, v2, color});
         quad.push_back({x1, y2, 0, u1, v2, color});
         return quad;
+    }
+    static void drawBitmap(ALLEGRO_BITMAP* bmp, float x, float y, ALLEGRO_COLOR color = al_map_rgb(255, 255, 255))
+    {
+        int bitmapWidth = al_get_bitmap_width(bmp);
+        int bitmapHeight = al_get_bitmap_height(bmp);
+        std::vector<ALLEGRO_VERTEX> bitmapQuad = Util::constructQuadAsTriangleFan(x, y, x + bitmapWidth, y + bitmapHeight, 0, 0, color);
+        al_draw_prim(&(bitmapQuad[0]), nullptr, bmp, 0, 4, ALLEGRO_PRIM_TRIANGLE_FAN);
     }
     template <class T>
     class Range
@@ -123,18 +130,12 @@ public:
 
             //al_draw_bitmap(bitmap, x, y, 0); //this functions seems to be a problem. Did in other way.
 
-            int bitmapWidth = al_get_bitmap_width(bitmap);
-            int bitmapHeight = al_get_bitmap_height(bitmap);
-            std::vector<ALLEGRO_VERTEX> bitmapQuad = Util::constructQuadAsTriangleFan(x, y, x+bitmapWidth, y+bitmapHeight, 0, 0, al_map_rgb(255,255,255));
-            al_draw_prim(&(bitmapQuad[0]), nullptr, bitmap, 0, 4, ALLEGRO_PRIM_TRIANGLE_FAN);
+            Util::drawBitmap(bitmap, x, y);
 
             al_set_target_bitmap(bitmap);
             //al_draw_bitmap(m_swapBuffer, 0, 0, 0); //this functions seems to be a problem. Did in other way.
 
-            bitmapWidth = al_get_bitmap_width(m_swapBuffer);
-            bitmapHeight = al_get_bitmap_height(m_swapBuffer);
-            bitmapQuad = Util::constructQuadAsTriangleFan(0, 0, bitmapWidth, bitmapHeight, 0, 0, al_map_rgb(255,255,255));
-            al_draw_prim(&(bitmapQuad[0]), nullptr, m_swapBuffer, 0, 4, ALLEGRO_PRIM_TRIANGLE_FAN);
+            Util::drawBitmap(m_swapBuffer, 0, 0);
 
             al_set_target_bitmap(al_get_backbuffer(m_display));
 

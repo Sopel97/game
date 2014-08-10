@@ -22,8 +22,8 @@ WorldGenerator::WorldGenerator(Configuration& config)
     for(int i = 1; i <= size; ++i)
     {
         Layer layer = Layer(layers[i]);
-        if(layer.lowerBound.min < 0.0f) layer.lowerBound.min = m_worldHeight-1;
-        if(layer.lowerBound.max < 0.0f) layer.lowerBound.max = m_worldHeight-1;
+        if(layer.lowerBound.min < 0.0f) layer.lowerBound.min = m_worldHeight - 1;
+        if(layer.lowerBound.max < 0.0f) layer.lowerBound.max = m_worldHeight - 1;
         addLayer(layer);
     }
 }
@@ -55,14 +55,14 @@ void WorldGenerator::generate(World* world)
             double lowerBound = m_layers[i].lowerBound.min;
             double upperBound = m_layers[i].lowerBound.max;
 
-            layers[x].push_back(noise.periodicSeededRangedOctaveNoise1(x, m_seed*i*4313513, m_layers[i].noiseOctaves, m_layers[i].noisePersistance, m_layers[i].noiseScale, lowerBound, upperBound, m_worldWidth));
+            layers[x].push_back(noise.periodicSeededRangedOctaveNoise1(x, m_seed * i * 4313513, m_layers[i].noiseOctaves, m_layers[i].noisePersistance, m_layers[i].noiseScale, lowerBound, upperBound, m_worldWidth));
         }
     }
 
-    for(int x = 0; x<m_worldWidth;++x)
+    for(int x = 0; x < m_worldWidth; ++x)
     {
         int layer = 0;
-        for(int y = 0; y<m_worldHeight; ++y)
+        for(int y = 0; y < m_worldHeight; ++y)
         {
             while(layer < numberOfLayers && y > layers[x][layer]) ++layer;
             if(layer >= numberOfLayers) break;
@@ -73,13 +73,13 @@ void WorldGenerator::generate(World* world)
             }
             if(layer > 0)
             {
-                Layer& previousLayer = m_layers[layer-1];
+                Layer& previousLayer = m_layers[layer - 1];
                 int overflow = previousLayer.bottomOverflow;
-                int diff = overflow+layers[x][layer-1] - y;
+                int diff = overflow + layers[x][layer - 1] - y;
                 if(diff > 0)
                 {
                     float fraction = (float)diff / (float)overflow;
-                    float r = rand()/(float)RAND_MAX; //rand must be replaced from seeded randomizer from geometry/Random lib
+                    float r = rand() / (float)RAND_MAX; //rand must be replaced from seeded randomizer from geometry/Random lib
                     if(r < fraction)
                     {
                         tile = previousLayer.bottomOverflowTile;
@@ -91,7 +91,7 @@ void WorldGenerator::generate(World* world)
                 continue;
             }
             Tile* tileClone = tile->clone();
-            if(!(world->placeTile(tileClone, x, y)))
+            if(!(world->setTile(tileClone, x, y)))
             {
                 delete tileClone;
             }

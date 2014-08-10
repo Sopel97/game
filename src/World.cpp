@@ -91,20 +91,106 @@ Array2<Tile*> World::getTiles2(int x, int y, int tilesHorizontal, int tilesVerti
     return tiles;
 }
 
-void World::setTile(Tile* tile, int x, int y)
+bool World::setTile(Tile* tile, int x, int y)
 {
+    if(!inWorldRange(x, y)) return false;
+    x = Util::mod(x, m_width);
     if(m_tiles[x][y]) delete m_tiles[x][y];
     m_tiles[x][y] = tile;
-}
-bool World::placeTile(Tile* tile, int x, int y)
-{
-    if(!inWorldRange(x,y)) return false;
-    setTile(tile, Util::mod(x, m_width), y);
     return true;
+}
+bool World::placeTile(Tile* tile, int x, int y, bool update, bool redraw)
+{
+    if(!inWorldRange(x, y)) return false;
+    x = Util::mod(x, m_width);
+
+    //setting tile like in setTile
+    if(m_tiles[x][y]) delete m_tiles[x][y];
+    m_tiles[x][y] = tile;
+
+    if(update) updateTilesFrom(x, y);
+    if(redraw) redrawTilesFrom(x, y);
+    return true;
+}
+void World::breakTile(int x, int y, bool update, bool redraw)
+{
+    if(!inWorldRange(x, y)) return;
+    x = Util::mod(x, m_width);
+
+    if(m_tiles[x][y]) delete m_tiles[x][y];
+    m_tiles[x][y] = nullptr;
+
+    if(update) updateTilesFrom(x, y);
+    if(redraw) redrawTilesFrom(x, y);
+}
+void World::redrawTilesFrom(int x, int y)
+{
+    //redrawing this tile and 8 neighbours (if on screen)
+}
+void World::updateTilesFrom(int x, int y)
+{
+    //updating 4 neighbour tiles to tile at x,y
 }
 bool World::inWorldRange(int x, int y)
 {
     return (y >= 0 && y < m_height);
+}
+void World::drawFromLayerToScreen(ALLEGRO_BITMAP* layer)
+{
+    Util::drawBitmap(layer, 0, 0);
+}
+void World::listForegroundTileBorders(int x, int y) //this method may be able to be optimised.
+{
+    Tile* tile = getTile(x, y);
+    std::vector<DrawableTileBorder> neighbours;
+    for(int xx = -1; xx <= 1; ++xx)
+    {
+        for(int yy = -1; yy <= 1; ++ yy)
+        {
+            if(yy == 0 && xx == 0) continue;
+            Tile* currentNeighbourTile = getTile(x + xx, y + yy);
+            if(currentNeighbourTile == nullptr) continue;
+            neighbours.push_back(DrawableTileBorder {currentNeighbourTile, currentNeighbourTile->spritesheetId(), x + xx, y + yy, tile, x, y});
+        }
+    }
+    size_t numberOfEntries = neighbours.size();
+    auto isDuplicatedLater = [&numberOfEntries, &neighbours] (int indexOfCurrent) -> bool
+    {
+        size_t index = indexOfCurrent + 1;
+        if(neighbours[indexOfCurrent].tile)
+        {
+            int id = neighbours[indexOfCurrent].tile->id();
+            for(; index < numberOfEntries; ++index)
+            {
+                DrawableTileBorder& entry = neighbours[index];
+                if(entry.tile)
+                {
+                    if(entry.tile->id() == id) return true;
+                }
+            }
+        }
+        else
+        {
+            for(; index < numberOfEntries; ++index)
+            {
+                DrawableTileBorder& entry = neighbours[index];
+                if(entry.tile == nullptr) return true;
+            }
+        }
+        return false;
+    };
+
+    for(size_t i = 0; i < numberOfEntries; ++i)
+    {
+        if(isDuplicatedLater(i)) continue;
+        m_foregroundBorderBuffer.push_back(neighbours[i]);
+    }
+}
+void World::listForegroundTile(int x, int y)
+{
+    Tile* tile = getTile(x, y);
+    if(!tile) return;
+    m_foregroundTileBuffer.push_back(DrawableTile {tile, tile->spritesheetId(), x, y});
 }
 void World::drawForegroundTileBuffer()
 {
@@ -139,10 +225,6 @@ void World::drawForegroundTileBuffer()
     al_set_target_bitmap(al_get_backbuffer(currentDisplay));
     //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 }
-void World::drawFromLayerToScreen(ALLEGRO_BITMAP* layer)
-{
-    al_draw_bitmap(layer, 0, 0, 0);
-}
 void World::listMissingForegroundTilesToBuffer()
 {
     Root& root = Root::instance();
@@ -175,14 +257,12 @@ void World::listMissingForegroundTilesToBuffer()
         for(int y = firstTileY; y <= lastTileY; ++y)
         {
             // some ties are not necesserily drawn
-            Tile* tile = getTile(x, y);
-            if(!tile) continue;
             if(!(x <= firstTileToExcludeX || x >= lastTileToExcludeX || y <= firstTileToExcludeY || y >= lastTileToExcludeY))
             {
-                y = lastTileToExcludeY-1;
+                y = lastTileToExcludeY - 1;
                 continue;
             }
-            m_foregroundTileBuffer.push_back(DrawableTile {tile, tile->spritesheetId(), x, y});
+            listForegroundTile(x, y);
         }
     }
 }
@@ -219,62 +299,16 @@ void World::listMissingForegroundBordersToBuffer()
         {
             // some ties are not necesserily drawn
 
-            Tile* tile = getTile(x, y);
 
             if(!(x <= firstTileToExcludeX || x >= lastTileToExcludeX || y <= firstTileToExcludeY || y >= lastTileToExcludeY))
             {
-                y = lastTileToExcludeY-1;
+                y = lastTileToExcludeY - 1;
                 continue;
             }
 
             if(y < -1 || y > m_height) continue; //border has to be drawn outside of world too
 
-
-            /* to optimize */
-            std::vector<DrawableTileBorder> neighbours;
-            for(int xx = -1; xx <= 1; ++xx)
-            {
-                for(int yy = -1; yy <= 1; ++ yy)
-                {
-                    if(yy == 0 && xx == 0) continue;
-                    Tile* currentNeighbourTile = getTile(x+xx, y+yy);
-                    if(currentNeighbourTile == nullptr) continue;
-                    neighbours.push_back(DrawableTileBorder{currentNeighbourTile, currentNeighbourTile->spritesheetId(), x+xx, y+yy, tile, x, y});
-                }
-            }
-            /* to here */
-            size_t numberOfEntries = neighbours.size();
-            auto isDuplicatedLater = [&numberOfEntries, &neighbours] (int indexOfCurrent) -> bool
-            {
-                size_t index = indexOfCurrent+1;
-                if(neighbours[indexOfCurrent].tile)
-                {
-                    int id = neighbours[indexOfCurrent].tile->id();
-                    for(;index<numberOfEntries;++index)
-                    {
-                        DrawableTileBorder& entry = neighbours[index];
-                        if(entry.tile)
-                        {
-                            if(entry.tile->id() == id) return true;
-                        }
-                    }
-                }
-                else
-                {
-                    for(;index<numberOfEntries;++index)
-                    {
-                        DrawableTileBorder& entry = neighbours[index];
-                        if(entry.tile == nullptr) return true;
-                    }
-                }
-                return false;
-            };
-
-            for(size_t i = 0; i<numberOfEntries;++i)
-            {
-                if(isDuplicatedLater(i)) continue;
-                m_foregroundBorderBuffer.push_back(neighbours[i]);
-            }
+            listForegroundTileBorders(x, y);
         }
     }
 }

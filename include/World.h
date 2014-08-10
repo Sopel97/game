@@ -25,15 +25,24 @@ public:
     std::vector<Tile*> getTiles(int x, int y, int tilesHorizontal, int tilesVertical);
     Array2<Tile*> getTiles2(int x, int y, int tilesHorizontal, int tilesVertical);
 
-    void setTile(Tile* tile, int x, int y);  //setting tile doesn't check if it's possible
-    bool placeTile(Tile* tile, int x, int y);
+    bool setTile(Tile* tile, int x, int y);  //setting tile doesn't check if it's possible
+    bool placeTile(Tile* tile, int x, int y, bool update = true, bool redraw = true);
+
+    void breakTile(int x, int y, bool update = true, bool redraw = true);
+
     bool inWorldRange(int x, int y);
+
+    void updateTilesFrom(int x, int y);
+    void redrawTilesFrom(int x, int y);
+
 
     void draw();
     void listMissingForegroundTilesToBuffer();
+    void listForegroundTile(int x, int y);
     void drawForegroundTileBuffer();
 
     void listMissingForegroundBordersToBuffer();
+    void listForegroundTileBorders(int x, int y);
     void drawForegroundBorderBuffer();
 
     void drawFromLayerToScreen(ALLEGRO_BITMAP* layer);
