@@ -83,7 +83,7 @@ public:
         int bitmapWidth = al_get_bitmap_width(bmp);
         int bitmapHeight = al_get_bitmap_height(bmp);
         std::vector<ALLEGRO_VERTEX> bitmapQuad = Util::constructQuadAsTriangleFan(x, y, x + bitmapWidth, y + bitmapHeight, 0, 0, color);
-        al_draw_prim(&(bitmapQuad[0]), nullptr, bmp, 0, 4, ALLEGRO_PRIM_TRIANGLE_FAN);
+        al_draw_prim(bitmapQuad.data(), nullptr, bmp, 0, 4, ALLEGRO_PRIM_TRIANGLE_FAN);
     }
     template <class T>
     class Range

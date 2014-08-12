@@ -213,14 +213,14 @@ void World::drawForegroundTileBuffer()
         int currentSpritesheetId = tile.spritesheetId;
         if(currentSpritesheetId != lastSpritesheetId)
         {
-            al_draw_prim(&(toDraw[0]), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+            al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
             toDraw.clear();
             toDraw.reserve(10000);
             lastSpritesheetId = currentSpritesheetId;
         }
         tile.tile->drawInner(this, toDraw, tile.x, tile.y);
     }
-    if(toDraw.size()) al_draw_prim(&(toDraw[0]), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+    if(toDraw.size()) al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 
     al_set_target_bitmap(al_get_backbuffer(currentDisplay));
     //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
@@ -333,14 +333,14 @@ void World::drawForegroundBorderBuffer()
         int currentSpritesheetId = tile.spritesheetId;
         if(currentSpritesheetId != lastSpritesheetId)
         {
-            al_draw_prim(&(toDraw[0]), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+            al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
             toDraw.clear();
             toDraw.reserve(10000);
             lastSpritesheetId = currentSpritesheetId;
         }
         tile.tile->drawOuter(this, toDraw, tile.x, tile.y, tile.destX, tile.destY, tile.destTile);
     }
-    if(toDraw.size()) al_draw_prim(&(toDraw[0]), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+    if(toDraw.size()) al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 
     al_set_target_bitmap(al_get_backbuffer(currentDisplay));
     //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
