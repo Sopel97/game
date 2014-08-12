@@ -32,26 +32,26 @@ Tile* TileDatabase::getBaseTile(const std::string& name)
 {
     return m_baseTiles[name];
 }
-Tile* TileDatabase::getTileById(int id)
+Tile* TileDatabase::getTileTemplateById(int id)
 {
     return m_tiles[id];
 }
-Tile* TileDatabase::getTileByName(const std::string& name)
+Tile* TileDatabase::getTileTemplateByName(const std::string& name)
 {
     return m_tiles[m_tilesMap[name]];
 }
-int TileDatabase::getTileIdByName(const std::string& name)
+int TileDatabase::getTileTemplateIdByName(const std::string& name)
 {
     return m_tilesMap[name];
 }
 
 StaticTileData* TileDatabase::getStaticTileDataByTileId(int id)
 {
-    return getTileById(id)->staticTileData();
+    return getTileTemplateById(id)->staticTileData();
 }
 StaticTileData* TileDatabase::getStaticTileDataByTileName(const std::string& name)
 {
-    return getTileByName(name)->staticTileData();
+    return getTileTemplateByName(name)->staticTileData();
 }
 void TileDatabase::addTile(const std::string& path)
 {
@@ -81,4 +81,12 @@ void TileDatabase::load()
         addTile(tileAsset);
     }
     std::cout << "Loaded " << m_lastId - currentId << " tiles." << '\n' << '\n';
+}
+Tile* TileDatabase::createNewTileById(int id)
+{
+    return getTileTemplateById(id)->clone();
+}
+Tile* TileDatabase::createNewTileByName(const std::string& name)
+{
+    return getTileTemplateByName(name)->clone();
 }

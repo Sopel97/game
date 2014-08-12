@@ -228,7 +228,6 @@ void World::drawForegroundTileBuffer()
 void World::listMissingForegroundTilesToBuffer()
 {
     Root& root = Root::instance();
-    SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
     int windowWidth = root.windowWidth();
     int windowHeight = root.windowHeight();
     Vec2D worldCoordsTopLeft = screenToWorld(Vec2D(0.0, 0.0));
@@ -269,7 +268,6 @@ void World::listMissingForegroundTilesToBuffer()
 void World::listMissingForegroundBordersToBuffer()
 {
     Root& root = Root::instance();
-    SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
     int windowWidth = root.windowWidth();
     int windowHeight = root.windowHeight();
     Vec2D worldCoordsTopLeft = screenToWorld(Vec2D(0.0, 0.0));
@@ -347,8 +345,6 @@ void World::drawForegroundBorderBuffer()
 }
 void World::draw() //in every drawing function coordinates need to be floored, not casted to int
 {
-    Root& root = Root::instance();
-
     Vec2I cam = Util::fastFloor(m_camera);
 
     int shiftX = m_cameraAtLastRedraw.x - cam.x;
