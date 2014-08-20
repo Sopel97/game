@@ -16,26 +16,30 @@ Cuboid<T>::Cuboid(const Vec3<T>& p1, const T width, const T height, const T dept
     bottomRight = p1 + Vec3<T>(width, height, depth);
 }
 template <class T>
-Cuboid<T>::Cuboid(const Cuboid<T>& c)
+template <class X>
+Cuboid<T>::Cuboid(const Cuboid<X>& c)
 {
     topLeft = c.topLeft;
     bottomRight = c.bottomRight;
 }
 template <class T>
-Cuboid<T>::Cuboid(Cuboid<T>&& c)
+template <class X>
+Cuboid<T>::Cuboid(Cuboid<X>&& c)
 {
     topLeft = std::move(c.topLeft);
     bottomRight = std::move(c.bottomRight);
 }
 template <class T>
-Cuboid<T>& Cuboid<T>::operator =(const Cuboid<T>& c)
+template <class X>
+Cuboid<T>& Cuboid<T>::operator =(const Cuboid<X>& c)
 {
     topLeft = c.topLeft;
     bottomRight = c.bottomRight;
     return *this;
 }
 template <class T>
-Cuboid<T>& Cuboid<T>::operator =(Cuboid<T> && c)
+template <class X>
+Cuboid<T>& Cuboid<T>::operator =(Cuboid<X> && c)
 {
     topLeft = std::move(c.topLeft);
     bottomRight = std::move(c.bottomRight);

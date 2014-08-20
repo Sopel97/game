@@ -10,26 +10,30 @@ Circle<T>::Circle(const Vec2<T>& p1, T r)
     radius = r;
 }
 template <class T>
-Circle<T>::Circle(const Circle<T>& c)
+template <class X>
+Circle<T>::Circle(const Circle<X>& c)
 {
     center = c.center;
     radius = c.radius;
 }
 template <class T>
-Circle<T>::Circle(Circle<T>&& c)
+template <class X>
+Circle<T>::Circle(Circle<X>&& c)
 {
     center = std::move(c.center);
     radius = c.radius;
 }
 template <class T>
-Circle<T>& Circle<T>::operator =(const Circle<T>& c)
+template <class X>
+Circle<T>& Circle<T>::operator =(const Circle<X>& c)
 {
     center = c.center;
     radius = c.radius;
     return *this;
 }
 template <class T>
-Circle<T>& Circle<T>::operator =(Circle<T> && c)
+template <class X>
+Circle<T>& Circle<T>::operator =(Circle<X> && c)
 {
     center = std::move(c.center);
     radius = c.radius;
@@ -106,6 +110,7 @@ Mesh<LineSegment<T>> Circle<T>::outline() const
     }
     return out;
 }
+
 /* INTERSECTIONS */
 template <class T>
 template <class S>

@@ -6,23 +6,6 @@
 #include <utility>
 #include <functional>
 
-/* Z coordinates are going down. Height is going down. So topLeft i actually 'lower' than bottomRight
-
-                            |y
-                            |
-                            |
-                            |
-                            |
-                x           |
-                -------------------------->
-                            |\
-                            |  \z
-                            |    \
-                            |      \
-                            |        \
-                            |          \
-                           \/           _|
-*/
 namespace Geo
 {
 /*   UTILITY   */
@@ -78,7 +61,7 @@ template <class T> class Cylinder;
 template <class T> class LineSegment;
 template <class T> class Triangle;
 template <class T> class Polygon;
-template<class T> class Mesh;
+template <class T> class Mesh;
 
 class Intersections;
 
@@ -97,6 +80,7 @@ class Intersections;
 #include "include/Mesh.h"
 
 #include "include/Intersections.h"
+
 
 /*         SOURCE         */
 /*

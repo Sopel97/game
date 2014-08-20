@@ -10,11 +10,15 @@ public:
     Vec3();
     Vec3(T _x, T _y, T _z);
     Vec3(const std::initializer_list<T>& list);
-    Vec3(const Vec3<T>& v);
-    Vec3(Vec3<T>&& v);
+    template <class X>
+    Vec3(const Vec3<X>& v);
+    template <class X>
+    Vec3(Vec3<X>&& v);
 
-    Vec3<T>& operator=(const Vec3<T>& v1);
-    Vec3<T>& operator=(Vec3<T> && v1);
+    template <class X>
+    Vec3<T>& operator=(const Vec3<X>& v1);
+    template <class X>
+    Vec3<T>& operator=(Vec3<X> && v1);
 
     Vec3<T> operator+(const Vec3<T>& v1) const;
     Vec3<T> operator-(const Vec3<T>& v1) const;

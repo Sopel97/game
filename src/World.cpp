@@ -26,8 +26,8 @@ World::World(WorldGenerator* worldGenerator)
         {
             Tile* tile = nullptr;
             int r = rand() % 2;
-            if(r == 0) tile = root.tileDatabase()->getTileByName("Dirt");
-            else if(r == 1) tile = root.tileDatabase()->getTileByName("Stone");
+            if(r == 0) tile = root.tileDatabase()->getTileTemplateByName("Dirt");
+            else if(r == 1) tile = root.tileDatabase()->getTileTemplateByName("Stone");
             m_tiles[x][y] = tile->clone();
         }
     }*/
@@ -235,6 +235,9 @@ void World::listMissingForegroundTilesToBuffer()
     int firstTileX = Util::fastFloor(worldCoordsTopLeft.x / 16.0f);
     int firstTileY = Util::fastFloor(worldCoordsTopLeft.y / 16.0f);
 
+    firstTileX = max(firstTileX, 0);
+    firstTileY = min(firstTileY, m_height - 1);
+
     int lastTileX = Util::fastFloor(worldCoordsBottomRight.x / 16.0f);
     int lastTileY = Util::fastFloor(worldCoordsBottomRight.y / 16.0f);
 
@@ -255,8 +258,8 @@ void World::listMissingForegroundTilesToBuffer()
     {
         for(int y = firstTileY; y <= lastTileY; ++y)
         {
-            // some ties are not necesserily drawn
-            if(!(x <= firstTileToExcludeX || x >= lastTileToExcludeX || y <= firstTileToExcludeY || y >= lastTileToExcludeY))
+            // some times are not necesserily drawn
+            if(!(x <= firstTileToExcludeX || x >= lastTileToExcludeX || y <= firstTileToExcludeY || y >= lastTileToExcludeY)) //may be optimised to 2 conditions
             {
                 y = lastTileToExcludeY - 1;
                 continue;
@@ -274,6 +277,9 @@ void World::listMissingForegroundBordersToBuffer()
     Vec2D worldCoordsBottomRight = screenToWorld(Vec2D(windowWidth, windowHeight));
     int firstTileX = Util::fastFloor(worldCoordsTopLeft.x / 16.0f);
     int firstTileY = Util::fastFloor(worldCoordsTopLeft.y / 16.0f);
+
+    firstTileX = max(firstTileX, -1); //border has to be drawn outside of world too
+    firstTileY = min(firstTileY, m_height);
 
     int lastTileX = Util::fastFloor(worldCoordsBottomRight.x / 16.0f);
     int lastTileY = Util::fastFloor(worldCoordsBottomRight.y / 16.0f);
@@ -296,15 +302,11 @@ void World::listMissingForegroundBordersToBuffer()
         for(int y = firstTileY; y <= lastTileY; ++y)
         {
             // some ties are not necesserily drawn
-
-
-            if(!(x <= firstTileToExcludeX || x >= lastTileToExcludeX || y <= firstTileToExcludeY || y >= lastTileToExcludeY))
+            if(!(x <= firstTileToExcludeX || x >= lastTileToExcludeX || y <= firstTileToExcludeY || y >= lastTileToExcludeY)) //may be optimised to 2 conditions
             {
                 y = lastTileToExcludeY - 1;
                 continue;
             }
-
-            if(y < -1 || y > m_height) continue; //border has to be drawn outside of world too
 
             listForegroundTileBorders(x, y);
         }

@@ -11,11 +11,15 @@ public:
     Polygon(const std::vector<Vec2<T>>& v);
     Polygon(std::vector<Vec2<T>>&& v);
     Polygon(Vec2<T>* v, size_t count);
-    Polygon(const Polygon<T>& p);
-    Polygon(Polygon<T>&& p);
+    template <class X>
+    Polygon(const Polygon<X>& p);
+    template <class X>
+    Polygon(Polygon<X>&& p);
 
-    Polygon<T>& operator=(const Polygon<T>& p);
-    Polygon<T>& operator=(Polygon<T> && p);
+    template <class X>
+    Polygon<T>& operator=(const Polygon<X>& p);
+    template <class X>
+    Polygon<T>& operator=(Polygon<X> && p);
 
     Polygon<T> operator+(const Vec2<T>& v) const;
     Polygon<T>& operator+=(const Vec2<T>& v);
@@ -32,6 +36,9 @@ public:
     void scale(const Vec2<T>& c, const T s);
     void scale(const Vec2<T>& s);
     void scale(const T s);
+
+    Vec2<T> project(const Vec2<T>& b) const;
+    std::pair<T, T> project1(const Vec2<T>& b) const;
 
     void transform(std::function<void(Polygon<T>&)>& func);
     void transform(std::function<void(Vec2<T>&)>& func);

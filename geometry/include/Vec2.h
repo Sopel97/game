@@ -10,13 +10,15 @@ public:
     Vec2();
     Vec2(T _x, T _y);
     Vec2(const std::initializer_list<T>& list);
-    template <class O>
-    Vec2(const Vec2<O>& v);
-    Vec2(const Vec2<T>& v);
-    Vec2(Vec2<T>&& v);
+    template <class X>
+    Vec2(const Vec2<X>& v);
+    template <class X>
+    Vec2(Vec2<X>&& v);
 
-    Vec2<T>& operator=(const Vec2<T>& v1);
-    Vec2<T>& operator=(Vec2<T> && v1);
+    template <class X>
+    Vec2<T>& operator=(const Vec2<X>& v1);
+    template <class X>
+    Vec2<T>& operator=(Vec2<X> && v1);
 
     Vec2<T> operator+(const Vec2<T>& v1) const;
     Vec2<T> operator-(const Vec2<T>& v1) const;
@@ -35,7 +37,12 @@ public:
     T magnitude() const;
     T distanceTo(const Vec2<T>& v1) const;
     void normalize();
-    Vec2<T> normal() const;
+    Vec2<T> normalized() const;
+    Vec2<T> normalLeft() const;
+    Vec2<T> normalRight() const;
+    Vec2<T> normal() const; //one of above two. Should be used only when it makes no difference which one is used.
+    T dot(const Vec2<T>& b) const;
+    Vec2<T> project(const Vec2<T>& b) const;
     T angle() const;
 
     void translate(const Vec2<T>& v);

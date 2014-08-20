@@ -9,10 +9,14 @@ public:
     Triangle();
     Triangle(const Vec2<T>& p1, const Vec2<T>& p2, const Vec2<T>& p3);
     Triangle(const Vec2<T>* p);
-    Triangle(const Triangle<T>& t);
-    Triangle(Triangle<T>&& t);
-    Triangle<T>& operator =(const Triangle<T>& t);
-    Triangle<T>& operator =(Triangle<T> && t);
+    template <class X>
+    Triangle(const Triangle<X>& t);
+    template <class X>
+    Triangle(Triangle<X>&& t);
+    template <class X>
+    Triangle<T>& operator =(const Triangle<X>& t);
+    template <class X>
+    Triangle<T>& operator =(Triangle<X> && t);
 
     Triangle<T> operator +(const Vec2<T>& p) const;
     Triangle<T>& operator +=(const Vec2<T>& p);
@@ -29,6 +33,7 @@ public:
 
     Mesh<LineSegment<T>> outline() const;
 
+    virtual typename Shape2<T>::ShapeID shapeId() const;
 
     template<class S>
     bool intersects(const S& b);

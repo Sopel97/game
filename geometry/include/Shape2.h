@@ -6,6 +6,7 @@ class Shape2 : public Shape<T>
 {
 public:
     Shape2();
+    virtual ~Shape2();
 
     virtual Mesh<LineSegment<T>> outline() const;
 
@@ -15,10 +16,9 @@ public:
     virtual void scale(const Vec2<T>& s) = 0;
     virtual void scale(const T s) = 0;
 
-    bool intersects(const Shape2<T>& b);
-    bool intersects(const Shape2<T>* b);
+    virtual Vec2<T> project(const Vec2<T>& b) const;
+    virtual std::pair<T, T> project1(const Vec2<T>& b) const; //min and max values on line
 
-    virtual ~Shape2();
 };
 
 typedef Shape2<double> Shape2D;

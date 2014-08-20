@@ -22,6 +22,7 @@ int fastFloor( const T x )
 }
 
 template <class T> class SimplexNoise;
+template <class T> class CellNoise;
 
 #include "include/SimplexNoise.h"
 #include "include/CellNoise.h"

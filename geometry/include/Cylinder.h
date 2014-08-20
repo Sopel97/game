@@ -11,10 +11,14 @@ public:
 
     Cylinder();
     Cylinder(const Vec3<T>& p1, T r, T h);
-    Cylinder(const Cylinder<T>& c);
-    Cylinder(Cylinder<T>&& c);
-    Cylinder<T>& operator =(const Cylinder<T>& c);
-    Cylinder<T>& operator =(Cylinder<T> && c);
+    template <class X>
+    Cylinder(const Cylinder<X>& c);
+    template <class X>
+    Cylinder(Cylinder<X>&& c);
+    template <class X>
+    Cylinder<T>& operator =(const Cylinder<X>& c);
+    template <class X>
+    Cylinder<T>& operator =(Cylinder<X> && c);
 
     Cylinder<T> operator +(const Vec3<T>& v) const;
     Cylinder<T>& operator +=(const Vec3<T>& v);

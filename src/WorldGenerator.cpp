@@ -5,9 +5,33 @@
 #include "../geometry/Noise.h"
 #include <iostream>
 
-#include <cstdlib> //temporary for rand
-
 using namespace Noise;
+
+WorldGenerator::Layer::Layer()
+{
+
+}
+WorldGenerator::Layer::Layer(LuaTableNode layerNode)
+{
+    Root& root = Root::instance();
+    TileDatabase* tileDatabase = root.tileDatabase();
+    name = layerNode[LayerParameter::NAME].getDefault<std::string>("");
+    lowerBound.min = layerNode[LayerParameter::LOWER_BOUND_MIN].getDefault<float>(-1.0f);
+    lowerBound.max = layerNode[LayerParameter::LOWER_BOUND_MAX].getDefault<float>(-1.0f);
+    std::string mainTileName = layerNode[LayerParameter::MAIN_TILE_NAME].getDefault<std::string>("Dirt");
+    mainTile = tileDatabase->getTileTemplateByName(mainTileName);
+
+    std::string bottomOutlineTileName = layerNode[LayerParameter::BOTTOM_OUTLINE_TILE_NAME].getDefault<std::string>(mainTileName);
+    bottomOutlineTile = tileDatabase->getTileTemplateByName(bottomOutlineTileName);
+
+    bottomOverflow = layerNode[LayerParameter::BOTTOM_OVERFLOW].getDefault<int>(0);
+    std::string bottomOverflowTileName = layerNode[LayerParameter::BOTTOM_OVERFLOW_TILE_NAME].getDefault<std::string>(bottomOutlineTileName);
+    bottomOverflowTile = tileDatabase->getTileTemplateByName(bottomOutlineTileName);
+
+    noiseOctaves = layerNode[LayerParameter::NOISE_OCTAVES].getDefault<int>(5);
+    noisePersistance = layerNode[LayerParameter::NOISE_PERSISTANCE].getDefault<double>(1);
+    noiseScale = layerNode[LayerParameter::NOISE_SCALE].getDefault<double>(0.01);
+}
 WorldGenerator::WorldGenerator(Configuration& config)
 {
     m_lastLayerId = 0;
@@ -26,6 +50,8 @@ WorldGenerator::WorldGenerator(Configuration& config)
         if(layer.lowerBound.max < 0.0f) layer.lowerBound.max = m_worldHeight - 1;
         addLayer(layer);
     }
+
+    m_randomEngine = XorshiftEngine(m_seed);
 }
 
 WorldGenerator::~WorldGenerator()
@@ -65,6 +91,7 @@ void WorldGenerator::generate(World* world)
         for(int y = 0; y < m_worldHeight; ++y)
         {
             while(layer < numberOfLayers && y > layers[x][layer]) ++layer;
+
             if(layer >= numberOfLayers) break;
             Tile* tile = m_layers[layer].mainTile;
             if(y == layers[x][layer])
@@ -79,7 +106,7 @@ void WorldGenerator::generate(World* world)
                 if(diff > 0)
                 {
                     float fraction = (float)diff / (float)overflow;
-                    float r = rand() / (float)RAND_MAX; //rand must be replaced from seeded randomizer from geometry/Random lib
+                    float r = m_randomEngine.nextFloat();
                     if(r < fraction)
                     {
                         tile = previousLayer.bottomOverflowTile;
@@ -95,7 +122,6 @@ void WorldGenerator::generate(World* world)
             {
                 delete tileClone;
             }
-
         }
     }
 }

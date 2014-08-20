@@ -10,10 +10,14 @@ public:
 
     Circle();
     Circle(const Vec2<T>& p1, T r);
-    Circle(const Circle<T>& c);
-    Circle(Circle<T>&& c);
-    Circle& operator =(const Circle<T>& c);
-    Circle& operator =(Circle<T> && c);
+    template <class X>
+    Circle(const Circle<X>& c);
+    template <class X>
+    Circle(Circle<X>&& c);
+    template <class X>
+    Circle& operator =(const Circle<X>& c);
+    template <class X>
+    Circle& operator =(Circle<X> && c);
 
     Circle<T> operator +(const Vec2<T>& v) const;
     Circle<T>& operator +=(const Vec2<T>& v);

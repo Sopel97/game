@@ -24,24 +24,28 @@ Polygon<T>::Polygon(Vec2<T>* v, size_t count)
     vertices.assign(v, v + count);
 }
 template <class T>
-Polygon<T>::Polygon(const Polygon<T>& p)
+template <class X>
+Polygon<T>::Polygon(const Polygon<X>& p)
 {
     vertices = p.vertices;
 }
 template <class T>
-Polygon<T>::Polygon(Polygon<T>&& p)
+template <class X>
+Polygon<T>::Polygon(Polygon<X>&& p)
 {
     vertices = std::move(p.vertices);
 }
 
 template <class T>
-Polygon<T>& Polygon<T>::operator=(const Polygon<T>& p)
+template <class X>
+Polygon<T>& Polygon<T>::operator=(const Polygon<X>& p)
 {
     vertices = p.vertices;
     return *this;
 }
 template <class T>
-Polygon<T>& Polygon<T>::operator=(Polygon<T> && p)
+template <class X>
+Polygon<T>& Polygon<T>::operator=(Polygon<X> && p)
 {
     vertices = std::move(p.vertices);
     return *this;
@@ -140,6 +144,28 @@ void Polygon<T>::transform(std::function<void(Vec2<T>&)>& func)
     }
 }
 
+template <class T>
+Vec2<T> Polygon<T>::project(const Vec2<T>& b) const
+{
+    Vec2<T> projection;
+
+    return projection;
+}
+
+template <class T>
+std::pair<T, T> Polygon<T>::project1(const Vec2<T>& b) const
+{
+    T minProjection;
+    T maxProjection;
+    minProjection = maxProjection = vertices[0].dot(b);
+    for(const Vec2<T>& vertex : vertices)
+    {
+        T dotProduct = vertex.dot(b);
+        if(dotProduct < minProjection) minProjection = dotProduct;
+        else if(dotProduct > maxProjection) maxProjection = dotProduct;
+    }
+    return std::pair<T,T>(minProjection, maxProjection);
+}
 template <class T>
 Mesh<LineSegment<T>> Polygon<T>::outline() const
 {

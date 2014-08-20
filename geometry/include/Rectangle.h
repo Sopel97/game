@@ -9,11 +9,14 @@ public:
     Rectangle();
     Rectangle(const Vec2<T>& p1, const Vec2<T>& p2);
     Rectangle(const Vec2<T>& p1, const T width, const T height);
-    Rectangle(const Rectangle<T>& r);
-    Rectangle(Rectangle<T>&& r);
-    Rectangle<T>& operator =(const Rectangle<T>& r);
-    Rectangle<T>& operator =(Rectangle<T> && r);
-
+    template <class X>
+    Rectangle(const Rectangle<X>& r);
+    template <class X>
+    Rectangle(Rectangle<X>&& r);
+    template <class X>
+    Rectangle<T>& operator =(const Rectangle<X>& r);
+    template <class X>
+    Rectangle<T>& operator =(Rectangle<X> && r);
 
     Rectangle<T> operator +(const Vec2<T>& v) const;
     Rectangle<T>& operator +=(const Vec2<T>& v);
@@ -33,6 +36,7 @@ public:
 
     Mesh<LineSegment<T>> outline() const;
 
+    virtual typename Shape2<T>::ShapeID shapeId() const;
 
     /* INTERSECTIONS */
     template<class S>

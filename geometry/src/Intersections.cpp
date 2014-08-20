@@ -266,6 +266,30 @@ bool Intersections::intersection(const Polygon<T>& a, const Vec2<T>& b)
     return totalQuadrantCrossDelta == 4 || totalQuadrantCrossDelta == -4;
 }
 template <class T>
+bool Intersections::intersection(const Polygon<T>& a, const Polygon<T>& b)
+{
+    Vec2<T> lastVertex = a.vertices.back();
+    for(const Vec2<T>& vertex : a.vertices)
+    {
+        Vec2<T> perp = (vertex - lastVertex).normal();
+        std::pair<T, T> aProjection = a.project1(perp);
+        std::pair<T, T> bProjection = b.project1(perp);
+        if(aProjection.first > bProjection.second || bProjection.first > aProjection.second) return false;
+        lastVertex = vertex;
+    }
+
+    lastVertex = b.vertices.back();
+    for(const Vec2<T>& vertex : b.vertices)
+    {
+        Vec2<T> perp = (vertex - lastVertex).normal();
+        std::pair<T, T> aProjection = a.project1(perp);
+        std::pair<T, T> bProjection = b.project1(perp);
+        if(aProjection.first > bProjection.second || bProjection.first > aProjection.second) return false;
+        lastVertex = vertex;
+    }
+    return true;
+}
+template <class T>
 bool Intersections::intersection(const Vec2<T>& a, const Polygon<T>& b)
 {
     return intersection(b, a);
@@ -302,29 +326,9 @@ bool Intersections::intersection(const S& a, const Mesh<T>& b)
     return intersection(b, a);
 }
 
-//universal
-template <class S, class T>
-bool Intersections::intersection(const S& a, const Shape2<T>* b) //TODO
-{
-    return false;
-}
-
-template <class S, class T>
-bool Intersections::intersection(const Shape2<T>* a, const S& b)
-{
-    return intersection(b, a);
-}
-
-template <class T>
-bool Intersections::intersection(const Shape2<T>* a, const Shape2<T>* b) //TODO
-{
-    return false;
-}
-
-
 //temporary
 template <class T>
 bool Intersections::intersection(const Vec2<T>& a, const Vec2<T>& b)
 {
-    return Circle<T>(a, 5).intersects(Circle<T>(b, 10));
+    return Circle<T>(a, T(5)).intersects(Circle<T>(b, T(10)));
 }

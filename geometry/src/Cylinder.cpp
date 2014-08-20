@@ -11,7 +11,8 @@ Cylinder<T>::Cylinder(const Vec3<T>& p1, T r, T h)
     height = h;
 }
 template <class T>
-Cylinder<T>::Cylinder(const Cylinder<T>& c)
+template <class X>
+Cylinder<T>::Cylinder(const Cylinder<X>& c)
 {
     center = c.center;
     radius = c.radius;
@@ -19,7 +20,16 @@ Cylinder<T>::Cylinder(const Cylinder<T>& c)
 }
 
 template <class T>
-Cylinder<T>& Cylinder<T>::operator =(const Cylinder<T>& c)
+template <class X>
+Cylinder<T>::Cylinder(Cylinder<X>&& c)
+{
+    center = c.center;
+    radius = c.radius;
+    height = c.height;
+}
+template <class T>
+template <class X>
+Cylinder<T>& Cylinder<T>::operator =(const Cylinder<X>& c)
 {
     center = c.center;
     radius = c.radius;
@@ -27,7 +37,8 @@ Cylinder<T>& Cylinder<T>::operator =(const Cylinder<T>& c)
     return *this;
 }
 template <class T>
-Cylinder<T>& Cylinder<T>::operator =(Cylinder<T> && c)
+template <class X>
+Cylinder<T>& Cylinder<T>::operator =(Cylinder<X> && c)
 {
     center = std::move(c.center);
     radius = c.radius;

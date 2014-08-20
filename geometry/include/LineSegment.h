@@ -9,11 +9,15 @@ public:
     Vec2<T> end;
     LineSegment();
     LineSegment(const Vec2<T>& _begin, const Vec2<T>& _end);
-    LineSegment(const LineSegment<T>& s);
-    LineSegment(LineSegment<T>&& s);
+    template <class X>
+    LineSegment(const LineSegment<X>& s);
+    template <class X>
+    LineSegment(LineSegment<X>&& s);
 
-    LineSegment<T>& operator=(const LineSegment<T>& s);
-    LineSegment<T>& operator=(LineSegment<T> && s);
+    template <class X>
+    LineSegment<T>& operator=(const LineSegment<X>& s);
+    template <class X>
+    LineSegment<T>& operator=(LineSegment<X> && s);
 
     LineSegment<T> operator+(const Vec2<T>& v) const;
     LineSegment<T>& operator+=(const Vec2<T>& v);

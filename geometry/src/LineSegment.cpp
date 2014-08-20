@@ -10,27 +10,31 @@ LineSegment<T>::LineSegment(const Vec2<T>& _begin, const Vec2<T>& _end)
     end = _end;
 }
 template <class T>
-LineSegment<T>::LineSegment(const LineSegment<T>& s)
+template <class X>
+LineSegment<T>::LineSegment(const LineSegment<X>& s)
 {
     begin = s.begin;
     end = s.end;
 }
 template <class T>
-LineSegment<T>::LineSegment(LineSegment<T>&& s)
+template <class X>
+LineSegment<T>::LineSegment(LineSegment<X>&& s)
 {
     begin = std::move(s.begin);
     end = std::move(s.end);
 }
 
 template <class T>
-LineSegment<T>& LineSegment<T>::operator=(const LineSegment<T>& s)
+template <class X>
+LineSegment<T>& LineSegment<T>::operator=(const LineSegment<X>& s)
 {
     begin = s.begin;
     end = s.end;
     return *this;
 }
 template <class T>
-LineSegment<T>& LineSegment<T>::operator=(LineSegment<T> && s)
+template <class X>
+LineSegment<T>& LineSegment<T>::operator=(LineSegment<X> && s)
 {
     begin = std::move(s.begin);
     end = std::move(s.end);

@@ -17,26 +17,30 @@ Rectangle<T>::Rectangle(const Vec2<T>& p1, const T width, const T height)
     bottomRight = p1 + Vec2<T>(width, height);
 }
 template <class T>
-Rectangle<T>::Rectangle(const Rectangle<T>& r)
+template <class X>
+Rectangle<T>::Rectangle(const Rectangle<X>& r)
 {
     topLeft = r.topLeft;
     bottomRight = r.bottomRight;
 }
 template <class T>
-Rectangle<T>::Rectangle(Rectangle<T>&& r)
+template <class X>
+Rectangle<T>::Rectangle(Rectangle<X>&& r)
 {
     topLeft = std::move(r.topLeft);
     bottomRight = std::move(r.bottomRight);
 }
 template <class T>
-Rectangle<T>& Rectangle<T>::operator =(const Rectangle<T>& r)
+template <class X>
+Rectangle<T>& Rectangle<T>::operator =(const Rectangle<X>& r)
 {
     topLeft = r.topLeft;
     bottomRight = r.bottomRight;
     return *this;
 }
 template <class T>
-Rectangle<T>& Rectangle<T>::operator =(Rectangle<T> && r)
+template <class X>
+Rectangle<T>& Rectangle<T>::operator =(Rectangle<X> && r)
 {
     topLeft = std::move(r.topLeft);
     bottomRight = std::move(r.bottomRight);
@@ -120,6 +124,7 @@ Mesh<LineSegment<T>> Rectangle<T>::outline() const
         LineSegment<T>(Vec2<T>(bottomRight), Vec2<T>(topLeft.x, bottomRight.y))
     });
 }
+
 /* INTERSECTIONS */
 
 template <class T>
