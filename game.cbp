@@ -47,103 +47,9 @@
 		<Linker>
 			<Add library="lib\lua5.1.lib" />
 		</Linker>
-		<Unit filename="geometry/Geometry.h">
+		<Unit filename="include/Array2.h">
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="geometry/Noise.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/CellNoise.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Circle.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Cuboid.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Cylinder.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Intersections.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/LineSegment.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Mesh.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Polygon.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Rectangle.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Shape.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Shape2.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/SimplexNoise.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Triangle.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Vec2.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/include/Vec3.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/CellNoise.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Circle.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Cuboid.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Cylinder.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Intersections.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/LineSegment.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Mesh.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Polygon.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Rectangle.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Shape.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Shape2.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/SimplexNoise.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Triangle.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Vec2.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="geometry/src/Vec3.cpp">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="include/Array2.h" />
 		<Unit filename="include/Assets.h">
 			<Option target="Release" />
 		</Unit>
@@ -159,10 +65,18 @@
 		<Unit filename="include/TileDatabase.h">
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="include/Util.h" />
-		<Unit filename="include/World.h" />
-		<Unit filename="include/WorldGenerator.h" />
-		<Unit filename="include/tiles/BasicSolidTile.h" />
+		<Unit filename="include/Util.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/World.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/WorldGenerator.h">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/tiles/BasicSolidTile.h">
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="include/tiles/StaticTileData.h">
 			<Option target="Release" />
 		</Unit>

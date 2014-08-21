@@ -4,15 +4,15 @@
 #include "Configuration.h"
 #include "Util.h"
 #include "Root.h"
-#include "TileDatabase.h"
 #include "../geometry/Random.h"
-
-using namespace Random;
 
 #include <vector>
 #include <map>
 
+using namespace Random;
+
 class World;
+class Tile;
 
 class WorldGenerator
 {

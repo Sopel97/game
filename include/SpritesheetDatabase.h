@@ -4,7 +4,9 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <allegro5/allegro.h>
+
+class ALLEGRO_BITMAP;
+class Assets;
 
 class SpritesheetDatabase
 {
@@ -16,7 +18,7 @@ public:
     ALLEGRO_BITMAP* getSpritesheetByName(const std::string& name);
     int getSpritesheetIdByName(const std::string& name);
     void addSpritesheet(const std::string& path);
-    void load();
+    void load(Assets* assets);
 protected:
 private:
     int m_lastId;

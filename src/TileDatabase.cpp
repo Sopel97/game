@@ -70,11 +70,10 @@ void TileDatabase::addTile(const std::string& path)
 
     ++m_lastId;
 }
-void TileDatabase::load()
+void TileDatabase::load(Assets* assets)
 {
     int currentId = m_lastId;
-    Root& root = Root::instance();
-    std::vector<std::string> tileAssets = root.assets()->tileAssets();
+    std::vector<std::string> tileAssets = assets->tileAssets();
     std::cout << "Found " << tileAssets.size() << " tiles:" << '\n';
     for(std::string& tileAsset : tileAssets)
     {

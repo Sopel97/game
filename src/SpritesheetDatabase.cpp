@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 
+#include <allegro5/allegro.h>
+
 #include "SpritesheetDatabase.h"
 #include "Root.h"
 #include "Assets.h"
@@ -30,10 +32,9 @@ void SpritesheetDatabase::addSpritesheet(const std::string& path)
 
     ++m_lastId;
 }
-void SpritesheetDatabase::load()
+void SpritesheetDatabase::load(Assets* assets)
 {
-    Root& root = Root::instance();
-    std::vector<std::string> gfxAssets = root.assets()->graphicsAssets();
+    std::vector<std::string> gfxAssets = assets->graphicsAssets();
     std::cout << "Found " << gfxAssets.size() << " spritesheets:" << '\n';
     for(std::string& gfxAsset : gfxAssets)
     {

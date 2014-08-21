@@ -2,7 +2,9 @@
 
 #include "World.h"
 #include "Tile.h"
+#include "TileDatabase.h"
 #include "../geometry/Noise.h"
+
 #include <iostream>
 
 using namespace Noise;
@@ -11,7 +13,7 @@ WorldGenerator::Layer::Layer()
 {
 
 }
-WorldGenerator::Layer::Layer(LuaTableNode layerNode)
+WorldGenerator::Layer::Layer(LuaTableNode layerNode) //maybe replace LuaTableNode with smth like ConfigurationNode
 {
     Root& root = Root::instance();
     TileDatabase* tileDatabase = root.tileDatabase();

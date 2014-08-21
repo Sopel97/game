@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <map>
-#include "../luatables/luatables.h"
+#include <string>
 
 class Root;
 class Assets;
@@ -30,7 +30,7 @@ public:
     Tile* createNewTileByName(const std::string& name);
 
     void addTile(const std::string& path);
-    void load();
+    void load(Assets* assets);
 
 protected:
 private:

@@ -63,12 +63,12 @@ void Root::start()
 
     /* Initializing spritesheets */
     m_spritesheetDatabase = new SpritesheetDatabase();
-    m_spritesheetDatabase->load();
+    m_spritesheetDatabase->load(m_assets);
 
     /* Initializing tiles */
     m_tileDatabase = new TileDatabase();
     addBaseTilesToDatabase();
-    m_tileDatabase->load();
+    m_tileDatabase->load(m_assets);
 
     /* World generator */
     //temporarly it will be hardcoded world generator path/handle/id
