@@ -13,7 +13,7 @@ WorldGenerator::Layer::Layer()
 {
 
 }
-WorldGenerator::Layer::Layer(LuaTableNode layerNode) //maybe replace LuaTableNode with smth like ConfigurationNode
+WorldGenerator::Layer::Layer(ConfigurationNode layerNode)
 {
     Root& root = Root::instance();
     TileDatabase* tileDatabase = root.tileDatabase();
@@ -43,7 +43,7 @@ WorldGenerator::WorldGenerator(Configuration& config)
     m_surfaceLevel.min = config["surface"][1].getDefault<float>(0.0f);
     m_surfaceLevel.max = config["surface"][2].getDefault<float>(0.0f);
 
-    LuaTableNode layers = config["layers"];
+    ConfigurationNode layers = config["layers"];
     int size = layers.length();
     for(int i = 1; i <= size; ++i)
     {

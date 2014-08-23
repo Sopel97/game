@@ -6,17 +6,21 @@
 
 #include "../luatables/luatables.h"
 
+typedef LuaTableNode ConfigurationNode;
+
 class Configuration
 {
 public:
-    Configuration(const std::string path);
+    Configuration(const std::string& path);
     virtual ~Configuration();
 
-    LuaTableNode operator[](const std::string nodePath);
+    ConfigurationNode operator[](const std::string& nodePath);
+    ConfigurationNode operator[](int index);
 protected:
     LuaTable m_table;
     std::string m_path;
 private:
 };
+
 
 #endif // CONFIGURATION_H

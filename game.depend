@@ -141,13 +141,14 @@
 
 1407061660 d:\dev\game\include\root.h
 
-1404718952 d:\dev\game\include\configuration.h
+1408804537 d:\dev\game\include\configuration.h
 	<lua.h>
 	<string>
 	"../luatables/luatables.h"
 
-1404718952 source:d:\dev\game\src\configuration.cpp
+1408804524 source:d:\dev\game\src\configuration.cpp
 	"Configuration.h"
+	"../geometry/Geometry.h"
 
 1408618830 source:d:\dev\game\src\root.cpp
 	<iostream>
@@ -251,7 +252,7 @@
 1405168896 source:d:\dev\game\src\array2.cpp
 	"Array2.h"
 
-1407004244 d:\dev\game\include\array2.h
+1408804462 d:\dev\game\include\array2.h
 	<iostream>
 	<vector>
 	<utility>
@@ -770,7 +771,7 @@
 	"Assets.h"
 	"Tile.h"
 
-1408619268 d:\dev\game\include\worldgenerator.h
+1408804524 d:\dev\game\include\worldgenerator.h
 	"Configuration.h"
 	"Util.h"
 	"Root.h"
@@ -778,10 +779,11 @@
 	<vector>
 	<map>
 
-1408552598 source:d:\dev\game\src\worldgenerator.cpp
+1408804200 source:d:\dev\game\src\worldgenerator.cpp
 	"WorldGenerator.h"
 	"World.h"
 	"Tile.h"
+	"TileDatabase.h"
 	"../geometry/Noise.h"
 	<iostream>
 

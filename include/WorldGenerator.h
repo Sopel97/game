@@ -46,7 +46,7 @@ public:
         int noiseOctaves;
         double noisePersistance;
         double noiseScale;
-        Layer(LuaTableNode layerNode);
+        Layer(ConfigurationNode layerNode);
         Layer();
     };
 

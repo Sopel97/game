@@ -5,6 +5,7 @@
 #include <utility>
 using std::size_t;
 
+
 template <class T>
 class Array2
 {
@@ -117,7 +118,8 @@ public:
         m_data = new T[m_sizeX * m_sizeY];
     }
     Array2(size_t sizeX, size_t sizeY, const T& initValue) :
-        Array2(sizeX, sizeY)
+        m_sizeX(sizeX),
+        m_sizeY(sizeY)
     {
         size_t totalSize = m_sizeX * m_sizeY;
         m_data = new T[totalSize];
@@ -238,7 +240,5 @@ private:
     size_t m_sizeX;
     size_t m_sizeY;
 };
-
-
 
 #endif // ARRAY2_H

@@ -1,6 +1,9 @@
 #include "Configuration.h"
+#include "../geometry/Geometry.h"
 
-Configuration::Configuration(const std::string path) :
+using namespace Geo;
+
+Configuration::Configuration(const std::string& path) :
     m_table(LuaTable::fromFile(path.c_str()))
 {
 
@@ -11,7 +14,12 @@ Configuration::~Configuration()
 
 }
 
-LuaTableNode Configuration::operator[](const std::string nodePath)
+ConfigurationNode Configuration::operator[](const std::string& nodePath)
 {
     return m_table[nodePath.c_str()];
+}
+
+ConfigurationNode Configuration::operator[](int index)
+{
+    return m_table[index];
 }
