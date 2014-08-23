@@ -107,10 +107,10 @@ public:
 
             iterator(pointer ptr, int jump) : m_start(ptr), m_ptr(ptr), m_jump(jump) { }
 
-            self_type       operator++ ()                     { self_type i = *this; m_ptr += m_jump; return i;       }
-            self_type       operator-- ()                     { self_type i = *this; m_ptr -= m_jump; return i;       }
-            self_type&      operator++ (int)                  { m_ptr += m_jump; return *this;                        }
-            self_type&      operator-- (int)                  { m_ptr -= m_jump; return *this;                        }
+            self_type       operator++ (int)                  { self_type i = *this; m_ptr += m_jump; return i;       }
+            self_type       operator-- (int)                  { self_type i = *this; m_ptr -= m_jump; return i;       }
+            self_type&      operator++ ()                     { m_ptr += m_jump; return *this;                        }
+            self_type&      operator-- ()                     { m_ptr -= m_jump; return *this;                        }
 
             self_type       operator+  (int n)                { self_type i = *this; i.m_ptr += m_jump * n; return i; }
             self_type       operator-  (int n)                { self_type i = *this; i.m_ptr -= m_jump * n; return i; }
@@ -255,7 +255,7 @@ public:
     {
         size_t totalSize = m_sizeX * m_sizeY;
         m_data = new T[totalSize];
-        for(size_t i; i < totalSize; ++i) m_data[i] = arrayCopy.m_data[i];
+        for(size_t i = 0; i < totalSize; ++i) m_data[i] = arrayCopy.m_data[i];
     }
 
     Array2(Array2<T>&& array) :
