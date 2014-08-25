@@ -124,24 +124,39 @@ void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         if(tileOut->outerBorderPrecedence() <= outerBorderPrecedence()) return;
     }
     int currentTileId = id();
+    int currentTilePrecedence = outerBorderPrecedence();
+
     Vec2F screenCoords = Util::fastFloor(world->worldToScreen(Vec2D(outX * 16.0, outY * 16.0)));
     ALLEGRO_COLOR color = al_map_rgb(255, 255, 255);
 
     Array2<Tile*> neighbours;
     Array2<int> ids(3, 3);
+    Array2<int> precedences(3, 3);
     neighbours = world->getTiles2(outX - 1, outY - 1, 3, 3);
     for(int x = 0; x < 3; ++x)
     {
         for(int y = 0; y < 3; ++y)
         {
             Tile* currentTile = neighbours[x][y];
-            if(!currentTile) ids[x][y] = 0; //air has highest precedence
-            else ids[x][y] = currentTile->id();
+            if(!currentTile)
+            {
+                ids[x][y] = 0; //air has highest precedence
+                precedences[x][y] = 0;
+            }
+            else
+            {
+                ids[x][y] = currentTile->id();
+                precedences[x][y] = currentTile->outerBorderPrecedence();
+            }
         }
     }
     auto shouldDraw = [&currentTileId](int id) -> bool
     {
         return currentTileId == id;
+    };
+    auto biggerPrecedence = [&currentTilePrecedence](int id) -> bool
+    {
+        return currentTilePrecedence > id;
     };
     float textureX;
     float textureY;
@@ -159,8 +174,9 @@ void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, textureX + 16, textureY     , color});
         toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, textureX     , textureY + 16, color});
     }
+    unsigned int p = biggerPrecedence(ids[0][1]) | (biggerPrecedence(ids[1][0]) << 1) | (biggerPrecedence(ids[2][1]) << 2) | (biggerPrecedence(ids[1][2]) << 3); //similar to spriteOffset1 but with precedences
 
-    unsigned int spriteOffset2 = (shouldDraw(ids[0][0]) && !(spriteOffset1 & 3)) | ((shouldDraw(ids[2][0]) && !(spriteOffset1 & 6)) << 1) | ((shouldDraw(ids[2][2]) && !(spriteOffset1 & 12)) << 2) | ((shouldDraw(ids[0][2]) && !(spriteOffset1 & 9)) << 3) ;
+    unsigned int spriteOffset2 = (shouldDraw(ids[0][0]) && !(p & 3)) | ((shouldDraw(ids[2][0]) && !(p & 6)) << 1) | ((shouldDraw(ids[2][2]) && !(p & 12)) << 2) | ((shouldDraw(ids[0][2]) && !(p & 9)) << 3) ;
     textureX = spriteOffset2 * 16.0f + offset.x;
     textureY = 16.0f + offset.y;
     if(spriteOffset2)
