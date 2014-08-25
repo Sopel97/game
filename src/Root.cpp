@@ -118,7 +118,7 @@ void Root::start()
             ++m_ticks;
             ++ticksThisSecond;
 
-#define HIGH_SPEED_CAMERA
+//#define HIGH_SPEED_CAMERA
 
 #ifndef HIGH_SPEED_CAMERA
             /* low camera speed */

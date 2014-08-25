@@ -2,6 +2,8 @@
 #define WORLD_H
 
 #include <vector>
+#include <set>
+
 #include "../geometry/Geometry.h"
 #include "Util.h"
 #include "Array2.h"
@@ -28,13 +30,16 @@ public:
     bool setTile(Tile* tile, int x, int y);  //setting tile doesn't check if it's possible
     bool placeTile(Tile* tile, int x, int y, bool update = true, bool redraw = true);
 
-    void breakTile(int x, int y, bool update = true, bool redraw = true);
+    void destroyTile(int x, int y, bool update = true, bool redraw = true);
+
+    bool requestForegroundTileRedraw(int x, int y);
 
     bool inWorldRange(int x, int y);
 
     void updateTilesFrom(int x, int y);
     void redrawTilesFrom(int x, int y);
 
+    void performForegroundRedrawRequests();
 
     void draw();
     void listMissingForegroundTilesToBuffer();
@@ -97,6 +102,21 @@ private:
 
     std::vector<DrawableTile> m_foregroundTileBuffer;
     std::vector<DrawableTileBorder> m_foregroundBorderBuffer;
+
+    std::vector<ALLEGRO_VERTEX> m_foregroundErasedTiles;
+    std::vector<ALLEGRO_VERTEX> m_foregroundErasedTileBorders;
+
+    class Vec2Icompare
+    {
+    public:
+        bool operator()(const Vec2I& lhs, const Vec2I& rhs)
+        {
+            if(lhs.x < rhs.x) return true;
+            else if (lhs.x == rhs.x) return lhs.y < rhs.y;
+            return false;
+        }
+    };
+    std::set < Vec2I, Vec2Icompare> m_foregroundRedrawRequests;
 
     WorldGenerator* m_worldGenerator;
 };

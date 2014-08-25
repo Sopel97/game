@@ -83,9 +83,15 @@ void TileDatabase::load(Assets* assets)
 }
 Tile* TileDatabase::createNewTileById(int id)
 {
-    return getTileTemplateById(id)->clone();
+    Tile* tile = getTileTemplateById(id);
+    if(tile) return tile->clone();
+
+    return nullptr;
 }
 Tile* TileDatabase::createNewTileByName(const std::string& name)
 {
-    return getTileTemplateByName(name)->clone();
+    Tile* tile = getTileTemplateByName(name);
+    if(tile) return tile->clone();
+
+    return nullptr;
 }

@@ -18,20 +18,7 @@ World::World(WorldGenerator* worldGenerator)
     m_height = worldGenerator->worldHeight();
     m_tiles = Array2<Tile*>(m_width, m_height, nullptr);
     m_worldGenerator->generate(this);
-    // this will be in world generator
     Root& root = Root::instance();
-    /*for(int x = 0; x < m_width; ++x)
-    {
-        for(int y = 0; y < m_height; ++y)
-        {
-            Tile* tile = nullptr;
-            int r = rand() % 2;
-            if(r == 0) tile = root.tileDatabase()->getTileTemplateByName("Dirt");
-            else if(r == 1) tile = root.tileDatabase()->getTileTemplateByName("Stone");
-            m_tiles[x][y] = tile->clone();
-        }
-    }*/
-    //
     m_camera = Vec2D(77.001, 77.001);
     m_foregroundTileLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
     m_foregroundBorderLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
@@ -71,7 +58,7 @@ std::vector<Tile*> World::getTiles(int x, int y, int tilesHorizontal, int tilesV
         for(int currentTileY = firstTileY; currentTileY <= lastTileY; ++currentTileY)
         {
             Tile* currentTile = getTile(currentTileX, currentTileY);
-            if(currentTile) tiles.push_back(currentTile);
+            if(currentTile) tiles.push_back(currentTile); //only non air tiles are listed, this may not be permanent
         }
     }
     return tiles;
@@ -112,24 +99,111 @@ bool World::placeTile(Tile* tile, int x, int y, bool update, bool redraw)
     if(redraw) redrawTilesFrom(x, y);
     return true;
 }
-void World::breakTile(int x, int y, bool update, bool redraw)
+void World::destroyTile(int x, int y, bool update, bool redraw)
 {
     if(!inWorldRange(x, y)) return;
     x = Util::mod(x, m_width);
 
     if(m_tiles[x][y]) delete m_tiles[x][y];
+    else return;
     m_tiles[x][y] = nullptr;
 
     if(update) updateTilesFrom(x, y);
     if(redraw) redrawTilesFrom(x, y);
 }
+bool World::requestForegroundTileRedraw(int x, int y)
+{
+    if(y < -1 || y > m_height) return false;
+    Root& root = Root::instance();
+
+    int windowWidth = root.windowWidth();
+    int windowHeight = root.windowHeight();
+    Vec2D worldCoordsTopLeft = screenToWorld(Vec2D(0.0, 0.0));
+    Vec2D worldCoordsBottomRight = screenToWorld(Vec2D(windowWidth, windowHeight));
+    int firstTileX = Util::fastFloor(worldCoordsTopLeft.x / 16.0f);
+    int firstTileY = Util::fastFloor(worldCoordsTopLeft.y / 16.0f);
+
+    int lastTileX = Util::fastFloor(worldCoordsBottomRight.x / 16.0f);
+    int lastTileY = Util::fastFloor(worldCoordsBottomRight.y / 16.0f);
+
+    bool a = (x < firstTileX || y < firstTileY || x > lastTileX || y > lastTileY);
+    bool b = (x+m_width < firstTileX || x+m_width > lastTileX);
+    if(!a)
+    {
+        m_foregroundRedrawRequests.insert({x, y});
+    }
+    else if (!b)
+    {
+        m_foregroundRedrawRequests.insert({x+m_width, y});
+    }
+    else return false;
+
+    return true;
+}
 void World::redrawTilesFrom(int x, int y)
 {
-    //redrawing this tile and 8 neighbours (if on screen)
+    for(int xx = -1; xx <= 1; ++xx)
+    {
+        for(int yy = -1; yy <= 1; ++yy)
+        {
+            requestForegroundTileRedraw(x + xx, y + yy);
+        }
+    }
+}
+void World::performForegroundRedrawRequests()
+{
+    if(m_foregroundRedrawRequests.empty()) return;
+    std::vector<ALLEGRO_VERTEX> erasedTiles;
+    for(Vec2I pos : m_foregroundRedrawRequests)
+    {
+        Tile* tile = getTile(pos.x, pos.y);
+
+        Vec2F screenCoords = Util::fastFloor(worldToScreen(Vec2D(pos.x * 16.0, pos.y * 16.0)));
+        ALLEGRO_COLOR color = al_map_rgba(0, 0, 0, 0);
+
+        if(tile)
+        {
+            listForegroundTile(pos.x, pos.y);
+        }
+        else
+        {
+            m_foregroundErasedTiles.push_back({screenCoords.x        , screenCoords.y        , 0, 0, 0, color});
+            m_foregroundErasedTiles.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, 0, 0, color});
+            m_foregroundErasedTiles.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, 0, 0, color});
+            m_foregroundErasedTiles.push_back({screenCoords.x + 16.0f, screenCoords.y + 16.0f, 0, 0, 0, color});
+            m_foregroundErasedTiles.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, 0, 0, color});
+            m_foregroundErasedTiles.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, 0, 0, color});
+        }
+
+        m_foregroundErasedTileBorders.push_back({screenCoords.x        , screenCoords.y        , 0, 0, 0, color});
+        m_foregroundErasedTileBorders.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, 0, 0, color});
+        m_foregroundErasedTileBorders.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, 0, 0, color});
+        m_foregroundErasedTileBorders.push_back({screenCoords.x + 16.0f, screenCoords.y + 16.0f, 0, 0, 0, color});
+        m_foregroundErasedTileBorders.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, 0, 0, color});
+        m_foregroundErasedTileBorders.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, 0, 0, color});
+
+        listForegroundTileBorders(pos.x, pos.y);
+    }
+    if(!erasedTiles.empty())
+    {
+        m_foregroundErasedTiles.insert(m_foregroundErasedTiles.end(), erasedTiles.begin(), erasedTiles.end());
+        m_foregroundErasedTileBorders.insert(m_foregroundErasedTileBorders.end(), erasedTiles.begin(), erasedTiles.end());
+    }
+    m_foregroundRedrawRequests.clear();
 }
 void World::updateTilesFrom(int x, int y)
 {
-    //updating 4 neighbour tiles to tile at x,y
+    for(int xx = -1; xx <= 1; xx += 2)
+    {
+        for(int yy = -1; yy <= 1; yy += 2)
+        {
+            Tile* tile = getTile(xx + x, yy + y);
+            if(!tile) continue;
+
+            if(tile->update(this, xx + x, yy + y))
+                updateTilesFrom(xx + x, yy + y);
+        }
+    }
 }
 bool World::inWorldRange(int x, int y)
 {
@@ -139,7 +213,7 @@ void World::drawFromLayerToScreen(ALLEGRO_BITMAP* layer)
 {
     Util::drawBitmap(layer, 0, 0);
 }
-void World::listForegroundTileBorders(int x, int y) //this method may be able to be optimised.
+void World::listForegroundTileBorders(int x, int y) //optimize
 {
     Tile* tile = getTile(x, y);
     std::vector<DrawableTileBorder> neighbours;
@@ -194,36 +268,44 @@ void World::listForegroundTile(int x, int y)
 }
 void World::drawForegroundTileBuffer()
 {
-    if(m_foregroundTileBuffer.empty()) return;
     Root& root = Root::instance();
     SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
 
     ALLEGRO_DISPLAY* currentDisplay = root.display();
     al_set_target_bitmap(m_foregroundTileLayer);
-    //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO); //may not be needed
+    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO);
 
-    std::sort(m_foregroundTileBuffer.begin(), m_foregroundTileBuffer.end(), [](const DrawableTile & lhs, const DrawableTile & rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
-
-    std::vector<ALLEGRO_VERTEX> toDraw;
-    toDraw.reserve(10000);
-    int lastSpritesheetId = m_foregroundTileBuffer[0].spritesheetId;
-
-    for(DrawableTile& tile : m_foregroundTileBuffer)
+    if(!m_foregroundErasedTiles.empty())
     {
-        int currentSpritesheetId = tile.spritesheetId;
-        if(currentSpritesheetId != lastSpritesheetId)
-        {
-            al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
-            toDraw.clear();
-            toDraw.reserve(10000);
-            lastSpritesheetId = currentSpritesheetId;
-        }
-        tile.tile->drawInner(this, toDraw, tile.x, tile.y);
+       al_draw_prim(m_foregroundErasedTiles.data(), NULL, NULL, 0, m_foregroundErasedTiles.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
     }
-    if(toDraw.size()) al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+
+    if(!m_foregroundTileBuffer.empty())
+    {
+        std::sort(m_foregroundTileBuffer.begin(), m_foregroundTileBuffer.end(), [](const DrawableTile & lhs, const DrawableTile & rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
+
+        std::vector<ALLEGRO_VERTEX> toDraw;
+        toDraw.reserve(10000);
+        int lastSpritesheetId = m_foregroundTileBuffer[0].spritesheetId;
+
+        for(DrawableTile& tile : m_foregroundTileBuffer)
+        {
+            int currentSpritesheetId = tile.spritesheetId;
+            if(currentSpritesheetId != lastSpritesheetId)
+            {
+                al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+                toDraw.clear();
+                toDraw.reserve(10000);
+                lastSpritesheetId = currentSpritesheetId;
+            }
+            tile.tile->drawInner(this, toDraw, tile.x, tile.y);
+        }
+        if(!toDraw.empty()) al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+    }
+
 
     al_set_target_bitmap(al_get_backbuffer(currentDisplay));
-    //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
+    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 }
 void World::listMissingForegroundTilesToBuffer()
 {
@@ -235,7 +317,7 @@ void World::listMissingForegroundTilesToBuffer()
     int firstTileX = Util::fastFloor(worldCoordsTopLeft.x / 16.0f);
     int firstTileY = Util::fastFloor(worldCoordsTopLeft.y / 16.0f);
 
-    firstTileX = max(firstTileX, 0);
+    firstTileY = max(firstTileY, 0);
     firstTileY = min(firstTileY, m_height - 1);
 
     int lastTileX = Util::fastFloor(worldCoordsBottomRight.x / 16.0f);
@@ -278,7 +360,7 @@ void World::listMissingForegroundBordersToBuffer()
     int firstTileX = Util::fastFloor(worldCoordsTopLeft.x / 16.0f);
     int firstTileY = Util::fastFloor(worldCoordsTopLeft.y / 16.0f);
 
-    firstTileX = max(firstTileX, -1); //border has to be drawn outside of world too
+    firstTileY = max(firstTileY, -1); //border has to be drawn outside of world too
     firstTileY = min(firstTileY, m_height);
 
     int lastTileX = Util::fastFloor(worldCoordsBottomRight.x / 16.0f);
@@ -314,36 +396,45 @@ void World::listMissingForegroundBordersToBuffer()
 }
 void World::drawForegroundBorderBuffer()
 {
-    if(m_foregroundBorderBuffer.empty()) return;
     Root& root = Root::instance();
     SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
 
     ALLEGRO_DISPLAY* currentDisplay = root.display();
     al_set_target_bitmap(m_foregroundBorderLayer);
-    //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO); //may not be needed
 
-    std::sort(m_foregroundBorderBuffer.begin(), m_foregroundBorderBuffer.end(), [](const DrawableTileBorder & lhs, const DrawableTileBorder & rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
-
-    std::vector<ALLEGRO_VERTEX> toDraw;
-    toDraw.reserve(10000);
-    int lastSpritesheetId = m_foregroundBorderBuffer[0].spritesheetId;
-
-    for(DrawableTileBorder& tile : m_foregroundBorderBuffer)
+    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO);
+    if(!m_foregroundErasedTileBorders.empty())
     {
-        int currentSpritesheetId = tile.spritesheetId;
-        if(currentSpritesheetId != lastSpritesheetId)
-        {
-            al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
-            toDraw.clear();
-            toDraw.reserve(10000);
-            lastSpritesheetId = currentSpritesheetId;
-        }
-        tile.tile->drawOuter(this, toDraw, tile.x, tile.y, tile.destX, tile.destY, tile.destTile);
+        al_draw_prim(m_foregroundErasedTileBorders.data(), NULL, NULL, 0, m_foregroundErasedTileBorders.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
     }
-    if(toDraw.size()) al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
+
+    if(!m_foregroundBorderBuffer.empty())
+    {
+        std::sort(m_foregroundBorderBuffer.begin(), m_foregroundBorderBuffer.end(), [](const DrawableTileBorder & lhs, const DrawableTileBorder & rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
+
+        std::vector<ALLEGRO_VERTEX> toDraw;
+        toDraw.reserve(10000);
+        int lastSpritesheetId = m_foregroundBorderBuffer[0].spritesheetId;
+
+        for(DrawableTileBorder& tile : m_foregroundBorderBuffer)
+        {
+            int currentSpritesheetId = tile.spritesheetId;
+            if(currentSpritesheetId != lastSpritesheetId)
+            {
+                al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+                toDraw.clear();
+                toDraw.reserve(10000);
+                lastSpritesheetId = currentSpritesheetId;
+            }
+            tile.tile->drawOuter(this, toDraw, tile.x, tile.y, tile.destX, tile.destY, tile.destTile);
+        }
+        if(!toDraw.empty()) al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+    }
+
+
 
     al_set_target_bitmap(al_get_backbuffer(currentDisplay));
-    //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 }
 void World::draw() //in every drawing function coordinates need to be floored, not casted to int
 {
@@ -352,37 +443,44 @@ void World::draw() //in every drawing function coordinates need to be floored, n
     int shiftX = m_cameraAtLastRedraw.x - cam.x;
     int shiftY = m_cameraAtLastRedraw.y - cam.y;
 
+    m_foregroundTileBuffer.clear(); //this may be needed to be out due to redrawing tiles in other place.
+    m_foregroundBorderBuffer.clear();
+
+    m_foregroundErasedTiles.clear();
+    m_foregroundErasedTileBorders.clear();
 
     if(shiftX || shiftY) //we want to draw missing tiles only when it is needed
     {
-        m_foregroundTileBuffer.clear(); //this may be needed to be out due to redrawing tiles in other place.
         m_foregroundTileBuffer.reserve(10000); //need to be reserved better.
-
-        m_foregroundBorderBuffer.clear();
         m_foregroundBorderBuffer.reserve(10000); //need to be reserved better.
 
         // drawing foreground tiles
         m_bitmapShifter->shift(m_foregroundTileLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0));
         m_bitmapShifter->shift(m_foregroundBorderLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0));
 
+
         listMissingForegroundTilesToBuffer();
         listMissingForegroundBordersToBuffer();
-
-        drawForegroundTileBuffer();
-        drawForegroundBorderBuffer();
 
         m_cameraAtLastRedraw.x -= shiftX;
         m_cameraAtLastRedraw.y -= shiftY;
     }
 
-    //TODO: redrawing tiles that request it
+    performForegroundRedrawRequests();
+
+    drawForegroundTileBuffer();
+    drawForegroundBorderBuffer();
 
     drawFromLayerToScreen(m_foregroundTileLayer);
     drawFromLayerToScreen(m_foregroundBorderLayer);
 }
 void World::update()
 {
-    //m_tiles[5][4]->update(this, 5, 4);
+    Root& root = Root::instance();
+    Vec2D c = screenToWorld(Vec2D(root.windowWidth()/2, root.windowHeight()/2));
+    destroyTile(c.x/16, c.y/16);
+    Vec2D c2 = screenToWorld(Vec2D(root.windowWidth()/4, root.windowHeight()/2));
+    placeTile(root.tileDatabase()->createNewTileByName("Stone"), c2.x/16, c2.y/16);
 }
 void World::doRandomTileUpdate()
 {

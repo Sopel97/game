@@ -146,6 +146,7 @@ void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
     float textureX;
     float textureY;
     Vec2F offset = textureOffset();
+
     unsigned int spriteOffset1 = shouldDraw(ids[0][1]) | (shouldDraw(ids[1][0]) << 1) | (shouldDraw(ids[2][1]) << 2) | (shouldDraw(ids[1][2]) << 3);
     textureX = spriteOffset1 * 16.0f + offset.x;
     textureY = 0.0f + offset.y;
@@ -172,9 +173,9 @@ void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, textureX     , textureY + 16, color});
     }
 }
-void BasicSolidTile::update(World* world, int x, int y)
+bool BasicSolidTile::update(World* world, int x, int y)
 {
-
+    return false;
 }
 void BasicSolidTile::randomUpdate(World* world, int x, int y)
 {
