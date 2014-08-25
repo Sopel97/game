@@ -204,13 +204,13 @@ const char serialize_std[] =
 //
 // Lua Helper Functions
 //
-void bail(lua_State *L, const char *msg)
+void bail(lua_State* L, const char* msg)
 {
     std::cerr << msg << lua_tostring(L, -1) << endl;
     abort();
 }
 
-void stack_print (const char *file, int line, lua_State *L)
+void stack_print (const char* file, int line, lua_State* L)
 {
     cout << file << ":" << line << ": stack size: " << lua_gettop(L) << endl;;
     for (int i = 1; i < lua_gettop(L) + 1; i++)
@@ -237,7 +237,7 @@ void stack_print (const char *file, int line, lua_State *L)
     }
 }
 
-void l_push_LuaKey (lua_State *L, const LuaKey &key)
+void l_push_LuaKey (lua_State* L, const LuaKey& key)
 {
     if (key.type == LuaKey::Integer)
         lua_pushnumber (L, key.int_value);
@@ -245,7 +245,7 @@ void l_push_LuaKey (lua_State *L, const LuaKey &key)
         lua_pushstring(L, key.string_value.c_str());
 }
 
-bool query_key_stack (lua_State *L, std::vector<LuaKey> key_stack)
+bool query_key_stack (lua_State* L, std::vector<LuaKey> key_stack)
 {
     for (int i = key_stack.size() - 1; i >= 0; i--)
     {
@@ -277,7 +277,7 @@ bool query_key_stack (lua_State *L, std::vector<LuaKey> key_stack)
     return true;
 }
 
-void create_key_stack (lua_State *L, std::vector<LuaKey> key_stack)
+void create_key_stack (lua_State* L, std::vector<LuaKey> key_stack)
 {
     for (int i = key_stack.size() - 1; i > 0; i--)
     {
@@ -322,7 +322,7 @@ std::vector<LuaKey> LuaTableNode::getKeyStack()
 {
     std::vector<LuaKey> result;
 
-    const LuaTableNode *node_ptr = this;
+    const LuaTableNode* node_ptr = this;
 
     do
     {
@@ -352,7 +352,7 @@ std::string LuaTableNode::keyStackToString()
 
 bool LuaTableNode::stackQueryValue()
 {
-    lua_State *L = luaTable->L;
+    lua_State* L = luaTable->L;
     stackTop = lua_gettop(L);
 
     std::vector<LuaKey> key_stack = getKeyStack();
@@ -362,7 +362,7 @@ bool LuaTableNode::stackQueryValue()
 
 void LuaTableNode::stackCreateValue()
 {
-    lua_State *L = luaTable->L;
+    lua_State* L = luaTable->L;
     stackTop = lua_gettop(L);
 
     std::vector<LuaKey> key_stack = getKeyStack();
@@ -372,7 +372,7 @@ void LuaTableNode::stackCreateValue()
 
 LuaTable LuaTableNode::stackQueryTable()
 {
-    lua_State *L = luaTable->L;
+    lua_State* L = luaTable->L;
     stackTop = lua_gettop(L);
 
     std::vector<LuaKey> key_stack = getKeyStack();
@@ -388,7 +388,7 @@ LuaTable LuaTableNode::stackQueryTable()
 
 LuaTable LuaTableNode::stackCreateLuaTable()
 {
-    lua_State *L = luaTable->L;
+    lua_State* L = luaTable->L;
     stackTop = lua_gettop(L);
 
     std::vector<LuaKey> key_stack = getKeyStack();
@@ -396,7 +396,7 @@ LuaTable LuaTableNode::stackCreateLuaTable()
     create_key_stack (L, key_stack);
 
     // create new table for the CustomType
-    lua_newtable(luaTable->L);	// parent, CustomTable
+    lua_newtable(luaTable->L);  // parent, CustomTable
     // add table of CustomType to the parent
     stackPushKey(); // parent, CustomTable, key
     lua_pushvalue(luaTable->L, -2); // parent, CustomTable, key, CustomTable
@@ -492,7 +492,7 @@ std::vector<LuaKey> LuaTableNode::keys()
             }
             else
             {
-                cerr << "Warning: invalid LuaKey type for key " << 				lua_typename(luaTable->L, lua_type(luaTable->L, -2)) << "!" << endl;
+                cerr << "Warning: invalid LuaKey type for key " <<              lua_typename(luaTable->L, lua_type(luaTable->L, -2)) << "!" << endl;
             }
 
             lua_pop(luaTable->L, 1);
@@ -505,7 +505,7 @@ std::vector<LuaKey> LuaTableNode::keys()
 }
 
 
-template<> bool LuaTableNode::getDefault<bool>(const bool &default_value)
+template<> bool LuaTableNode::getDefault<bool>(const bool& default_value)
 {
     bool result = default_value;
 
@@ -519,7 +519,7 @@ template<> bool LuaTableNode::getDefault<bool>(const bool &default_value)
     return result;
 }
 
-template<> float LuaTableNode::getDefault<float>(const float &default_value)
+template<> float LuaTableNode::getDefault<float>(const float& default_value)
 {
     float result = default_value;
 
@@ -533,7 +533,7 @@ template<> float LuaTableNode::getDefault<float>(const float &default_value)
     return result;
 }
 
-template<> double LuaTableNode::getDefault<double>(const double &default_value)
+template<> double LuaTableNode::getDefault<double>(const double& default_value)
 {
     double result = default_value;
 
@@ -547,7 +547,7 @@ template<> double LuaTableNode::getDefault<double>(const double &default_value)
     return result;
 }
 
-template<> std::string LuaTableNode::getDefault<std::string>(const std::string &default_value)
+template<> std::string LuaTableNode::getDefault<std::string>(const std::string& default_value)
 {
     std::string result = default_value;
 
@@ -561,7 +561,7 @@ template<> std::string LuaTableNode::getDefault<std::string>(const std::string &
     return result;
 }
 
-template<> int LuaTableNode::getDefault<int>(const int &default_value)
+template<> int LuaTableNode::getDefault<int>(const int& default_value)
 {
     int result = default_value;
 
@@ -575,7 +575,7 @@ template<> int LuaTableNode::getDefault<int>(const int &default_value)
     return result;
 }
 
-template<> void LuaTableNode::set<bool>(const bool &value)
+template<> void LuaTableNode::set<bool>(const bool& value)
 {
     stackCreateValue();
 
@@ -587,7 +587,7 @@ template<> void LuaTableNode::set<bool>(const bool &value)
     stackRestore();
 }
 
-template<> void LuaTableNode::set<float>(const float &value)
+template<> void LuaTableNode::set<float>(const float& value)
 {
     stackCreateValue();
 
@@ -599,7 +599,7 @@ template<> void LuaTableNode::set<float>(const float &value)
     stackRestore();
 }
 
-template<> void LuaTableNode::set<double>(const double &value)
+template<> void LuaTableNode::set<double>(const double& value)
 {
     stackCreateValue();
 
@@ -611,7 +611,7 @@ template<> void LuaTableNode::set<double>(const double &value)
     stackRestore();
 }
 
-template<> void LuaTableNode::set<std::string>(const std::string &value)
+template<> void LuaTableNode::set<std::string>(const std::string& value)
 {
     stackCreateValue();
 
@@ -622,7 +622,7 @@ template<> void LuaTableNode::set<std::string>(const std::string &value)
 
     stackRestore();
 }
-template<> void LuaTableNode::set<int>(const int &value)
+template<> void LuaTableNode::set<int>(const int& value)
 {
     stackCreateValue();
 
@@ -660,7 +660,7 @@ int LuaTable::length()
     return result;
 }
 
-LuaTable& LuaTable::operator= (const LuaTable &luatable)
+LuaTable& LuaTable::operator= (const LuaTable& luatable)
 {
     if (this != &luatable)
     {

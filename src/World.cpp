@@ -127,14 +127,14 @@ bool World::requestForegroundTileRedraw(int x, int y)
     int lastTileY = Util::fastFloor(worldCoordsBottomRight.y / 16.0f);
 
     bool a = (x < firstTileX || y < firstTileY || x > lastTileX || y > lastTileY);
-    bool b = (x+m_width < firstTileX || x+m_width > lastTileX);
+    bool b = (x + m_width < firstTileX || x + m_width > lastTileX);
     if(!a)
     {
         m_foregroundRedrawRequests.insert({x, y});
     }
     else if (!b)
     {
-        m_foregroundRedrawRequests.insert({x+m_width, y});
+        m_foregroundRedrawRequests.insert({x + m_width, y});
     }
     else return false;
 
@@ -153,7 +153,6 @@ void World::redrawTilesFrom(int x, int y)
 void World::performForegroundRedrawRequests()
 {
     if(m_foregroundRedrawRequests.empty()) return;
-    std::vector<ALLEGRO_VERTEX> erasedTiles;
     for(Vec2I pos : m_foregroundRedrawRequests)
     {
         Tile* tile = getTile(pos.x, pos.y);
@@ -184,11 +183,7 @@ void World::performForegroundRedrawRequests()
 
         listForegroundTileBorders(pos.x, pos.y);
     }
-    if(!erasedTiles.empty())
-    {
-        m_foregroundErasedTiles.insert(m_foregroundErasedTiles.end(), erasedTiles.begin(), erasedTiles.end());
-        m_foregroundErasedTileBorders.insert(m_foregroundErasedTileBorders.end(), erasedTiles.begin(), erasedTiles.end());
-    }
+
     m_foregroundRedrawRequests.clear();
 }
 void World::updateTilesFrom(int x, int y)
@@ -277,7 +272,7 @@ void World::drawForegroundTileBuffer()
 
     if(!m_foregroundErasedTiles.empty())
     {
-       al_draw_prim(m_foregroundErasedTiles.data(), NULL, NULL, 0, m_foregroundErasedTiles.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+        al_draw_prim(m_foregroundErasedTiles.data(), NULL, NULL, 0, m_foregroundErasedTiles.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
     }
 
     if(!m_foregroundTileBuffer.empty())
@@ -477,10 +472,10 @@ void World::draw() //in every drawing function coordinates need to be floored, n
 void World::update()
 {
     Root& root = Root::instance();
-    Vec2D c = screenToWorld(Vec2D(root.windowWidth()/2, root.windowHeight()/2));
-    destroyTile(c.x/16, c.y/16);
-    Vec2D c2 = screenToWorld(Vec2D(root.windowWidth()/4, root.windowHeight()/2));
-    placeTile(root.tileDatabase()->createNewTileByName("Stone"), c2.x/16, c2.y/16);
+    Vec2D c = screenToWorld(Vec2D(root.windowWidth() / 2, root.windowHeight() / 2));
+    destroyTile(c.x / 16, c.y / 16);
+    Vec2D c2 = screenToWorld(Vec2D(root.windowWidth() / 4, root.windowHeight() / 2));
+    placeTile(root.tileDatabase()->createNewTileByName("Stone"), c2.x / 16, c2.y / 16);
 }
 void World::doRandomTileUpdate()
 {

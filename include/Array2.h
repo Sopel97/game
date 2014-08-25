@@ -46,7 +46,8 @@ public:
             return *(m_dataCol + y);
         }
 
-        Col& operator= (Col && col) {
+        Col& operator= (Col && col)
+        {
             m_dataCol = col.m_dataCol;
             m_colSize = col.m_colSize;
             return *this;
