@@ -14,9 +14,9 @@ BasicSolidTile::~BasicSolidTile()
 
 }
 
-void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y)
+void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& vertexData, int x, int y)
 {
-    Vec2F screenCoords = Util::fastFloor(world->worldToScreen(Vec2D(x * 16.0, y * 16.0)));
+    Vec2F posOnScreen = Util::fastFloor(world->worldToScreen(Vec2D(x * 16.0, y * 16.0)));
     ALLEGRO_COLOR color = al_map_rgb(255, 255, 255);
     /* we dont do inner borders anymore
     Array2<Tile*> neighbours;
@@ -46,58 +46,58 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
         else textureY += (topLeft & 3) * 8.0f;
 
 
-        toDraw.push_back({screenCoords.x       , screenCoords.y       , 0, textureX    , textureY    , color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
-        toDraw.push_back({screenCoords.x       , screenCoords.y + 8.0f, 0, textureX    , textureY + 8, color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y + 8.0f, 0, textureX + 8, textureY + 8, color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
-        toDraw.push_back({screenCoords.x       , screenCoords.y + 8.0f, 0, textureX    , textureY + 8, color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y       , 0, textureX    , textureY    , color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y       , 0, textureX + 8, textureY    , color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y + 8.0f, 0, textureX    , textureY + 8, color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y + 8.0f, 0, textureX + 8, textureY + 8, color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y       , 0, textureX + 8, textureY    , color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y + 8.0f, 0, textureX    , textureY + 8, color});
 
         // inner top right
-        screenCoords.x += 8.0f;
+        posOnScreen.x += 8.0f;
         textureX = 8.0f;
         textureY = 32.0f;
         unsigned char topRight = (inner(precedences[2][0]) << 2) | (inner(precedences[1][0]) << 1) | (inner(precedences[2][1]));
         if(topRight == 4) textureY += 32.0f;
         else textureY += (topRight & 3) * 8.0f;
 
-        toDraw.push_back({screenCoords.x       , screenCoords.y       , 0, textureX    , textureY    , color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
-        toDraw.push_back({screenCoords.x       , screenCoords.y + 8.0f, 0, textureX    , textureY + 8, color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y + 8.0f, 0, textureX + 8, textureY + 8, color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
-        toDraw.push_back({screenCoords.x       , screenCoords.y + 8.0f, 0, textureX    , textureY + 8, color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y       , 0, textureX    , textureY    , color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y       , 0, textureX + 8, textureY    , color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y + 8.0f, 0, textureX    , textureY + 8, color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y + 8.0f, 0, textureX + 8, textureY + 8, color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y       , 0, textureX + 8, textureY    , color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y + 8.0f, 0, textureX    , textureY + 8, color});
 
         // inner bottom left
-        screenCoords.x -= 8.0f;
-        screenCoords.y += 8.0f;
+        posOnScreen.x -= 8.0f;
+        posOnScreen.y += 8.0f;
         textureX = 16.0f;
         textureY = 32.0f;
         unsigned char bottomLeft = (inner(precedences[0][2]) << 2) | (inner(precedences[1][2]) << 1) | (inner(precedences[0][1]));
         if(bottomLeft == 4) textureY += 32.0f;
         else textureY += (bottomLeft & 3) * 8.0f;
 
-        toDraw.push_back({screenCoords.x       , screenCoords.y       , 0, textureX    , textureY    , color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
-        toDraw.push_back({screenCoords.x       , screenCoords.y + 8.0f, 0, textureX    , textureY + 8, color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y + 8.0f, 0, textureX + 8, textureY + 8, color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
-        toDraw.push_back({screenCoords.x       , screenCoords.y + 8.0f, 0, textureX    , textureY + 8, color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y       , 0, textureX    , textureY    , color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y       , 0, textureX + 8, textureY    , color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y + 8.0f, 0, textureX    , textureY + 8, color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y + 8.0f, 0, textureX + 8, textureY + 8, color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y       , 0, textureX + 8, textureY    , color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y + 8.0f, 0, textureX    , textureY + 8, color});
 
         // inner bottom right
-        screenCoords.x += 8.0f;
+        posOnScreen.x += 8.0f;
         textureX = 24.0f;
         textureY = 32.0f;
         unsigned char bottomRight = (inner(precedences[2][2]) << 2) | (inner(precedences[1][2]) << 1) | (inner(precedences[2][1]));
         if(bottomRight == 4) textureY += 32.0f;
         else textureY += (bottomRight & 3) * 8.0f;
 
-        toDraw.push_back({screenCoords.x       , screenCoords.y       , 0, textureX    , textureY    , color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
-        toDraw.push_back({screenCoords.x       , screenCoords.y + 8.0f, 0, textureX    , textureY + 8, color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y + 8.0f, 0, textureX + 8, textureY + 8, color});
-        toDraw.push_back({screenCoords.x + 8.0f, screenCoords.y       , 0, textureX + 8, textureY    , color});
-        toDraw.push_back({screenCoords.x       , screenCoords.y + 8.0f, 0, textureX    , textureY + 8, color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y       , 0, textureX    , textureY    , color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y       , 0, textureX + 8, textureY    , color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y + 8.0f, 0, textureX    , textureY + 8, color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y + 8.0f, 0, textureX + 8, textureY + 8, color});
+        vertexData.push_back({posOnScreen.x + 8.0f, posOnScreen.y       , 0, textureX + 8, textureY    , color});
+        vertexData.push_back({posOnScreen.x       , posOnScreen.y + 8.0f, 0, textureX    , textureY + 8, color});
     }
     else
     {
@@ -106,17 +106,13 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
     */
 
     Vec2F offset = textureOffset();
-    float textureX = 0.0f + offset.x;
-    float textureY = 0.0f + offset.y;
-    toDraw.push_back({screenCoords.x        , screenCoords.y        , 0, textureX     , textureY     , color});
-    toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, textureX + 16, textureY     , color});
-    toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, textureX     , textureY + 16, color});
-    toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y + 16.0f, 0, textureX + 16, textureY + 16, color});
-    toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, textureX + 16, textureY     , color});
-    toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, textureX     , textureY + 16, color});
+    Vec2F uv(0.0f + offset.x, 0.0f + offset.y);
+    //float textureX = 0.0f + offset.x;
+    //float textureY = 0.0f + offset.y;
+    Util::appendQuadAsTriangleList(vertexData, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), uv, color);
     return;
 }
-void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw, int x, int y, int outX, int outY, Tile* tileOut)
+void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& vertexData, int x, int y, int outX, int outY, Tile* tileOut)
 {
     if(!hasOuterBorder()) return;
     if(tileOut)
@@ -126,7 +122,7 @@ void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
     int currentTileId = id();
     int currentTilePrecedence = outerBorderPrecedence();
 
-    Vec2F screenCoords = Util::fastFloor(world->worldToScreen(Vec2D(outX * 16.0, outY * 16.0)));
+    Vec2F posOnScreen = Util::fastFloor(world->worldToScreen(Vec2D(outX * 16.0, outY * 16.0)));
     ALLEGRO_COLOR color = al_map_rgb(255, 255, 255);
 
     Array2<Tile*> neighbours;
@@ -158,35 +154,27 @@ void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& toDraw
     {
         return currentTilePrecedence > id;
     };
-    float textureX;
-    float textureY;
+    //float textureX;
+    //float textureY;
     Vec2F offset = textureOffset();
 
     unsigned int spriteOffset1 = shouldDraw(ids[0][1]) | (shouldDraw(ids[1][0]) << 1) | (shouldDraw(ids[2][1]) << 2) | (shouldDraw(ids[1][2]) << 3);
-    textureX = spriteOffset1 * 16.0f + offset.x;
-    textureY = 0.0f + offset.y;
+    Vec2F uv(spriteOffset1 * 16.0f + offset.x, 0.0f + offset.y);
+    //textureX = spriteOffset1 * 16.0f + offset.x;
+    //textureY = 0.0f + offset.y;
     if(spriteOffset1)
     {
-        toDraw.push_back({screenCoords.x        , screenCoords.y        , 0, textureX     , textureY     , color});
-        toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, textureX + 16, textureY     , color});
-        toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, textureX     , textureY + 16, color});
-        toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y + 16.0f, 0, textureX + 16, textureY + 16, color});
-        toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, textureX + 16, textureY     , color});
-        toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, textureX     , textureY + 16, color});
+        Util::appendQuadAsTriangleList(vertexData, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), uv, color);
     }
     unsigned int p = biggerPrecedence(ids[0][1]) | (biggerPrecedence(ids[1][0]) << 1) | (biggerPrecedence(ids[2][1]) << 2) | (biggerPrecedence(ids[1][2]) << 3); //similar to spriteOffset1 but with precedences
 
     unsigned int spriteOffset2 = (shouldDraw(ids[0][0]) && !(p & 3)) | ((shouldDraw(ids[2][0]) && !(p & 6)) << 1) | ((shouldDraw(ids[2][2]) && !(p & 12)) << 2) | ((shouldDraw(ids[0][2]) && !(p & 9)) << 3) ;
-    textureX = spriteOffset2 * 16.0f + offset.x;
-    textureY = 16.0f + offset.y;
+    uv = Vec2F(spriteOffset2 * 16.0f + offset.x, 16.0f + offset.y);
+    //textureX = spriteOffset2 * 16.0f + offset.x;
+    //textureY = 16.0f + offset.y;
     if(spriteOffset2)
     {
-        toDraw.push_back({screenCoords.x        , screenCoords.y        , 0, textureX     , textureY     , color});
-        toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, textureX + 16, textureY     , color});
-        toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, textureX     , textureY + 16, color});
-        toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y + 16.0f, 0, textureX + 16, textureY + 16, color});
-        toDraw.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, textureX + 16, textureY     , color});
-        toDraw.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, textureX     , textureY + 16, color});
+        Util::appendQuadAsTriangleList(vertexData, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), uv, color);
     }
 }
 bool BasicSolidTile::update(World* world, int x, int y)

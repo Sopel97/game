@@ -28,13 +28,13 @@ public:
     Array2<Tile*> getTiles2(int x, int y, int tilesHorizontal, int tilesVertical);
 
     bool setTile(Tile* tile, int x, int y);  //setting tile doesn't check if it's possible
-    bool placeTile(Tile* tile, int x, int y, bool update = true, bool redraw = true);
 
+    bool placeTile(Tile* tile, int x, int y, bool update = true, bool redraw = true);
     void destroyTile(int x, int y, bool update = true, bool redraw = true);
 
     bool requestForegroundTileRedraw(int x, int y);
 
-    bool inWorldRange(int x, int y);
+    bool inWorldRange(int x, int y); //checks only y coords
 
     void updateTilesFrom(int x, int y);
     void redrawTilesFrom(int x, int y);
@@ -42,12 +42,12 @@ public:
     void performForegroundRedrawRequests();
 
     void draw();
-    void listMissingForegroundTilesToBuffer();
     void listForegroundTile(int x, int y);
+    void listMissingForegroundTilesToBuffer();
     void drawForegroundTileBuffer();
 
+    void listForegroundBorders(int x, int y);
     void listMissingForegroundBordersToBuffer();
-    void listForegroundTileBorders(int x, int y);
     void drawForegroundBorderBuffer();
 
     void drawFromLayerToScreen(ALLEGRO_BITMAP* layer);
@@ -63,7 +63,7 @@ public:
     WorldGenerator* worldGenerator() const;
 
     void moveCamera(const Vec2D& diff);
-    float distance(const Vec2D& a, const Vec2D& b); /* a.x and b.x must be in range <0, m_width> */
+    double distance(const Vec2D& a, const Vec2D& b); /* a.x and b.x must be in range <0, m_width> */
     Vec2D way(const Vec2D& from, const Vec2D& to); /* from.x and to.x must be in range <0, m_width> */
 
     void adjustPosition(Vec2D& pos);
@@ -103,8 +103,8 @@ private:
     std::vector<DrawableTile> m_foregroundTileBuffer;
     std::vector<DrawableTileBorder> m_foregroundBorderBuffer;
 
-    std::vector<ALLEGRO_VERTEX> m_foregroundErasedTiles;
-    std::vector<ALLEGRO_VERTEX> m_foregroundErasedTileBorders;
+    std::vector<Vec2I> m_foregroundErasedTiles;
+    std::vector<Vec2I> m_foregroundErasedBorders;
 
     class Vec2Icompare
     {
@@ -116,7 +116,7 @@ private:
             return false;
         }
     };
-    std::set < Vec2I, Vec2Icompare> m_foregroundRedrawRequests;
+    std::set<Vec2I, Vec2Icompare> m_foregroundRedrawRequests;
 
     WorldGenerator* m_worldGenerator;
 };

@@ -22,7 +22,7 @@ World::World(WorldGenerator* worldGenerator)
     m_camera = Vec2D(77.001, 77.001);
     m_foregroundTileLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
     m_foregroundBorderLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
-    m_bitmapShifter = new Util::BitmapShifter(root.display(), root.windowWidth(), root.windowHeight());
+    m_bitmapShifter = new Util::BitmapShifter(root.windowWidth(), root.windowHeight());
     m_cameraAtLastRedraw = Vec2I(1000000, -1000000); //so it draw every tile first time
 }
 
@@ -157,31 +157,18 @@ void World::performForegroundRedrawRequests()
     {
         Tile* tile = getTile(pos.x, pos.y);
 
-        Vec2F screenCoords = Util::fastFloor(worldToScreen(Vec2D(pos.x * 16.0, pos.y * 16.0)));
-        ALLEGRO_COLOR color = al_map_rgba(0, 0, 0, 0);
-
         if(tile)
         {
             listForegroundTile(pos.x, pos.y);
         }
         else
         {
-            m_foregroundErasedTiles.push_back({screenCoords.x        , screenCoords.y        , 0, 0, 0, color});
-            m_foregroundErasedTiles.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, 0, 0, color});
-            m_foregroundErasedTiles.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, 0, 0, color});
-            m_foregroundErasedTiles.push_back({screenCoords.x + 16.0f, screenCoords.y + 16.0f, 0, 0, 0, color});
-            m_foregroundErasedTiles.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, 0, 0, color});
-            m_foregroundErasedTiles.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, 0, 0, color});
+            m_foregroundErasedTiles.push_back(Vec2I(pos.x, pos.y));
         }
 
-        m_foregroundErasedTileBorders.push_back({screenCoords.x        , screenCoords.y        , 0, 0, 0, color});
-        m_foregroundErasedTileBorders.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, 0, 0, color});
-        m_foregroundErasedTileBorders.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, 0, 0, color});
-        m_foregroundErasedTileBorders.push_back({screenCoords.x + 16.0f, screenCoords.y + 16.0f, 0, 0, 0, color});
-        m_foregroundErasedTileBorders.push_back({screenCoords.x + 16.0f, screenCoords.y        , 0, 0, 0, color});
-        m_foregroundErasedTileBorders.push_back({screenCoords.x        , screenCoords.y + 16.0f, 0, 0, 0, color});
+        m_foregroundErasedBorders.push_back(Vec2I(pos.x, pos.y));
 
-        listForegroundTileBorders(pos.x, pos.y);
+        listForegroundBorders(pos.x, pos.y);
     }
 
     m_foregroundRedrawRequests.clear();
@@ -208,7 +195,7 @@ void World::drawFromLayerToScreen(ALLEGRO_BITMAP* layer)
 {
     Util::drawBitmap(layer, 0, 0);
 }
-void World::listForegroundTileBorders(int x, int y) //optimize
+void World::listForegroundBorders(int x, int y) //optimize
 {
     Tile* tile = getTile(x, y);
     std::vector<DrawableTileBorder> neighbours;
@@ -261,47 +248,7 @@ void World::listForegroundTile(int x, int y)
     if(!tile) return;
     m_foregroundTileBuffer.push_back(DrawableTile {tile, tile->spritesheetId(), x, y});
 }
-void World::drawForegroundTileBuffer()
-{
-    Root& root = Root::instance();
-    SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
 
-    ALLEGRO_DISPLAY* currentDisplay = root.display();
-    al_set_target_bitmap(m_foregroundTileLayer);
-    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO);
-
-    if(!m_foregroundErasedTiles.empty())
-    {
-        al_draw_prim(m_foregroundErasedTiles.data(), NULL, NULL, 0, m_foregroundErasedTiles.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
-    }
-
-    if(!m_foregroundTileBuffer.empty())
-    {
-        std::sort(m_foregroundTileBuffer.begin(), m_foregroundTileBuffer.end(), [](const DrawableTile & lhs, const DrawableTile & rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
-
-        std::vector<ALLEGRO_VERTEX> toDraw;
-        toDraw.reserve(10000);
-        int lastSpritesheetId = m_foregroundTileBuffer[0].spritesheetId;
-
-        for(DrawableTile& tile : m_foregroundTileBuffer)
-        {
-            int currentSpritesheetId = tile.spritesheetId;
-            if(currentSpritesheetId != lastSpritesheetId)
-            {
-                al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
-                toDraw.clear();
-                toDraw.reserve(10000);
-                lastSpritesheetId = currentSpritesheetId;
-            }
-            tile.tile->drawInner(this, toDraw, tile.x, tile.y);
-        }
-        if(!toDraw.empty()) al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
-    }
-
-
-    al_set_target_bitmap(al_get_backbuffer(currentDisplay));
-    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
-}
 void World::listMissingForegroundTilesToBuffer()
 {
     Root& root = Root::instance();
@@ -345,6 +292,57 @@ void World::listMissingForegroundTilesToBuffer()
         }
     }
 }
+void World::drawForegroundTileBuffer()
+{
+    Root& root = Root::instance();
+    SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
+
+    ALLEGRO_BITMAP* oldTarget = al_get_target_bitmap();
+    al_set_target_bitmap(m_foregroundTileLayer);
+    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO);
+
+    if(!m_foregroundErasedTiles.empty())
+    {
+        std::vector<ALLEGRO_VERTEX> erasedArea(m_foregroundErasedTiles.size() * 6);
+
+        ALLEGRO_COLOR color = al_map_rgba(0, 0, 0, 0);
+
+        for(Vec2I tilePosition : m_foregroundErasedTiles)
+        {
+            Vec2F posOnScreen = Util::fastFloor(worldToScreen(Vec2D(tilePosition.x * 16.0, tilePosition.y * 16.0)));
+            Util::appendQuadAsTriangleList(erasedArea, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), Vec2F(0.0f, 0.0f), color);
+        }
+        al_draw_prim(erasedArea.data(), NULL, NULL, 0, erasedArea.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+    }
+
+    if(!m_foregroundTileBuffer.empty())
+    {
+        std::sort(m_foregroundTileBuffer.begin(), m_foregroundTileBuffer.end(), [](const DrawableTile & lhs, const DrawableTile & rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
+
+        std::vector<ALLEGRO_VERTEX> vertexData;
+        vertexData.reserve(10000);
+        int lastSpritesheetId = m_foregroundTileBuffer[0].spritesheetId;
+
+        for(DrawableTile& tile : m_foregroundTileBuffer)
+        {
+            int currentSpritesheetId = tile.spritesheetId;
+            if(currentSpritesheetId != lastSpritesheetId)
+            {
+                al_draw_prim(vertexData.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, vertexData.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+                vertexData.clear();
+                vertexData.reserve(10000);
+                lastSpritesheetId = currentSpritesheetId;
+            }
+            tile.tile->drawInner(this, vertexData, tile.x, tile.y);
+        }
+        if(!vertexData.empty()) al_draw_prim(vertexData.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, vertexData.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+    }
+
+
+    al_set_target_bitmap(oldTarget);
+    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
+}
+
 void World::listMissingForegroundBordersToBuffer()
 {
     Root& root = Root::instance();
@@ -385,7 +383,7 @@ void World::listMissingForegroundBordersToBuffer()
                 continue;
             }
 
-            listForegroundTileBorders(x, y);
+            listForegroundBorders(x, y);
         }
     }
 }
@@ -394,13 +392,22 @@ void World::drawForegroundBorderBuffer()
     Root& root = Root::instance();
     SpritesheetDatabase* spritesheetDatabase = root.spritesheetDatabase();
 
-    ALLEGRO_DISPLAY* currentDisplay = root.display();
+    ALLEGRO_BITMAP* oldTarget = al_get_target_bitmap();
     al_set_target_bitmap(m_foregroundBorderLayer);
 
     al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ZERO);
-    if(!m_foregroundErasedTileBorders.empty())
+    if(!m_foregroundErasedBorders.empty())
     {
-        al_draw_prim(m_foregroundErasedTileBorders.data(), NULL, NULL, 0, m_foregroundErasedTileBorders.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+        std::vector<ALLEGRO_VERTEX> erasedArea(m_foregroundErasedBorders.size() * 6);
+
+        ALLEGRO_COLOR color = al_map_rgba(0, 0, 0, 0);
+
+        for(Vec2I tilePosition : m_foregroundErasedBorders)
+        {
+            Vec2F posOnScreen = Util::fastFloor(worldToScreen(Vec2D(tilePosition.x * 16.0, tilePosition.y * 16.0)));
+            Util::appendQuadAsTriangleList(erasedArea, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), Vec2F(0.0f, 0.0f), color);
+        }
+        al_draw_prim(erasedArea.data(), NULL, NULL, 0, erasedArea.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
     }
     al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 
@@ -408,8 +415,8 @@ void World::drawForegroundBorderBuffer()
     {
         std::sort(m_foregroundBorderBuffer.begin(), m_foregroundBorderBuffer.end(), [](const DrawableTileBorder & lhs, const DrawableTileBorder & rhs) -> bool {return lhs.spritesheetId < rhs.spritesheetId;});
 
-        std::vector<ALLEGRO_VERTEX> toDraw;
-        toDraw.reserve(10000);
+        std::vector<ALLEGRO_VERTEX> vertexData;
+        vertexData.reserve(10000);
         int lastSpritesheetId = m_foregroundBorderBuffer[0].spritesheetId;
 
         for(DrawableTileBorder& tile : m_foregroundBorderBuffer)
@@ -417,19 +424,17 @@ void World::drawForegroundBorderBuffer()
             int currentSpritesheetId = tile.spritesheetId;
             if(currentSpritesheetId != lastSpritesheetId)
             {
-                al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
-                toDraw.clear();
-                toDraw.reserve(10000);
+                al_draw_prim(vertexData.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, vertexData.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+                vertexData.clear();
+                vertexData.reserve(10000);
                 lastSpritesheetId = currentSpritesheetId;
             }
-            tile.tile->drawOuter(this, toDraw, tile.x, tile.y, tile.destX, tile.destY, tile.destTile);
+            tile.tile->drawOuter(this, vertexData, tile.x, tile.y, tile.destX, tile.destY, tile.destTile);
         }
-        if(!toDraw.empty()) al_draw_prim(toDraw.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, toDraw.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+        if(!vertexData.empty()) al_draw_prim(vertexData.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, vertexData.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
     }
 
-
-
-    al_set_target_bitmap(al_get_backbuffer(currentDisplay));
+    al_set_target_bitmap(oldTarget);
 }
 void World::draw() //in every drawing function coordinates need to be floored, not casted to int
 {
@@ -437,12 +442,6 @@ void World::draw() //in every drawing function coordinates need to be floored, n
 
     int shiftX = m_cameraAtLastRedraw.x - cam.x;
     int shiftY = m_cameraAtLastRedraw.y - cam.y;
-
-    m_foregroundTileBuffer.clear(); //this may be needed to be out due to redrawing tiles in other place.
-    m_foregroundBorderBuffer.clear();
-
-    m_foregroundErasedTiles.clear();
-    m_foregroundErasedTileBorders.clear();
 
     if(shiftX || shiftY) //we want to draw missing tiles only when it is needed
     {
@@ -452,7 +451,6 @@ void World::draw() //in every drawing function coordinates need to be floored, n
         // drawing foreground tiles
         m_bitmapShifter->shift(m_foregroundTileLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0));
         m_bitmapShifter->shift(m_foregroundBorderLayer, shiftX, shiftY, al_map_rgba(0, 0, 0, 0));
-
 
         listMissingForegroundTilesToBuffer();
         listMissingForegroundBordersToBuffer();
@@ -468,6 +466,11 @@ void World::draw() //in every drawing function coordinates need to be floored, n
 
     drawFromLayerToScreen(m_foregroundTileLayer);
     drawFromLayerToScreen(m_foregroundBorderLayer);
+
+    m_foregroundTileBuffer.clear();
+    m_foregroundBorderBuffer.clear();
+    m_foregroundErasedTiles.clear();
+    m_foregroundErasedBorders.clear();
 }
 void World::update()
 {
@@ -514,7 +517,7 @@ void World::moveCamera(const Vec2D& diff)
     m_cameraAtLastRedraw.x = Util::fastFloor(m_camera.x + xDiff);
     m_cameraAtLastRedraw.y = Util::fastFloor(m_camera.y + yDiff);
 }
-float World::distance(const Vec2D& a, const Vec2D& b)
+double World::distance(const Vec2D& a, const Vec2D& b)
 {
     float xDiff = b.x - a.x;
     if(abs(xDiff) > m_width * 16 / 2.0f) //point is closer in the other way
