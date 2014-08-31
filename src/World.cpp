@@ -30,7 +30,10 @@ World::~World()
 {
     for(Tile* tile : m_tiles)
     {
-        if(tile != nullptr) delete tile;
+        if(tile != nullptr)
+        {
+            if(tile->hasAnyData()) delete tile;
+        }
     }
 }
 int World::width()
@@ -82,7 +85,10 @@ bool World::setTile(Tile* tile, int x, int y)
 {
     if(!inWorldRange(x, y)) return false;
     x = Util::mod(x, m_width);
-    if(m_tiles[x][y]) delete m_tiles[x][y];
+    if(m_tiles[x][y])
+    {
+        if(m_tiles[x][y]->hasAnyData()) delete m_tiles[x][y];
+    }
     m_tiles[x][y] = tile;
     return true;
 }
@@ -92,7 +98,10 @@ bool World::placeTile(Tile* tile, int x, int y, bool update, bool redraw)
     x = Util::mod(x, m_width);
 
     //setting tile like in setTile
-    if(m_tiles[x][y]) delete m_tiles[x][y];
+    if(m_tiles[x][y])
+    {
+        if(m_tiles[x][y]->hasAnyData()) delete m_tiles[x][y];
+    }
     m_tiles[x][y] = tile;
 
     if(update) updateTilesFrom(x, y);
@@ -104,7 +113,10 @@ void World::destroyTile(int x, int y, bool update, bool redraw)
     if(!inWorldRange(x, y)) return;
     x = Util::mod(x, m_width);
 
-    if(m_tiles[x][y]) delete m_tiles[x][y];
+    if(m_tiles[x][y])
+    {
+        if(m_tiles[x][y]->hasAnyData()) delete m_tiles[x][y];
+    }
     else return;
     m_tiles[x][y] = nullptr;
 

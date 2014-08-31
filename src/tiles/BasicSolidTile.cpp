@@ -203,3 +203,7 @@ StaticTileData* BasicSolidTile::createStaticTileData(Configuration& config, int 
 {
     return new StaticData(config, id);
 }
+bool BasicSolidTile::hasAnyData() const
+{
+    return false;
+}

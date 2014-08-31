@@ -40,6 +40,8 @@ public:
 
     virtual StaticTileData* createStaticTileData(Configuration& config, int id) const = 0;
 
+    virtual bool hasAnyData() const = 0;
+
 protected:
     StaticTileData* m_staticTileData;
 private:

@@ -41,6 +41,9 @@ public:
     virtual Tile* create(Configuration& config, StaticTileData* staticTileData) const;
 
     virtual StaticTileData* createStaticTileData(Configuration& config, int id) const;
+
+    virtual bool hasAnyData() const;
+
 protected:
 private:
 };

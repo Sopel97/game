@@ -119,10 +119,11 @@ void WorldGenerator::generate(World* world)
             {
                 continue;
             }
-            Tile* tileClone = tile->clone();
+            Tile* tileClone = tile;
+            if(tile->hasAnyData()) tileClone = tile->clone();
             if(!(world->setTile(tileClone, x, y)))
             {
-                delete tileClone;
+                if(tile->hasAnyData()) delete tileClone;
             }
         }
     }
