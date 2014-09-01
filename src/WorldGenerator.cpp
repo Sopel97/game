@@ -21,14 +21,14 @@ WorldGenerator::Layer::Layer(ConfigurationNode layerNode)
     lowerBound.min = layerNode[LayerParameter::LOWER_BOUND_MIN].getDefault<float>(-1.0f);
     lowerBound.max = layerNode[LayerParameter::LOWER_BOUND_MAX].getDefault<float>(-1.0f);
     std::string mainTileName = layerNode[LayerParameter::MAIN_TILE_NAME].getDefault<std::string>("Dirt");
-    mainTile = tileDatabase->getTileTemplateByName(mainTileName);
+    mainTile = tileDatabase->getTileTemplateIdByName(mainTileName);
 
     std::string bottomOutlineTileName = layerNode[LayerParameter::BOTTOM_OUTLINE_TILE_NAME].getDefault<std::string>(mainTileName);
-    bottomOutlineTile = tileDatabase->getTileTemplateByName(bottomOutlineTileName);
+    bottomOutlineTile = tileDatabase->getTileTemplateIdByName(bottomOutlineTileName);
 
     bottomOverflow = layerNode[LayerParameter::BOTTOM_OVERFLOW].getDefault<int>(0);
     std::string bottomOverflowTileName = layerNode[LayerParameter::BOTTOM_OVERFLOW_TILE_NAME].getDefault<std::string>(bottomOutlineTileName);
-    bottomOverflowTile = tileDatabase->getTileTemplateByName(bottomOutlineTileName);
+    bottomOverflowTile = tileDatabase->getTileTemplateIdByName(bottomOutlineTileName);
 
     noiseOctaves = layerNode[LayerParameter::NOISE_OCTAVES].getDefault<int>(5);
     noisePersistance = layerNode[LayerParameter::NOISE_PERSISTANCE].getDefault<double>(1);
@@ -36,10 +36,14 @@ WorldGenerator::Layer::Layer(ConfigurationNode layerNode)
 }
 WorldGenerator::WorldGenerator(Configuration& config)
 {
+    Root& root = Root::instance();
+    TileDatabase* tileDatabase = root.tileDatabase();
     m_lastLayerId = 0;
     m_seed = 133; //temp
     m_worldWidth = config["width"].getDefault<int>(1);
     m_worldHeight = config["height"].getDefault<int>(1);
+    std::string fillTileName = config["fillTile"].getDefault<std::string>("Air");
+    m_fillTile = tileDatabase->getTileTemplateIdByName(fillTileName);
     m_surfaceLevel.min = config["surface"][1].getDefault<float>(0.0f);
     m_surfaceLevel.max = config["surface"][2].getDefault<float>(0.0f);
 
@@ -71,6 +75,8 @@ int WorldGenerator::worldHeight() const
 }
 void WorldGenerator::generate(World* world)
 {
+    TileDatabase* tileDatabase = Root::instance().tileDatabase();
+
     std::vector<std::vector<int>> layers;
     layers.reserve(m_worldWidth);
     layers.resize(m_worldWidth);
@@ -95,7 +101,7 @@ void WorldGenerator::generate(World* world)
             while(layer < numberOfLayers && y > layers[x][layer]) ++layer;
 
             if(layer >= numberOfLayers) break;
-            Tile* tile = m_layers[layer].mainTile;
+            int tile = m_layers[layer].mainTile;
             if(y == layers[x][layer])
             {
                 tile = m_layers[layer].bottomOutlineTile;
@@ -117,14 +123,9 @@ void WorldGenerator::generate(World* world)
             }
             if(!tile)
             {
-                continue;
+                tile = m_fillTile;
             }
-            Tile* tileClone = tile;
-            if(tile->hasAnyData()) tileClone = tile->clone();
-            if(!(world->setTile(tileClone, x, y)))
-            {
-                if(tile->hasAnyData()) delete tileClone;
-            }
+            world->createAndPlaceTileIfPossible(tile, x, y, false, false);
         }
     }
 }
@@ -147,4 +148,8 @@ void WorldGenerator::addLayer(const WorldGenerator::Layer& layer)
     m_layers.push_back(layer);
     m_layersMap.insert(std::pair<std::string, int>(layer.name, m_lastLayerId));
     ++m_lastLayerId;
+}
+int WorldGenerator::fillTile() const
+{
+    return m_fillTile;
 }

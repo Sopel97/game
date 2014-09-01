@@ -10,6 +10,7 @@
 #include <allegro5/allegro_primitives.h>
 
 class WorldGenerator;
+class TileDatabase;
 
 using namespace Geo;
 class Tile;
@@ -28,8 +29,11 @@ public:
     Array2<Tile*> getTiles2(int x, int y, int tilesHorizontal, int tilesVertical);
 
     bool setTile(Tile* tile, int x, int y);  //setting tile doesn't check if it's possible
-
     bool placeTile(Tile* tile, int x, int y, bool update = true, bool redraw = true);
+    bool createAndPlaceTileIfPossible(int id, int x, int y, bool update = true, bool redraw = true);
+    bool createAndPlaceTileIfPossible(const std::string& name, int x, int y, bool update = true, bool redraw = true);
+    bool createAndPlaceTileIfPossible(Tile* tile, int x, int y, bool update = true, bool redraw = true);
+
     void destroyTile(int x, int y, bool update = true, bool redraw = true);
 
     bool requestForegroundTileRedraw(int x, int y);
@@ -59,6 +63,8 @@ public:
     Vec2D screenToWorld(const Vec2D& screen);
     Vec2D worldToScreen(const Vec2D& world);
     Vec2D camera() const;
+
+    int fillTileId() const;
 
     WorldGenerator* worldGenerator() const;
 
@@ -97,6 +103,8 @@ private:
     Vec2D m_camera;
     Vec2I m_cameraAtLastRedraw;
 
+    int m_fillTileId;
+
     ALLEGRO_BITMAP* m_foregroundTileLayer;
     ALLEGRO_BITMAP* m_foregroundBorderLayer;
 
@@ -119,6 +127,8 @@ private:
     std::set<Vec2I, Vec2Icompare> m_foregroundRedrawRequests;
 
     WorldGenerator* m_worldGenerator;
+
+    TileDatabase* m_tileDatabase;
 };
 
 #endif // WORLD_H

@@ -77,6 +77,9 @@
 		<Unit filename="include/tiles/BasicSolidTile.h">
 			<Option target="Release" />
 		</Unit>
+		<Unit filename="include/tiles/EmptyTile.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="include/tiles/StaticTileData.h">
 			<Option target="Release" />
 		</Unit>
@@ -95,6 +98,9 @@
 		<Unit filename="src/World.cpp" />
 		<Unit filename="src/WorldGenerator.cpp" />
 		<Unit filename="src/tiles/BasicSolidTile.cpp" />
+		<Unit filename="src/tiles/EmptyTile.cpp">
+			<Option target="Debug" />
+		</Unit>
 		<Unit filename="src/tiles/StaticTileData.cpp" />
 		<Unit filename="src/tiles/Tile.cpp" />
 		<Extensions>

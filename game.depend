@@ -151,7 +151,7 @@
 	"Configuration.h"
 	"../geometry/Geometry.h"
 
-1408978495 source:d:\dev\game\src\root.cpp
+1409588551 source:d:\dev\game\src\root.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -166,6 +166,7 @@
 	"TileDatabase.h"
 	"World.h"
 	"WorldGenerator.h"
+	"EmptyTile.h"
 	"BasicSolidTile.h"
 
 1407694402 source:d:\dev\game\src\assets.cpp
@@ -237,7 +238,7 @@
 	<direct.h>
 	<unistd.h>
 
-1409489244 source:d:\dev\game\src\tiledatabase.cpp
+1409589383 source:d:\dev\game\src\tiledatabase.cpp
 	"TileDatabase.h"
 	"Root.h"
 	"Assets.h"
@@ -258,7 +259,7 @@
 	<vector>
 	<utility>
 
-1409159948 d:\dev\game\include\world.h
+1409590221 d:\dev\game\include\world.h
 	<vector>
 	<set>
 	"../geometry/Geometry.h"
@@ -266,7 +267,7 @@
 	"Array2.h"
 	<allegro5/allegro_primitives.h>
 
-1409489288 source:d:\dev\game\src\world.cpp
+1409590969 source:d:\dev\game\src\world.cpp
 	<iostream>
 	<cstdlib>
 	<algorithm>
@@ -775,7 +776,7 @@
 	"Assets.h"
 	"Tile.h"
 
-1408804524 d:\dev\game\include\worldgenerator.h
+1409590095 d:\dev\game\include\worldgenerator.h
 	"Configuration.h"
 	"Util.h"
 	"Root.h"
@@ -783,7 +784,7 @@
 	<vector>
 	<map>
 
-1409489288 source:d:\dev\game\src\worldgenerator.cpp
+1409590107 source:d:\dev\game\src\worldgenerator.cpp
 	"WorldGenerator.h"
 	"World.h"
 	"Tile.h"
@@ -846,4 +847,13 @@
 	"../src/XorshiftEngine.cpp"
 
 1408552489 d:\dev\game\geometry\src\xorshiftengine.cpp
+
+1409588471 source:d:\dev\game\src\tiles\emptytile.cpp
+	"EmptyTile.h"
+
+1409589217 d:\dev\game\include\tiles\emptytile.h
+	<vector>
+	<allegro5/allegro_primitives.h>
+	"Tile.h"
+	"StaticTileData.h"
 

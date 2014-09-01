@@ -36,11 +36,11 @@ public:
         std::string name;
         Util::RangeF lowerBound;
 
-        Tile* mainTile;
-        Tile* bottomOutlineTile;
+        int mainTile;
+        int bottomOutlineTile;
 
         int bottomOverflow;
-        Tile* bottomOverflowTile;
+        int bottomOverflowTile;
 
         //applies to lowerBound of layer
         int noiseOctaves;
@@ -60,11 +60,14 @@ public:
 
     void addLayer(const Layer& layer);
 
+    int fillTile() const;
+
     int worldWidth() const;
     int worldHeight() const;
 protected:
     int m_worldWidth;
     int m_worldHeight;
+    int m_fillTile;
     Util::RangeF m_surfaceLevel;
 
     int m_lastLayerId;

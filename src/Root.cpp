@@ -15,6 +15,7 @@
 #include "World.h"
 #include "WorldGenerator.h"
 
+#include "EmptyTile.h"
 #include "BasicSolidTile.h"
 
 Root::Root()
@@ -194,6 +195,7 @@ World* Root::world() const
 void Root::addBaseTilesToDatabase()
 {
     m_tileDatabase->addBaseTile(new BasicSolidTile(), "BasicSolidTile");
+    m_tileDatabase->addBaseTile(new EmptyTile(), "EmptyTile");
 }
 
 int Root::windowWidth() const

@@ -24,3 +24,6 @@ This is not an issue anymore bit cause is not known. Now uses 600MB with 32M til
 Noted fix: when moving camera redrawing is not precise. Sometimes it lefts (periodic) inaccurations (offs by one) with positioning. Problem happened when camera was at intiger position.
 
 !!!important !!! method for checking if smth is on screen and drawing it on screen regarding world wrap. (for example tile position affects where it is drawn. If we want to draw one tile it has 'infinitely' many correct positions but only one o them will result in drawing on screen. This position is determined by camera position.)
+
+
+!!!important!!! make air a tile like others (functioning but not doing anything and empty (maybe a EmptyTile class for Air and possibly similar objects in future)) (common instance for every tile) so there will be no nullptr in map ever. (tiles outside map are still nullptr)

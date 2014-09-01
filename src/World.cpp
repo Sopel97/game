@@ -13,27 +13,28 @@
 
 World::World(WorldGenerator* worldGenerator)
 {
+    Root& root = Root::instance();
+
     m_worldGenerator = worldGenerator;
+    m_tileDatabase = root.tileDatabase();
+    m_fillTileId = worldGenerator->fillTile();
     m_width = worldGenerator->worldWidth();
     m_height = worldGenerator->worldHeight();
     m_tiles = Array2<Tile*>(m_width, m_height, nullptr);
     m_worldGenerator->generate(this);
-    Root& root = Root::instance();
     m_camera = Vec2D(77.001, 77.001);
     m_foregroundTileLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
     m_foregroundBorderLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
     m_bitmapShifter = new Util::BitmapShifter(root.windowWidth(), root.windowHeight());
     m_cameraAtLastRedraw = Vec2I(1000000, -1000000); //so it draw every tile first time
+
 }
 
 World::~World()
 {
     for(Tile* tile : m_tiles)
     {
-        if(tile != nullptr)
-        {
-            if(tile->hasAnyData()) delete tile;
-        }
+        if(tile->hasAnyData()) delete tile;
     }
 }
 int World::width()
@@ -60,8 +61,7 @@ std::vector<Tile*> World::getTiles(int x, int y, int tilesHorizontal, int tilesV
     {
         for(int currentTileY = firstTileY; currentTileY <= lastTileY; ++currentTileY)
         {
-            Tile* currentTile = getTile(currentTileX, currentTileY);
-            if(currentTile) tiles.push_back(currentTile); //only non air tiles are listed, this may not be permanent
+            tiles.push_back(getTile(currentTileX, currentTileY));
         }
     }
     return tiles;
@@ -108,24 +108,54 @@ bool World::placeTile(Tile* tile, int x, int y, bool update, bool redraw)
     if(redraw) redrawTilesFrom(x, y);
     return true;
 }
+bool World::createAndPlaceTileIfPossible(int id, int x, int y, bool update, bool redraw)
+{
+    Tile* clone = m_tileDatabase->createNewTileById(id);
+    if(!placeTile(clone, x, y, update, redraw))
+    {
+        if(clone->hasAnyData()) delete clone;
+        return false;
+    }
+    return true;
+}
+bool World::createAndPlaceTileIfPossible(const std::string& name, int x, int y, bool update, bool redraw)
+{
+    Tile* clone = m_tileDatabase->createNewTileByName(name);
+    if(!placeTile(clone, x, y, update, redraw))
+    {
+        if(clone->hasAnyData()) delete clone;
+        return false;
+    }
+    return true;
+}
+bool World::createAndPlaceTileIfPossible(Tile* tile, int x, int y, bool update, bool redraw)
+{
+    Tile* clone = tile;
+    if(tile->hasAnyData()) clone = tile->clone();
+    if(!placeTile(clone, x, y, update, redraw))
+    {
+        if(clone->hasAnyData()) delete clone;
+        return false;
+    }
+    return true;
+}
 void World::destroyTile(int x, int y, bool update, bool redraw)
 {
     if(!inWorldRange(x, y)) return;
     x = Util::mod(x, m_width);
 
-    if(m_tiles[x][y])
-    {
-        if(m_tiles[x][y]->hasAnyData()) delete m_tiles[x][y];
-    }
-    else return;
-    m_tiles[x][y] = nullptr;
+    if(m_tiles[x][y]->id() == fillTileId()) return; //we dont want to delete tile replacing it with itself
+
+    if(m_tiles[x][y]->hasAnyData()) delete m_tiles[x][y];
+
+    m_tiles[x][y] = m_tileDatabase->createNewTileById(fillTileId());
 
     if(update) updateTilesFrom(x, y);
     if(redraw) redrawTilesFrom(x, y);
 }
 bool World::requestForegroundTileRedraw(int x, int y)
 {
-    if(y < -1 || y > m_height) return false;
+    if(y < -1 || y > m_height) return false; //borders are drawn outside of world too
     Root& root = Root::instance();
 
     int windowWidth = root.windowWidth();
@@ -167,9 +197,13 @@ void World::performForegroundRedrawRequests()
     if(m_foregroundRedrawRequests.empty()) return;
     for(Vec2I pos : m_foregroundRedrawRequests)
     {
+        m_foregroundErasedBorders.push_back(Vec2I(pos.x, pos.y)); //borders can be outside of world
+        listForegroundBorders(pos.x, pos.y);
+
+        if(!inWorldRange(pos.x, pos.y)) continue;
         Tile* tile = getTile(pos.x, pos.y);
 
-        if(tile)
+        if(tile->id() != fillTileId())
         {
             listForegroundTile(pos.x, pos.y);
         }
@@ -177,10 +211,6 @@ void World::performForegroundRedrawRequests()
         {
             m_foregroundErasedTiles.push_back(Vec2I(pos.x, pos.y));
         }
-
-        m_foregroundErasedBorders.push_back(Vec2I(pos.x, pos.y));
-
-        listForegroundBorders(pos.x, pos.y);
     }
 
     m_foregroundRedrawRequests.clear();
@@ -191,11 +221,13 @@ void World::updateTilesFrom(int x, int y)
     {
         for(int yy = -1; yy <= 1; yy += 2)
         {
-            Tile* tile = getTile(xx + x, yy + y);
-            if(!tile) continue;
+            if(xx == 0 && yy == 0) continue;
+            int xxx = x + xx;
+            int yyy = y + yy;
+            if(!inWorldRange(xxx,yyy)) continue;
+            Tile* tile = getTile(xxx, yyy);
 
-            if(tile->update(this, xx + x, yy + y))
-                updateTilesFrom(xx + x, yy + y);
+            if(tile->update(this, xxx, yyy)) updateTilesFrom(xxx, yyy);
         }
     }
 }
@@ -216,34 +248,23 @@ void World::listForegroundBorders(int x, int y) //optimize
         for(int yy = -1; yy <= 1; ++ yy)
         {
             if(yy == 0 && xx == 0) continue;
-            Tile* currentNeighbourTile = getTile(x + xx, y + yy);
-            if(currentNeighbourTile == nullptr) continue;
-            neighbours.push_back(DrawableTileBorder {currentNeighbourTile, currentNeighbourTile->spritesheetId(), x + xx, y + yy, tile, x, y});
+            int xxx = x + xx;
+            int yyy = y + yy;
+            if(!inWorldRange(xxx, yyy)) continue;
+            Tile* currentNeighbourTile = getTile(xxx, yyy);
+            if(!currentNeighbourTile->hasOuterBorder()) continue;
+            neighbours.push_back(DrawableTileBorder {currentNeighbourTile, currentNeighbourTile->spritesheetId(), xxx, yyy, tile, x, y});
         }
     }
     size_t numberOfEntries = neighbours.size();
     auto isDuplicatedLater = [&numberOfEntries, &neighbours] (int indexOfCurrent) -> bool
     {
         size_t index = indexOfCurrent + 1;
-        if(neighbours[indexOfCurrent].tile)
+        int id = neighbours[indexOfCurrent].tile->id();
+        for(; index < numberOfEntries; ++index)
         {
-            int id = neighbours[indexOfCurrent].tile->id();
-            for(; index < numberOfEntries; ++index)
-            {
-                DrawableTileBorder& entry = neighbours[index];
-                if(entry.tile)
-                {
-                    if(entry.tile->id() == id) return true;
-                }
-            }
-        }
-        else
-        {
-            for(; index < numberOfEntries; ++index)
-            {
-                DrawableTileBorder& entry = neighbours[index];
-                if(entry.tile == nullptr) return true;
-            }
+            DrawableTileBorder& entry = neighbours[index];
+            if(entry.tile->id() == id) return true;
         }
         return false;
     };
@@ -256,8 +277,8 @@ void World::listForegroundBorders(int x, int y) //optimize
 }
 void World::listForegroundTile(int x, int y)
 {
+    if(!inWorldRange(x,y)) return;
     Tile* tile = getTile(x, y);
-    if(!tile) return;
     m_foregroundTileBuffer.push_back(DrawableTile {tile, tile->spritesheetId(), x, y});
 }
 
@@ -349,7 +370,6 @@ void World::drawForegroundTileBuffer()
         }
         if(!vertexData.empty()) al_draw_prim(vertexData.data(), NULL, spritesheetDatabase->getSpritesheetById(lastSpritesheetId), 0, vertexData.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
     }
-
 
     al_set_target_bitmap(oldTarget);
     al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
@@ -554,4 +574,8 @@ Vec2D World::way(const Vec2D& from, const Vec2D& to) //may need fix and there ha
     {
         return to - from - Vec2D(m_width * 16, 0);
     }
+}
+int World::fillTileId() const
+{
+    return m_fillTileId;
 }
