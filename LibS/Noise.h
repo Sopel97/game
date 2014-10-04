@@ -26,10 +26,6 @@ template <class T> class CellNoise;
 
 #include "include/SimplexNoise.h"
 #include "include/CellNoise.h"
-/*
-#include "src/SimplexNoise.cpp"
-#include "src/CellNoise.cpp"
-*/
 }
 
 #endif // NOISE_H_INCLUDED

@@ -1,6 +1,6 @@
 template <int I>
 CMWCEngineT<I>::CMWCEngineT(uint32_t seed) :
-    RandomEngine(seed, 0x00010000U)
+    RandomEngineT<uint32_t>(seed, 0xffffffffU)
 {
     c = 362436;
 
@@ -8,8 +8,7 @@ CMWCEngineT<I>::CMWCEngineT(uint32_t seed) :
     Q[1] = seed + PHI;
     Q[2] = seed + PHI + PHI;
 
-    for (int i = 3; i < 4096; i++)
-        Q[i] = Q[i - 3] ^ Q[i - 2] ^ PHI ^ i;
+    for (int i = 3; i < 4096; i++) Q[i] = Q[i - 3] ^ Q[i - 2] ^ PHI ^ i;
 }
 template <int I>
 CMWCEngineT<I>::~CMWCEngineT()
@@ -27,5 +26,5 @@ uint32_t CMWCEngineT<I>::nextRaw()
     c = t >> 32;
     Q[i] = 0xfffffffe - t;
 
-    return Q[i] & 0x0000FFFFU;
+    return Q[i];
 }

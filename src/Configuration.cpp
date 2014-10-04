@@ -1,12 +1,11 @@
 #include "Configuration.h"
-#include "../geometry/Geometry.h"
+#include "../LibS/Geometry.h"
 
 using namespace Geo;
 
 Configuration::Configuration(const std::string& path) :
     m_table(LuaTable::fromFile(path.c_str()))
 {
-
 }
 
 Configuration::~Configuration()

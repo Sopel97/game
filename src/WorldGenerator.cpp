@@ -3,7 +3,7 @@
 #include "World.h"
 #include "Tile.h"
 #include "TileDatabase.h"
-#include "../geometry/Noise.h"
+#include "../LibS/Noise.h"
 
 #include <iostream>
 
@@ -34,7 +34,7 @@ WorldGenerator::Layer::Layer(ConfigurationNode layerNode)
     noisePersistance = layerNode[LayerParameter::NOISE_PERSISTANCE].getDefault<double>(1);
     noiseScale = layerNode[LayerParameter::NOISE_SCALE].getDefault<double>(0.01);
 }
-WorldGenerator::WorldGenerator(Configuration& config)
+WorldGenerator::WorldGenerator(Configuration& config) : m_randomEngine(m_seed)
 {
     Root& root = Root::instance();
     TileDatabase* tileDatabase = root.tileDatabase();
@@ -56,8 +56,6 @@ WorldGenerator::WorldGenerator(Configuration& config)
         if(layer.lowerBound.max < 0.0f) layer.lowerBound.max = m_worldHeight - 1;
         addLayer(layer);
     }
-
-    m_randomEngine = XorshiftEngine(m_seed);
 }
 
 WorldGenerator::~WorldGenerator()

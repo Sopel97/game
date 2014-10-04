@@ -2,9 +2,10 @@
 #define CMWCENGINE_H_INCLUDED
 
 template <int I>
-class CMWCEngineT : public RandomEngineT<I> //with lag of 4096
+class CMWCEngineT : public RandomEngineT<uint32_t> //with lag of 4096 //find better version
 {
 public:
+    typedef uint32_t GeneratedValuesType;
     CMWCEngineT(uint32_t seed = 0xb5f3c6a7);
     ~CMWCEngineT();
     virtual uint32_t nextRaw(); /* generates 16 bit number */

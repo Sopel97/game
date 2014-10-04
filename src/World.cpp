@@ -507,10 +507,18 @@ void World::draw() //in every drawing function coordinates need to be floored, n
 void World::update()
 {
     Root& root = Root::instance();
-    Vec2D c = screenToWorld(Vec2D(root.windowWidth() / 2, root.windowHeight() / 2));
-    destroyTile(c.x / 16, c.y / 16);
-    Vec2D c2 = screenToWorld(Vec2D(root.windowWidth() / 4, root.windowHeight() / 2));
-    placeTile(root.tileDatabase()->createNewTileByName("Stone"), c2.x / 16, c2.y / 16);
+    ALLEGRO_MOUSE_STATE mouseState;
+    al_get_mouse_state(&mouseState);
+    if(mouseState.buttons & 1) //left
+    {
+        Vec2D c = screenToWorld(Vec2D(mouseState.x, mouseState.y));
+        destroyTile(c.x / 16, c.y / 16);
+    }
+    else if(mouseState.buttons & 2) // right
+    {
+        Vec2D c = screenToWorld(Vec2D(mouseState.x, mouseState.y));
+        placeTile(root.tileDatabase()->createNewTileByName("Stone"), c.x / 16, c.y / 16);
+    }
 }
 void World::doRandomTileUpdate()
 {

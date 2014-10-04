@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include "../geometry/Geometry.h"
+#include "../LibS/Geometry.h"
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
 

@@ -4,7 +4,7 @@
 #include <vector>
 #include <set>
 
-#include "../geometry/Geometry.h"
+#include "../LibS/Geometry.h"
 #include "Util.h"
 #include "Array2.h"
 #include <allegro5/allegro_primitives.h>

@@ -4,7 +4,7 @@
 #include "Configuration.h"
 #include "Util.h"
 #include "Root.h"
-#include "../geometry/Random.h"
+#include "../LibS/Random.h"
 
 #include <vector>
 #include <map>
@@ -76,7 +76,7 @@ protected:
 
     int m_seed;
 
-    XorshiftEngine m_randomEngine;
+    Xorshift1024Engine m_randomEngine;
 private:
 
 };

@@ -5,24 +5,9 @@
 #include <cmath>
 #include <utility>
 #include <functional>
+#include <algorithm>
 
-/* Z coordinates are going down. Height is going down. So topLeft i actually 'lower' than bottomRight
-
-                            |y
-                            |
-                            |
-                            |
-                            |
-                x           |
-                -------------------------->
-                            |\
-                            |  \z
-                            |    \
-                            |      \
-                            |        \
-                            |          \
-                           \/           _|
-*/
+//maybe will be renamed to Shapes and some functions will be extracted to other files
 namespace Geo
 {
 /*   UTILITY   */
@@ -78,9 +63,11 @@ template <class T> class Cylinder;
 template <class T> class LineSegment;
 template <class T> class Triangle;
 template <class T> class Polygon;
-template<class T> class Mesh;
+template <class T> class Mesh;
 
 class Intersections;
+
+template <class T> class ConvexHull;
 
 /*         HEADERS         */
 #include "include/Shape.h"
@@ -98,22 +85,7 @@ class Intersections;
 
 #include "include/Intersections.h"
 
-/*         SOURCE         */
-/*
-#include "src/Shape.cpp"
-#include "src/Shape2.cpp"
-#include "src/Vec2.cpp"
-#include "src/Vec3.cpp"
-#include "src/Rectangle.cpp"
-#include "src/Cuboid.cpp"
-#include "src/Circle.cpp"
-#include "src/Cylinder.cpp"
-#include "src/LineSegment.cpp"
-#include "src/Triangle.cpp"
-#include "src/Polygon.cpp"
-#include "src/Mesh.cpp"
+#include "include/ConvexHull.h"
 
-#include "src/Intersections.cpp"
-*/
 }
 #endif // GEOMETRY_H_INCLUDED

@@ -1,0 +1,7 @@
+airTile = {
+
+	baseTileName = "EmptyTile",
+	name = "Air"
+}
+
+return airTile

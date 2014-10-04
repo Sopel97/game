@@ -1,8 +1,6 @@
 #include <iostream>
 
-#include "geometry/Geometry.h"
 #include "include/Root.h"
-#include "Util.h"
 
 int main()
 {

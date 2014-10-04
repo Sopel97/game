@@ -5,7 +5,7 @@
 #include <vector>
 
 #include <allegro5/allegro_primitives.h>
-#include "../../geometry/Geometry.h"
+#include "../../LibS/Geometry.h"
 #include "World.h"
 #include "../Configuration.h"
 #include "StaticTileData.h"
