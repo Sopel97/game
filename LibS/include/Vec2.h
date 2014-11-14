@@ -51,7 +51,8 @@ public:
     void scale(const Vec2<T>& s);
     void scale(const T s);
 
-    void transform(std::function<void(Vec2<T>&)>& func);
+    template <class Transformation>
+    void transform(Transformation&& func);
 
     Mesh<LineSegment<T>> outline() const;
 

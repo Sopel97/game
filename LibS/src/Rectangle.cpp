@@ -5,30 +5,22 @@ Rectangle<T>::Rectangle()
 
 }
 template <class T>
-Rectangle<T>::Rectangle(const Vec2<T>& p1, const Vec2<T>& p2)
+Rectangle<T>::Rectangle(const Vec2<T>& p1, const Vec2<T>& p2) : topLeft(p1), bottomRight(p2)
 {
-    topLeft = p1;
-    bottomRight = p2;
 }
 template <class T>
-Rectangle<T>::Rectangle(const Vec2<T>& p1, const T width, const T height)
+Rectangle<T>::Rectangle(const Vec2<T>& p1, const T width, const T height) : topLeft(p1), bottomRight(p1 + Vec2<T>(width, height))
 {
-    topLeft = p1;
-    bottomRight = p1 + Vec2<T>(width, height);
 }
 template <class T>
 template <class X>
-Rectangle<T>::Rectangle(const Rectangle<X>& r)
+Rectangle<T>::Rectangle(const Rectangle<X>& r) : topLeft(r.topLeft), bottomRight(r.bottomRight)
 {
-    topLeft = r.topLeft;
-    bottomRight = r.bottomRight;
 }
 template <class T>
 template <class X>
-Rectangle<T>::Rectangle(Rectangle<X>&& r)
+Rectangle<T>::Rectangle(Rectangle<X>&& r) : topLeft(std::move(r.topLeft)), bottomRight(std::move(r.bottomRight))
 {
-    topLeft = std::move(r.topLeft);
-    bottomRight = std::move(r.bottomRight);
 }
 template <class T>
 template <class X>
@@ -108,7 +100,8 @@ void Rectangle<T>::scale(const T s)
 
 }
 template <class T>
-void Rectangle<T>::transform(std::function<void(Rectangle<T>&)>& func)
+template <class Transformation>
+void Rectangle<T>::transform(Transformation&& func)
 {
     func(*this);
 }

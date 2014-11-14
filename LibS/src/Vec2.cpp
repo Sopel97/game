@@ -1,37 +1,30 @@
 #include "../include/Intersections.h"
 template <class T>
-Vec2<T>::Vec2()
+Vec2<T>::Vec2() : x(0), y(0)
 {
-    x = y = 0;
+
 }
 
 template <class T>
-Vec2<T>::Vec2(T _x, T _y)
+Vec2<T>::Vec2(T _x, T _y) : x(_x), y(_y)
 {
-    x = _x;
-    y = _y;
 }
 template <class T>
 Vec2<T>::Vec2(const std::initializer_list<T>& list)
 {
     typename std::initializer_list<T>::iterator it = list.begin();
     x = *it;
-    ++it;
-    y = *it;
+    y = *(it+1);
 }
 template <class T>
 template <class X>
-Vec2<T>::Vec2(const Vec2<X>& v)
+Vec2<T>::Vec2(const Vec2<X>& v) : x(v.x), y(v.y)
 {
-    x = v.x;
-    y = v.y;
 }
 template <class T>
 template <class X>
-Vec2<T>::Vec2(Vec2<X>&& v)
+Vec2<T>::Vec2(Vec2<X>&& v) : x(v.x), y(v.y)
 {
-    x = v.x;
-    y = v.y;
 }
 template <class T>
 template <class X>
@@ -128,26 +121,26 @@ Vec2<T>& Vec2<T>::operator/=(const Vec2& v1)
 template <class T>
 T Vec2<T>::magnitude() const
 {
-    return 1. / invSqrt(x * x + y * y);
+    return std::sqrt(x * x + y * y);
 }
 template <class T>
 T Vec2<T>::distanceTo(const Vec2& v1) const
 {
     T dx = x - v1.x;
     T dy = y - v1.y;
-    return 1. / (invSqrt(dx * dx + dy * dy));
+    return std::sqrt(dx * dx + dy * dy);
 }
 template <class T>
 void Vec2<T>::normalize()
 {
-    T invertedSquareRoot = invSqrt(x * x + y * y);
+    T invertedSquareRoot = 1./std::sqrt(x * x + y * y);
     x *= invertedSquareRoot;
     y *= invertedSquareRoot;
 }
 template <class T>
 Vec2<T> Vec2<T>::normalized() const
 {
-    T invertedSquareRoot = invSqrt(x * x + y * y);
+    T invertedSquareRoot = 1./std::sqrt(x * x + y * y);
     return Vec2<T>(x * invertedSquareRoot, y * invertedSquareRoot);
 }
 template <class T>
@@ -211,7 +204,8 @@ void Vec2<T>::scale(const T s)
 
 }
 template <class T>
-void Vec2<T>::transform(std::function<void(Vec2<T>&)>& func)
+template <class Transformation>
+void Vec2<T>::transform(Transformation&& func)
 {
     func(*this);
 }

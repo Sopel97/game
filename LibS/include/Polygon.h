@@ -38,10 +38,10 @@ public:
     void scale(const T s);
 
     Vec2<T> project(const Vec2<T>& b) const;
-    std::pair<T, T> project1(const Vec2<T>& b) const;
+    std::pair<T, T> projectMinMax(const Vec2<T>& b) const;
 
-    void transform(std::function<void(Polygon<T>&)>& func);
-    void transform(std::function<void(Vec2<T>&)>& func);
+    template <class Transformation>
+    void transform(Transformation&& func);
 
     Mesh<LineSegment<T>> outline() const;
 

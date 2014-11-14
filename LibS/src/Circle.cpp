@@ -4,24 +4,18 @@ Circle<T>::Circle()
 
 }
 template <class T>
-Circle<T>::Circle(const Vec2<T>& p1, T r)
+Circle<T>::Circle(const Vec2<T>& p1, T r) : center(p1), radius(r)
 {
-    center = p1;
-    radius = r;
 }
 template <class T>
 template <class X>
-Circle<T>::Circle(const Circle<X>& c)
+Circle<T>::Circle(const Circle<X>& c) : center(c.center), radius(c.radius)
 {
-    center = c.center;
-    radius = c.radius;
 }
 template <class T>
 template <class X>
-Circle<T>::Circle(Circle<X>&& c)
+Circle<T>::Circle(Circle<X>&& c) : center(std::move(c.center)), radius(c.radius)
 {
-    center = std::move(c.center);
-    radius = c.radius;
 }
 template <class T>
 template <class X>
@@ -83,7 +77,8 @@ void Circle<T>::scale(const Vec2<T>& s)
 
 }
 template <class T>
-void Circle<T>::transform(std::function<void(Circle<T>&)>& func)
+template <class Transformation>
+void Circle<T>::transform(Transformation&& func)
 {
     func(*this);
 }

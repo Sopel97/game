@@ -1,5 +1,6 @@
 #include "BasicSolidTile.h"
 
+#include "../LibS/AllegroUtil.h"
 
 BasicSolidTile::BasicSolidTile(Configuration& config, StaticTileData* staticTileData) :
     Tile(config, staticTileData)
@@ -109,7 +110,7 @@ void BasicSolidTile::drawInner(World* world, std::vector<ALLEGRO_VERTEX>& vertex
     Vec2F uv(0.0f + offset.x, 0.0f + offset.y);
     //float textureX = 0.0f + offset.x;
     //float textureY = 0.0f + offset.y;
-    Util::appendQuadAsTriangleList(vertexData, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), uv, color);
+    AllegroUtil::appendQuadAsTriangleList(vertexData, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), uv, color);
     return;
 }
 void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& vertexData, int x, int y, int outX, int outY, Tile* tileOut)
@@ -164,7 +165,7 @@ void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& vertex
     //textureY = 0.0f + offset.y;
     if(spriteOffset1)
     {
-        Util::appendQuadAsTriangleList(vertexData, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), uv, color);
+        AllegroUtil::appendQuadAsTriangleList(vertexData, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), uv, color);
     }
     unsigned int p = biggerPrecedence(ids[0][1]) | (biggerPrecedence(ids[1][0]) << 1) | (biggerPrecedence(ids[2][1]) << 2) | (biggerPrecedence(ids[1][2]) << 3); //similar to spriteOffset1 but with precedences
 
@@ -174,7 +175,7 @@ void BasicSolidTile::drawOuter(World* world, std::vector<ALLEGRO_VERTEX>& vertex
     //textureY = 16.0f + offset.y;
     if(spriteOffset2)
     {
-        Util::appendQuadAsTriangleList(vertexData, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), uv, color);
+        AllegroUtil::appendQuadAsTriangleList(vertexData, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), uv, color);
     }
 }
 bool BasicSolidTile::update(World* world, int x, int y)

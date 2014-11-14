@@ -24,7 +24,7 @@ Vec2<T> Shape2<T>::project(const Vec2<T>& b) const
 }
 
 template <class T>
-std::pair<T,T> Shape2<T>::project1(const Vec2<T>& b) const
+std::pair<T,T> Shape2<T>::projectMinMax(const Vec2<T>& b) const
 {
     //not specified
     return std::pair<T,T>(T(), T());

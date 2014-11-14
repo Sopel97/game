@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1412438347 source:d:\dev\game\main.cpp
+1412434747 source:d:\dev\game\main.cpp
 	<iostream>
 	"include/Root.h"
 
@@ -116,7 +116,7 @@
 
 1408549596 d:\dev\game\geometry\src\simplexnoise.cpp
 
-1404718952 d:\dev\game\luatables\luatables.h
+1404715352 d:\dev\game\luatables\luatables.h
 	<iostream>
 	<assert.h>
 	<cstdlib>
@@ -138,18 +138,18 @@
 	<direct.h>
 	<unistd.h>
 
-1407061660 d:\dev\game\include\root.h
+1407058060 d:\dev\game\include\root.h
 
-1408804537 d:\dev\game\include\configuration.h
+1408800937 d:\dev\game\include\configuration.h
 	<lua.h>
 	<string>
 	"../luatables/luatables.h"
 
-1412438658 source:d:\dev\game\src\configuration.cpp
+1412435058 source:d:\dev\game\src\configuration.cpp
 	"Configuration.h"
 	"../LibS/Geometry.h"
 
-1412438929 source:d:\dev\game\src\root.cpp
+1412435329 source:d:\dev\game\src\root.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -167,20 +167,20 @@
 	"EmptyTile.h"
 	"BasicSolidTile.h"
 
-1407694402 source:d:\dev\game\src\assets.cpp
+1407690802 source:d:\dev\game\src\assets.cpp
 	"Assets.h"
 
-1407351106 d:\dev\game\include\assets.h
+1407347506 d:\dev\game\include\assets.h
 	<vector>
 	<string>
 	<windows.h>
 
-1408619201 d:\dev\game\include\spritesheetdatabase.h
+1408615601 d:\dev\game\include\spritesheetdatabase.h
 	<vector>
 	<map>
 	<string>
 
-1408619220 source:d:\dev\game\src\spritesheetdatabase.cpp
+1408615620 source:d:\dev\game\src\spritesheetdatabase.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -198,21 +198,21 @@
 	<vector>
 	<utility>
 
-1407417894 source:d:\dev\game\src\tiles\statictiledata.cpp
+1407414294 source:d:\dev\game\src\tiles\statictiledata.cpp
 	<string>
 	"StaticTileData.h"
 	"Root.h"
 	"SpritesheetDatabase.h"
 
-1407417834 source:d:\dev\game\src\tiles\tile.cpp
+1407414234 source:d:\dev\game\src\tiles\tile.cpp
 	"Tile.h"
 
-1412438358 d:\dev\game\include\tiles\statictiledata.h
+1412434758 d:\dev\game\include\tiles\statictiledata.h
 	<string>
 	"../Configuration.h"
 	"../../LibS/Geometry.h"
 
-1412438372 d:\dev\game\include\tiles\tile.h
+1412434772 d:\dev\game\include\tiles\tile.h
 	<string>
 	<vector>
 	<allegro5/allegro_primitives.h>
@@ -221,7 +221,7 @@
 	"../Configuration.h"
 	"StaticTileData.h"
 
-1408972566 source:d:\dev\game\luatables\luatables.cc
+1408968966 source:d:\dev\game\luatables\luatables.cc
 	"luatables.h"
 	<assert.h>
 	<iostream>
@@ -236,40 +236,40 @@
 	<direct.h>
 	<unistd.h>
 
-1409589383 source:d:\dev\game\src\tiledatabase.cpp
+1409585783 source:d:\dev\game\src\tiledatabase.cpp
 	"TileDatabase.h"
 	"Root.h"
 	"Assets.h"
 	"Tile.h"
 
-1408619234 d:\dev\game\include\tiledatabase.h
+1408615634 d:\dev\game\include\tiledatabase.h
 	<vector>
 	<map>
 	<string>
 
 1405028983 d:\dev\game\geometry\geometry.cpp
 
-1405168896 source:d:\dev\game\src\array2.cpp
+1405165296 source:d:\dev\game\src\array2.cpp
 	"Array2.h"
 
-1408972566 d:\dev\game\include\array2.h
+1408968966 d:\dev\game\include\array2.h
 	<iostream>
 	<vector>
 	<utility>
 
-1412438395 d:\dev\game\include\world.h
+1415639036 d:\dev\game\include\world.h
 	<vector>
 	<set>
 	"../LibS/Geometry.h"
-	"Util.h"
+	"../LibS/AllegroUtil.h"
 	"Array2.h"
 	<allegro5/allegro_primitives.h>
 
-1412439117 source:d:\dev\game\src\world.cpp
+1415639122 source:d:\dev\game\src\world.cpp
 	<iostream>
 	<cstdlib>
 	<algorithm>
-	"Util.h"
+	"../LibS/AllegroUtil.h"
 	"World.h"
 	"Root.h"
 	"TileDatabase.h"
@@ -277,10 +277,11 @@
 	"Tile.h"
 	"WorldGenerator.h"
 
-1409489231 source:d:\dev\game\src\tiles\basicsolidtile.cpp
+1415639080 source:d:\dev\game\src\tiles\basicsolidtile.cpp
 	"BasicSolidTile.h"
+	"../LibS/AllegroUtil.h"
 
-1409489231 d:\dev\game\include\tiles\basicsolidtile.h
+1409485631 d:\dev\game\include\tiles\basicsolidtile.h
 	<vector>
 	<allegro5/allegro_primitives.h>
 	"Tile.h"
@@ -774,15 +775,15 @@
 	"Assets.h"
 	"Tile.h"
 
-1412438748 d:\dev\game\include\worldgenerator.h
+1415639025 d:\dev\game\include\worldgenerator.h
 	"Configuration.h"
-	"Util.h"
+	"../LibS/Util.h"
 	"Root.h"
 	"../LibS/Random.h"
 	<vector>
 	<map>
 
-1412438721 source:d:\dev\game\src\worldgenerator.cpp
+1412435121 source:d:\dev\game\src\worldgenerator.cpp
 	"WorldGenerator.h"
 	"World.h"
 	"Tile.h"
@@ -846,16 +847,16 @@
 
 1408552490 d:\dev\game\geometry\src\xorshiftengine.cpp
 
-1409588471 source:d:\dev\game\src\tiles\emptytile.cpp
+1409584871 source:d:\dev\game\src\tiles\emptytile.cpp
 	"EmptyTile.h"
 
-1409589217 d:\dev\game\include\tiles\emptytile.h
+1409585617 d:\dev\game\include\tiles\emptytile.h
 	<vector>
 	<allegro5/allegro_primitives.h>
 	"Tile.h"
 	"StaticTileData.h"
 
-1410553381 d:\dev\game\libs\geometry.h
+1410549781 d:\dev\game\libs\geometry.h
 	<vector>
 	<cmath>
 	<utility>
@@ -876,81 +877,81 @@
 	"include/Intersections.h"
 	"include/ConvexHull.h"
 
-1405028144 d:\dev\game\libs\include\shape.h
+1405024544 d:\dev\game\libs\include\shape.h
 	"../src/Shape.cpp"
 
-1404938336 d:\dev\game\libs\src\shape.cpp
+1404934736 d:\dev\game\libs\src\shape.cpp
 
-1408467173 d:\dev\game\libs\include\shape2.h
+1415637962 d:\dev\game\libs\include\shape2.h
 	"../src/Shape2.cpp"
 
-1408467173 d:\dev\game\libs\src\shape2.cpp
+1415637971 d:\dev\game\libs\src\shape2.cpp
 
-1408548858 d:\dev\game\libs\include\vec2.h
+1415635773 d:\dev\game\libs\include\vec2.h
 	"../src/Vec2.cpp"
 
-1408549096 d:\dev\game\libs\src\vec2.cpp
+1415637724 d:\dev\game\libs\src\vec2.cpp
 	"../include/Intersections.h"
 
-1408467173 d:\dev\game\libs\include\intersections.h
+1408463573 d:\dev\game\libs\include\intersections.h
 	"../src/Intersections.cpp"
 
-1408547666 d:\dev\game\libs\src\intersections.cpp
+1415637987 d:\dev\game\libs\src\intersections.cpp
 
-1408548858 d:\dev\game\libs\include\vec3.h
+1415635773 d:\dev\game\libs\include\vec3.h
 	"../src/Vec3.cpp"
 
-1408549096 d:\dev\game\libs\src\vec3.cpp
+1415637786 d:\dev\game\libs\src\vec3.cpp
 
-1408548858 d:\dev\game\libs\include\rectangle.h
+1415637962 d:\dev\game\libs\include\rectangle.h
 	"../src/Rectangle.cpp"
 
-1408549096 d:\dev\game\libs\src\rectangle.cpp
+1415637390 d:\dev\game\libs\src\rectangle.cpp
 
-1408548858 d:\dev\game\libs\include\cuboid.h
+1415635773 d:\dev\game\libs\include\cuboid.h
 	"../src/Cuboid.cpp"
 
-1408549096 d:\dev\game\libs\src\cuboid.cpp
+1415636921 d:\dev\game\libs\src\cuboid.cpp
 
-1408548858 d:\dev\game\libs\include\circle.h
+1415635773 d:\dev\game\libs\include\circle.h
 	"../src/Circle.cpp"
 
-1408549096 d:\dev\game\libs\src\circle.cpp
+1415636929 d:\dev\game\libs\src\circle.cpp
 
-1408548858 d:\dev\game\libs\include\cylinder.h
+1415635773 d:\dev\game\libs\include\cylinder.h
 	"../src/Cylinder.cpp"
 
-1408549096 d:\dev\game\libs\src\cylinder.cpp
+1415637103 d:\dev\game\libs\src\cylinder.cpp
 
-1408548858 d:\dev\game\libs\include\linesegment.h
+1415635773 d:\dev\game\libs\include\linesegment.h
 	"../src/LineSegment.cpp"
 
-1408549096 d:\dev\game\libs\src\linesegment.cpp
+1415637114 d:\dev\game\libs\src\linesegment.cpp
 
-1408548858 d:\dev\game\libs\include\triangle.h
+1415637962 d:\dev\game\libs\include\triangle.h
 	"../src/Triangle.cpp"
 
-1408549096 d:\dev\game\libs\src\triangle.cpp
+1415637570 d:\dev\game\libs\src\triangle.cpp
 
-1408548858 d:\dev\game\libs\include\polygon.h
+1415637962 d:\dev\game\libs\include\polygon.h
 	"../src/Polygon.cpp"
 
-1408549096 d:\dev\game\libs\src\polygon.cpp
+1415637971 d:\dev\game\libs\src\polygon.cpp
 
-1406146242 d:\dev\game\libs\include\mesh.h
+1415638202 d:\dev\game\libs\include\mesh.h
 	"../src/Mesh.cpp"
 
-1406146241 d:\dev\game\libs\src\mesh.cpp
+1415638202 d:\dev\game\libs\src\mesh.cpp
 
-1410555134 d:\dev\game\libs\include\convexhull.h
+1410551534 d:\dev\game\libs\include\convexhull.h
 	<vector>
 	"Vec2.h"
 	"Polygon.h"
 	"../src/ConvexHull.cpp"
 
-1411740184 d:\dev\game\libs\src\convexhull.cpp
+1415636955 d:\dev\game\libs\src\convexhull.cpp
 
-1411740184 d:\dev\game\libs\noise.h
+1411736584 d:\dev\game\libs\noise.h
 	<cmath>
 	<random>
 	<algorithm>
@@ -958,17 +959,17 @@
 	"include/SimplexNoise.h"
 	"include/CellNoise.h"
 
-1408549586 d:\dev\game\libs\include\simplexnoise.h
+1408545986 d:\dev\game\libs\include\simplexnoise.h
 	"../src/SimplexNoise.cpp"
 
-1408549594 d:\dev\game\libs\src\simplexnoise.cpp
+1408545994 d:\dev\game\libs\src\simplexnoise.cpp
 
-1405028144 d:\dev\game\libs\include\cellnoise.h
+1405024544 d:\dev\game\libs\include\cellnoise.h
 	"../src/CellNoise.cpp"
 
-1406146242 d:\dev\game\libs\src\cellnoise.cpp
+1406142642 d:\dev\game\libs\src\cellnoise.cpp
 
-1411740184 d:\dev\game\libs\random.h
+1415978458 d:\dev\game\libs\random.h
 	<cstdint>
 	"include/RandomEngine.h"
 	"include/CMWCEngine.h"
@@ -976,34 +977,61 @@
 	"include/Xorshift64Engine.h"
 	"include/Xorshift128Engine.h"
 	"include/Xorshift1024Engine.h"
+	"include/WELL512Engine.h"
+	"include/WELL1024Engine.h"
 
-1411739965 d:\dev\game\libs\include\randomengine.h
+1411736365 d:\dev\game\libs\include\randomengine.h
 	"../src/RandomEngine.cpp"
 
-1411739495 d:\dev\game\libs\src\randomengine.cpp
+1411735895 d:\dev\game\libs\src\randomengine.cpp
 
-1411739965 d:\dev\game\libs\include\cmwcengine.h
+1411736365 d:\dev\game\libs\include\cmwcengine.h
 	"../src/CMWCEngine.cpp"
 
-1411739820 d:\dev\game\libs\src\cmwcengine.cpp
+1411736220 d:\dev\game\libs\src\cmwcengine.cpp
 
-1411739965 d:\dev\game\libs\include\xorshift32engine.h
+1411736365 d:\dev\game\libs\include\xorshift32engine.h
 	"../src/Xorshift32Engine.cpp"
 
-1411739697 d:\dev\game\libs\src\xorshift32engine.cpp
+1411736097 d:\dev\game\libs\src\xorshift32engine.cpp
 
-1411739965 d:\dev\game\libs\include\xorshift64engine.h
+1411736365 d:\dev\game\libs\include\xorshift64engine.h
 	"../src/Xorshift64Engine.cpp"
 
-1411738341 d:\dev\game\libs\src\xorshift64engine.cpp
+1411734741 d:\dev\game\libs\src\xorshift64engine.cpp
 
-1411739965 d:\dev\game\libs\include\xorshift128engine.h
+1411736365 d:\dev\game\libs\include\xorshift128engine.h
 	"../src/Xorshift128Engine.cpp"
 
-1411738373 d:\dev\game\libs\src\xorshift128engine.cpp
+1411734773 d:\dev\game\libs\src\xorshift128engine.cpp
 
-1411739965 d:\dev\game\libs\include\xorshift1024engine.h
+1411736365 d:\dev\game\libs\include\xorshift1024engine.h
 	"../src/Xorshift1024Engine.cpp"
 
-1412438791 d:\dev\game\libs\src\xorshift1024engine.cpp
+1412435191 d:\dev\game\libs\src\xorshift1024engine.cpp
+
+1415636650 d:\dev\game\libs\util.h
+	<iostream>
+	<vector>
+	"../LibS/Geometry.h"
+
+1415636697 d:\dev\game\libs\allegroutil.h
+	"Util.h"
+	<allegro5/allegro5.h>
+	<allegro5/allegro_primitives.h>
+
+1415638841 source:d:\dev\game\libs\src\allegroutil.cpp
+	"../AllegroUtil.h"
+	<iostream>
+	<vector>
+
+1415979865 d:\dev\game\libs\include\well512engine.h
+	"../src/WELL512Engine.cpp"
+
+1415979697 d:\dev\game\libs\src\well512engine.cpp
+
+1415979871 d:\dev\game\libs\include\well1024engine.h
+	"../src/WELL1024Engine.cpp"
+
+1415979905 d:\dev\game\libs\src\well1024engine.cpp
 

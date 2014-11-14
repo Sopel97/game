@@ -73,8 +73,6 @@ int WorldGenerator::worldHeight() const
 }
 void WorldGenerator::generate(World* world)
 {
-    TileDatabase* tileDatabase = Root::instance().tileDatabase();
-
     std::vector<std::vector<int>> layers;
     layers.reserve(m_worldWidth);
     layers.resize(m_worldWidth);

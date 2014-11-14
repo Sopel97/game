@@ -272,8 +272,8 @@ bool Intersections::intersection(const Polygon<T>& a, const Polygon<T>& b)
     for(const Vec2<T>& vertex : a.vertices)
     {
         Vec2<T> perp = (vertex - lastVertex).normal();
-        std::pair<T, T> aProjection = a.project1(perp);
-        std::pair<T, T> bProjection = b.project1(perp);
+        std::pair<T, T> aProjection = a.projectMinMax(perp);
+        std::pair<T, T> bProjection = b.projectMinMax(perp);
         if(aProjection.first > bProjection.second || bProjection.first > aProjection.second) return false;
         lastVertex = vertex;
     }
@@ -282,8 +282,8 @@ bool Intersections::intersection(const Polygon<T>& a, const Polygon<T>& b)
     for(const Vec2<T>& vertex : b.vertices)
     {
         Vec2<T> perp = (vertex - lastVertex).normal();
-        std::pair<T, T> aProjection = a.project1(perp);
-        std::pair<T, T> bProjection = b.project1(perp);
+        std::pair<T, T> aProjection = a.projectMinMax(perp);
+        std::pair<T, T> bProjection = b.projectMinMax(perp);
         if(aProjection.first > bProjection.second || bProjection.first > aProjection.second) return false;
         lastVertex = vertex;
     }

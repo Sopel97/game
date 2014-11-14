@@ -2,7 +2,7 @@
 #define WORLDGENERATOR_H
 
 #include "Configuration.h"
-#include "Util.h"
+#include "../LibS/Util.h"
 #include "Root.h"
 #include "../LibS/Random.h"
 

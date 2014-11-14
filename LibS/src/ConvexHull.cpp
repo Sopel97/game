@@ -9,7 +9,7 @@ ConvexHull<T>::ConvexHull(std::vector<Vec2<T>>&& p) : points(p), sorted(false)
 
 }
 template <class T>
-void ConvexHull<T>::sortPoints()
+void ConvexHull<T>::sortPoints() //TODO: disable warning about float == comparsion
 {
     std::sort(points.begin(), points.end(), [] (const Vec2<T>& lhs, const Vec2<T>& rhs) -> bool {return (lhs.x < rhs.x || (lhs.x == rhs.x && lhs.y < rhs.y));});
 }

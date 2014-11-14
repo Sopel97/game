@@ -4,28 +4,19 @@ Cylinder<T>::Cylinder()
 
 }
 template <class T>
-Cylinder<T>::Cylinder(const Vec3<T>& p1, T r, T h)
+Cylinder<T>::Cylinder(const Vec3<T>& p1, T r, T h) : center(p1), radius(r), height(h)
 {
-    center = p1;
-    radius = r;
-    height = h;
 }
 template <class T>
 template <class X>
-Cylinder<T>::Cylinder(const Cylinder<X>& c)
+Cylinder<T>::Cylinder(const Cylinder<X>& c) : center(c.p1), radius(c.r), height(c.h)
 {
-    center = c.center;
-    radius = c.radius;
-    height = c.height;
 }
 
 template <class T>
 template <class X>
-Cylinder<T>::Cylinder(Cylinder<X>&& c)
+Cylinder<T>::Cylinder(Cylinder<X>&& c) : center(std::move(c.p1)), radius(c.r), height(c.h)
 {
-    center = c.center;
-    radius = c.radius;
-    height = c.height;
 }
 template <class T>
 template <class X>
@@ -74,7 +65,8 @@ Circle<T> Cylinder<T>::base() const
     return Circle<T>(Vec2<T>(center.x, center.y), radius);
 }
 template <class T>
-void Cylinder<T>::transform(std::function<void(Cylinder<T>&)>& func)
+template <class Transformation>
+void Cylinder<T>::transform(Transformation&& func)
 {
     func(*this);
 }

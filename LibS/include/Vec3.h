@@ -38,7 +38,8 @@ public:
     Vec3<T> normal();
     T angle() const;
 
-    void transform(std::function<void(Vec3<T>&)>& func);
+    template <class Transformation>
+    void transform(Transformation&& func);
 
     template<class S>
     bool intersects(const S& b);

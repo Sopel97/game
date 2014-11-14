@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <algorithm>
 
-#include "Util.h"
+#include "../LibS/AllegroUtil.h"
 #include "World.h"
 #include "Root.h"
 #include "TileDatabase.h"
@@ -25,7 +25,7 @@ World::World(WorldGenerator* worldGenerator)
     m_camera = Vec2D(77.001, 77.001);
     m_foregroundTileLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
     m_foregroundBorderLayer = al_create_bitmap(root.windowWidth(), root.windowHeight());
-    m_bitmapShifter = new Util::BitmapShifter(root.windowWidth(), root.windowHeight());
+    m_bitmapShifter = new AllegroUtil::BitmapShifter(root.windowWidth(), root.windowHeight());
     m_cameraAtLastRedraw = Vec2I(1000000, -1000000); //so it draw every tile first time
 
 }
@@ -237,7 +237,7 @@ bool World::inWorldRange(int x, int y)
 }
 void World::drawFromLayerToScreen(ALLEGRO_BITMAP* layer)
 {
-    Util::drawBitmap(layer, 0, 0);
+    AllegroUtil::drawBitmap(layer, 0, 0);
 }
 void World::listForegroundBorders(int x, int y) //optimize
 {
@@ -343,7 +343,7 @@ void World::drawForegroundTileBuffer()
         for(Vec2I tilePosition : m_foregroundErasedTiles)
         {
             Vec2F posOnScreen = Util::fastFloor(worldToScreen(Vec2D(tilePosition.x * 16.0, tilePosition.y * 16.0)));
-            Util::appendQuadAsTriangleList(erasedArea, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), Vec2F(0.0f, 0.0f), color);
+            AllegroUtil::appendQuadAsTriangleList(erasedArea, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), Vec2F(0.0f, 0.0f), color);
         }
         al_draw_prim(erasedArea.data(), NULL, NULL, 0, erasedArea.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
     }
@@ -437,7 +437,7 @@ void World::drawForegroundBorderBuffer()
         for(Vec2I tilePosition : m_foregroundErasedBorders)
         {
             Vec2F posOnScreen = Util::fastFloor(worldToScreen(Vec2D(tilePosition.x * 16.0, tilePosition.y * 16.0)));
-            Util::appendQuadAsTriangleList(erasedArea, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), Vec2F(0.0f, 0.0f), color);
+            AllegroUtil::appendQuadAsTriangleList(erasedArea, posOnScreen, posOnScreen + Vec2F(16.0f, 16.0f), Vec2F(0.0f, 0.0f), color);
         }
         al_draw_prim(erasedArea.data(), NULL, NULL, 0, erasedArea.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
     }

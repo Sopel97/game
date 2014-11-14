@@ -47,6 +47,7 @@
 		<Linker>
 			<Add library="lib\lua5.1.lib" />
 		</Linker>
+		<Unit filename="LibS/src/AllegroUtil.cpp" />
 		<Unit filename="include/Array2.h">
 			<Option target="Release" />
 		</Unit>
@@ -63,9 +64,6 @@
 			<Option target="Release" />
 		</Unit>
 		<Unit filename="include/TileDatabase.h">
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="include/Util.h">
 			<Option target="Release" />
 		</Unit>
 		<Unit filename="include/World.h">
@@ -94,7 +92,6 @@
 		<Unit filename="src/Root.cpp" />
 		<Unit filename="src/SpritesheetDatabase.cpp" />
 		<Unit filename="src/TileDatabase.cpp" />
-		<Unit filename="src/Util.cpp" />
 		<Unit filename="src/World.cpp" />
 		<Unit filename="src/WorldGenerator.cpp" />
 		<Unit filename="src/tiles/BasicSolidTile.cpp" />

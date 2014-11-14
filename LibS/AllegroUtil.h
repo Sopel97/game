@@ -1,43 +1,15 @@
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef ALLEGROUTIL_H_INCLUDED
+#define ALLEGROUTIL_H_INCLUDED
 
-#include <iostream>
-#include <vector>
-#include "../LibS/Geometry.h"
+#include "Util.h"
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
 
-using namespace Geo;
+/* File src/AllegroUtil.cpp has to be compiled and linked separately!!! No solution yet. */
 
-class Util
+class AllegroUtil
 {
 public:
-    template <class T>
-    static inline int fastFloor(const T& value)
-    {
-        int i = (int)value; /* truncate */
-        return i - ( value < 0.0 ); /* convert trunc to floor */
-    }
-    template <class T>
-    static inline Vec2I fastFloor(const Vec2<T>& value)
-    {
-        return Vec2I(fastFloor(value.x), fastFloor(value.y));
-    }
-    template <class T>
-    static inline int mod(const T& value, const T& div)
-    {
-        int r = value % div;
-        if(r < 0) r += div;
-        return r;
-    }
-    template <class T>
-    static inline float mod(const float value, const T& div)
-    {
-        float r = fmod(value, div);
-        if(r < 0) r += div;
-        return r;
-    }
-
     static void outputBitmapFlagsToStream(ALLEGRO_BITMAP* bitmap, std::ostream& stream = std::cout);
 
     static std::vector<ALLEGRO_VERTEX> constructQuadAsTriangleList(float x1, float y1, float x2, float y2, float u1, float v1, ALLEGRO_COLOR color);
@@ -54,26 +26,6 @@ public:
 
     static void drawBitmap(ALLEGRO_BITMAP* bmp, float x, float y, ALLEGRO_COLOR color = al_map_rgb(255, 255, 255));
 
-    template <class T>
-    class Range
-    {
-    public:
-        T min, max;
-
-        Range(T& _min, T& _max)
-        {
-            min = _min;
-            max = _max;
-        }
-        Range()
-        {
-
-        }
-    };
-    typedef Range<float> RangeF;
-    typedef Range<double> RangeD;
-    typedef Range<int> RangeI;
-
     class BitmapShifter
     {
     public:
@@ -85,12 +37,6 @@ public:
         int m_width;
         int m_height;
     };
-
-protected:
-private:
-    Util() {}
-    virtual ~Util() {}
-
 };
 
-#endif // UTIL_H
+#endif // ALLEGROUTIL_H_INCLUDED

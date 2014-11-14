@@ -17,7 +17,7 @@ public:
     virtual void scale(const T s) = 0;
 
     virtual Vec2<T> project(const Vec2<T>& b) const;
-    virtual std::pair<T, T> project1(const Vec2<T>& b) const; //min and max values on line
+    virtual std::pair<T, T> projectMinMax(const Vec2<T>& b) const; //min and max values on line
 
 };
 

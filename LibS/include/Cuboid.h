@@ -28,7 +28,8 @@ public:
     T height() const;
     T depth() const;
 
-    void transform(std::function<void(Cuboid<T>&)>& func);
+    template <class Transformation>
+    void transform(Transformation&& func);
 
     /* INTERSECTIONS */
     template<class S>

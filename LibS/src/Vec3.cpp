@@ -4,37 +4,26 @@ Vec3<T>::Vec3()
     x = y = z = 0.0;
 }
 template <class T>
-Vec3<T>::Vec3(T _x, T _y, T _z)
+Vec3<T>::Vec3(T _x, T _y, T _z) : x(_x), y(_y), z(_z)
 {
-    x = _x;
-    y = _y;
-    z = _z;
 }
 template <class T>
 Vec3<T>::Vec3(const std::initializer_list<T>& list)
 {
     typename std::initializer_list<T>::iterator it = list.begin();
     x = *it;
-    ++it;
-    y = *it;
-    ++it;
-    z = *it;
+    y = *(it+1);
+    z = *(it+2);
 }
 template <class T>
 template <class X>
-Vec3<T>::Vec3(const Vec3<X>& v)
+Vec3<T>::Vec3(const Vec3<X>& v) : x(v.x), y(v.y), z(v.z)
 {
-    x = v.x;
-    y = v.y;
-    z = v.z;
 }
 template <class T>
 template <class X>
-Vec3<T>::Vec3(Vec3<X>&& v)
+Vec3<T>::Vec3(Vec3<X>&& v) : x(v.x), y(v.y), z(v.z)
 {
-    x = v.x;
-    y = v.y;
-    z = v.z;
 }
 
 template <class T>
@@ -125,7 +114,7 @@ Vec3<T>& Vec3<T>::operator/=(const T scalar)
 template <class T>
 T Vec3<T>::magnitude()
 {
-    return 1. / invSqrt((x * x) + (y * y) + (z * z));
+    return std::sqrt((x * x) + (y * y) + (z * z));
 }
 template <class T>
 T Vec3<T>::distanceTo(const Vec3<T>& v)
@@ -133,12 +122,12 @@ T Vec3<T>::distanceTo(const Vec3<T>& v)
     T dx = x - v.x;
     T dy = y - v.y;
     T dz = z - v.z;
-    return 1. / invSqrt(dx * dx + dy * dy + dz * dz);
+    return std::sqrt(dx * dx + dy * dy + dz * dz);
 }
 template <class T>
 void Vec3<T>::normalize()
 {
-    T invertedSquareRoot = invSqrt(x * x + y * y + z * z);
+    T invertedSquareRoot = 1./std::sqrt(x * x + y * y + z * z);
     x *= invertedSquareRoot;
     y *= invertedSquareRoot;
     z *= invertedSquareRoot;
@@ -146,7 +135,7 @@ void Vec3<T>::normalize()
 template <class T>
 Vec3<T> Vec3<T>::normal()
 {
-    T invertedSquareRoot = invSqrt(x * x + y * y + z * z);
+    T invertedSquareRoot = 1./std::sqrt(x * x + y * y + z * z);
     return Vec3<T>(x * invertedSquareRoot, y * invertedSquareRoot, z * invertedSquareRoot);
 }
 template <class T>
@@ -155,7 +144,8 @@ T Vec3<T>::angle() const
     return 0.0; //currently blank
 }
 template <class T>
-void Vec3<T>::transform(std::function<void(Vec3<T>&)>& func)
+template <class Transformation>
+void Vec3<T>::transform(Transformation&& func)
 {
     func(*this);
 }

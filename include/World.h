@@ -5,7 +5,7 @@
 #include <set>
 
 #include "../LibS/Geometry.h"
-#include "Util.h"
+#include "../LibS/AllegroUtil.h"
 #include "Array2.h"
 #include <allegro5/allegro_primitives.h>
 
@@ -95,7 +95,7 @@ private:
         int destX;
         int destY;
     };
-    Util::BitmapShifter* m_bitmapShifter;
+    AllegroUtil::BitmapShifter* m_bitmapShifter;
     int m_width; //this is world width in tiles. To get world width in pixels this value needs to be multiplied by 16
     int m_height;
     Array2<Tile*> m_tiles;

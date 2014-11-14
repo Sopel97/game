@@ -4,30 +4,22 @@ Cuboid<T>::Cuboid()
 
 }
 template <class T>
-Cuboid<T>::Cuboid(const Vec3<T>& p1, const Vec3<T>& p2)
+Cuboid<T>::Cuboid(const Vec3<T>& p1, const Vec3<T>& p2) : topLeft(p1), bottomRight(p2)
 {
-    topLeft = p1;
-    bottomRight = p2;
 }
 template <class T>
-Cuboid<T>::Cuboid(const Vec3<T>& p1, const T width, const T height, const T depth)
+Cuboid<T>::Cuboid(const Vec3<T>& p1, const T width, const T height, const T depth) : topLeft(p1), bottomRight(p1 + Vec3<T>(width, height, depth))
 {
-    topLeft = p1;
-    bottomRight = p1 + Vec3<T>(width, height, depth);
 }
 template <class T>
 template <class X>
-Cuboid<T>::Cuboid(const Cuboid<X>& c)
+Cuboid<T>::Cuboid(const Cuboid<X>& c) : topLeft(c.topLeft), bottomRight(c.bottomRigth)
 {
-    topLeft = c.topLeft;
-    bottomRight = c.bottomRight;
 }
 template <class T>
 template <class X>
-Cuboid<T>::Cuboid(Cuboid<X>&& c)
+Cuboid<T>::Cuboid(Cuboid<X>&& c) : topLeft(std::move(c.topLeft)), bottomRight(std::move(c.bottomRigth))
 {
-    topLeft = std::move(c.topLeft);
-    bottomRight = std::move(c.bottomRight);
 }
 template <class T>
 template <class X>
@@ -88,7 +80,8 @@ T Cuboid<T>::depth() const
     return bottomRight.z - topLeft.z;
 }
 template <class T>
-void Cuboid<T>::transform(std::function<void(Cuboid<T>&)>& func)
+template <class Transformation>
+void Cuboid<T>::transform(Transformation&& func)
 {
     func(*this);
 }

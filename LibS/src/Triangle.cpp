@@ -4,34 +4,22 @@ Triangle<T>::Triangle()
 
 }
 template <class T>
-Triangle<T>::Triangle(const Vec2<T>& p1, const Vec2<T>& p2, const Vec2<T>& p3)
+Triangle<T>::Triangle(const Vec2<T>& p1, const Vec2<T>& p2, const Vec2<T>& p3) : vertices{p1,p2,p3}
 {
-    vertices[0] = p1;
-    vertices[1] = p2;
-    vertices[2] = p3;
 }
 template <class T>
-Triangle<T>::Triangle(const Vec2<T>* p)
+Triangle<T>::Triangle(const Vec2<T>* p) : vertices{p[0],p[1],p[2]}
 {
-    vertices[0] = p[0];
-    vertices[2] = p[2];
-    vertices[1] = p[1];
 }
 template <class T>
 template <class X>
-Triangle<T>::Triangle(const Triangle<X>& t)
+Triangle<T>::Triangle(const Triangle<X>& t) : vertices{t.vertices[0],t.vertices[1],t.vertices[2]}
 {
-    vertices[0] = t.vertices[0];
-    vertices[1] = t.vertices[1];
-    vertices[2] = t.vertices[2];
 }
 template <class T>
 template <class X>
-Triangle<T>::Triangle(Triangle<X>&& t)
+Triangle<T>::Triangle(Triangle<X>&& t) : vertices{std::move(t.vertices[0]), std::move(t.vertices[1]), std::move(t.vertices[2])}
 {
-    vertices[0] = std::move(t.vertices[0]);
-    vertices[1] = std::move(t.vertices[1]);
-    vertices[2] = std::move(t.vertices[2]);
 }
 template <class T>
 template <class X>
@@ -104,7 +92,8 @@ void Triangle<T>::scale(const T s)
 
 }
 template <class T>
-void Triangle<T>::transform(std::function<void(Triangle<T>&)>& func)
+template <class Transformation>
+void Triangle<T>::transform(Transformation&& func)
 {
     func(*this);
 }

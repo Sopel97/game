@@ -26,7 +26,8 @@ public:
     Cylinder<T>& operator -=(const Vec3<T>& v);
     Circle<T> base() const;
 
-    void transform(std::function<void(Cylinder<T>&)>& func);
+    template <class Transformation>
+    void transform(Transformation&& func);
 
     /* INTERSECTIONS */
     template<class S>

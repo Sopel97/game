@@ -4,24 +4,18 @@ LineSegment<T>::LineSegment()
 
 }
 template <class T>
-LineSegment<T>::LineSegment(const Vec2<T>& _begin, const Vec2<T>& _end)
+LineSegment<T>::LineSegment(const Vec2<T>& _begin, const Vec2<T>& _end) : begin(_begin), end(_end)
 {
-    begin = _begin;
-    end = _end;
 }
 template <class T>
 template <class X>
-LineSegment<T>::LineSegment(const LineSegment<X>& s)
+LineSegment<T>::LineSegment(const LineSegment<X>& s) : begin(s._begin), end(s._end)
 {
-    begin = s.begin;
-    end = s.end;
 }
 template <class T>
 template <class X>
-LineSegment<T>::LineSegment(LineSegment<X>&& s)
+LineSegment<T>::LineSegment(LineSegment<X>&& s) : begin(std::move(s.begin)), end(std::move(s.end))
 {
-    begin = std::move(s.begin);
-    end = std::move(s.end);
 }
 
 template <class T>
@@ -92,7 +86,8 @@ void LineSegment<T>::scale(const T s)
 
 }
 template <class T>
-void LineSegment<T>::transform(std::function<void(LineSegment<T>&)>& func)
+template <class Transformation>
+void LineSegment<T>::transform(Transformation&& func)
 {
     func(*this);
 }

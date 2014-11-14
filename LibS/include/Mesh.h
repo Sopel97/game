@@ -37,8 +37,8 @@ public:
     void scale(const Vec2<T>& s);
     void scale(const T s);
 
-    void transform(std::function<void(T&)>& func);
-    void transform(std::function<void(Mesh<T>&)>& func);
+    template <class Transformation>
+    void transform(Transformation&& func);
 
     template <class LineSegmentType = decltype(T().outline())> //wut?    fixed in mingw 4.8.1
     auto outline() -> decltype(T().outline()) const;

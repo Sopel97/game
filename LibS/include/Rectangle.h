@@ -32,11 +32,10 @@ public:
     void scale(const Vec2<T>& s);
     void scale(const T s);
 
-    void transform(std::function<void(Rectangle<T>&)>& func);
+    template <class Transformation>
+    void transform(Transformation&& func);
 
     Mesh<LineSegment<T>> outline() const;
-
-    virtual typename Shape2<T>::ShapeID shapeId() const;
 
     /* INTERSECTIONS */
     template<class S>

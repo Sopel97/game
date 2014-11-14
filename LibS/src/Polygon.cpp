@@ -4,19 +4,16 @@ Polygon<T>::Polygon()
 
 }
 template <class T>
-Polygon<T>::Polygon(const std::initializer_list<Vec2<T>>& list)
+Polygon<T>::Polygon(const std::initializer_list<Vec2<T>>& list) : vertices(list)
 {
-    vertices.assign(list);
 }
 template <class T>
-Polygon<T>::Polygon(const std::vector<Vec2<T>>& v)
+Polygon<T>::Polygon(const std::vector<Vec2<T>>& v) : vertices(v)
 {
-    vertices = v;
 }
 template <class T>
-Polygon<T>::Polygon(std::vector<Vec2<T>>&& v)
+Polygon<T>::Polygon(std::vector<Vec2<T>>&& v) : vertices(std::move(v))
 {
-    vertices = std::move(v);
 }
 template <class T>
 Polygon<T>::Polygon(Vec2<T>* v, size_t count)
@@ -25,15 +22,13 @@ Polygon<T>::Polygon(Vec2<T>* v, size_t count)
 }
 template <class T>
 template <class X>
-Polygon<T>::Polygon(const Polygon<X>& p)
+Polygon<T>::Polygon(const Polygon<X>& p) : vertices(p.vertives)
 {
-    vertices = p.vertices;
 }
 template <class T>
 template <class X>
-Polygon<T>::Polygon(Polygon<X>&& p)
+Polygon<T>::Polygon(Polygon<X>&& p) : vertices(std::move(p.vertices))
 {
-    vertices = std::move(p.vertices);
 }
 
 template <class T>
@@ -131,17 +126,10 @@ void Polygon<T>::scale(const T s)
 
 }
 template <class T>
-void Polygon<T>::transform(std::function<void(Polygon<T>&)>& func)
+template <class Transformation>
+void Polygon<T>::transform(Transformation&& func)
 {
     func(*this);
-}
-template <class T>
-void Polygon<T>::transform(std::function<void(Vec2<T>&)>& func)
-{
-    for(Vec2<T>& vertex : vertices)
-    {
-        func(vertex);
-    }
 }
 
 template <class T>
@@ -153,7 +141,7 @@ Vec2<T> Polygon<T>::project(const Vec2<T>& b) const
 }
 
 template <class T>
-std::pair<T, T> Polygon<T>::project1(const Vec2<T>& b) const
+std::pair<T, T> Polygon<T>::projectMinMax(const Vec2<T>& b) const
 {
     T minProjection;
     T maxProjection;

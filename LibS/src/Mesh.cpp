@@ -4,19 +4,16 @@ Mesh<T>::Mesh()
 
 }
 template <class T>
-Mesh<T>::Mesh(const std::vector<T>& e)
+Mesh<T>::Mesh(const std::vector<T>& e) : elements(e)
 {
-    elements = e;
 }
 template <class T>
-Mesh<T>::Mesh(std::vector<T>&& e)
+Mesh<T>::Mesh(std::vector<T>&& e) : elements(std::move(e))
 {
-    elements = std::move(e);
 }
 template <class T>
-Mesh<T>::Mesh(const std::initializer_list<T>& list)
+Mesh<T>::Mesh(const std::initializer_list<T>& list) : elements(list)
 {
-    elements.assign(list);
 }
 template <class T>
 Mesh<T>::Mesh(T* e, size_t count)
@@ -24,14 +21,12 @@ Mesh<T>::Mesh(T* e, size_t count)
     elements.assign(e, e + count);
 }
 template <class T>
-Mesh<T>::Mesh(const Mesh<T>& m)
+Mesh<T>::Mesh(const Mesh<T>& m) : elements(m.elements)
 {
-    elements = m.elements;
 }
 template <class T>
-Mesh<T>::Mesh(Mesh<T>&& m)
+Mesh<T>::Mesh(Mesh<T>&& m) : elements(std::move(m.elements))
 {
-    elements = std::move(m.elements);
 }
 
 template <class T>
@@ -128,15 +123,8 @@ void Mesh<T>::scale(const Vec2<T>& s)
 
 }
 template <class T>
-void Mesh<T>::transform(std::function<void(T&)>& func)
-{
-    for(T& element : elements)
-    {
-        func(element);
-    }
-}
-template <class T>
-void Mesh<T>::transform(std::function<void(Mesh<T>&)>& func)
+template <class Transformation>
+void Mesh<T>::transform(Transformation&& func)
 {
     func(*this);
 }
