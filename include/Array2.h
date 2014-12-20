@@ -45,9 +45,11 @@ public:
         {
             return *(m_dataCol + y);
         }
-
-        Col& operator= (Col && col)
+        T& at(size_t y) const
         {
+            return *(m_dataCol + y);
+        }
+        Col& operator= (Col && col) {
             m_dataCol = col.m_dataCol;
             m_colSize = col.m_colSize;
             return *this;
@@ -58,14 +60,24 @@ public:
             return operator= (std::move(Col(col)));
         }
 
+        Col& operator= (const std::initializer_list<T>& list)
+        {
+            int i = 0;
+            for(auto&& v : list)
+            {
+                operator[](i) = v;
+                ++i;
+            }
+        }
+
         T* data() const
         {
             return m_dataCol;
         }
 
-        void fill(T& value)
+        void fill(const T& value)
         {
-            for(size_t i = 0; i < m_colSize; ++i) m_dataCol[i] = value;
+            std::fill(begin(), end(), value);
         }
 
         size_t size() const
@@ -86,6 +98,23 @@ public:
         iterator end() const
         {
             return m_dataCol + m_colSize;
+        }
+
+        Col previousCol(int n = 1) const
+        {
+            return Col(m_dataCol - (m_colSize*n), m_colSize);
+        }
+        Col nextCol(int n = 1) const
+        {
+            return Col(m_dataCol + (m_colSize*n), m_colSize);
+        }
+        Col& moveToPreviousCol(int n = 1)
+        {
+            m_dataCol -= (m_colSize*n);
+        }
+        Col& moveToNextCol(int n = 1)
+        {
+            m_dataCol += (m_colSize*n);
         }
 
     private:
@@ -168,11 +197,14 @@ public:
         {
         }
 
-        T& operator[] (size_t y) const
+        T& operator[] (size_t x) const
         {
-            return *(m_dataRow + y * m_colSize);
+            return *(m_dataRow + x * m_colSize);
         }
-
+        T& at(size_t x) const
+        {
+            return *(m_dataRow + x * m_colSize);
+        }
         Row& operator= (Row && row)
         {
             m_dataRow = row.m_dataRow;
@@ -186,14 +218,24 @@ public:
             return operator= (std::move(Row(row)));
         }
 
-        T* data() const
+        Row& operator= (const std::initializer_list<T>& list)
+        {
+            int i = 0;
+            for(auto&& v : list)
+            {
+                operator[](i) = v;
+                ++i;
+            }
+        }
+
+        T* data() const //data is not continguous
         {
             return m_dataRow;
         }
 
-        void fill(T& value)
+        void fill(const T& value)
         {
-            for(size_t i = 0; i < m_rowSize; ++i) m_dataRow[i * m_colSize] = value;
+            std::fill(begin(), end(), value);
         }
 
         size_t size() const
@@ -215,7 +257,22 @@ public:
         {
             return iterator(m_dataRow + m_rowSize * m_colSize, m_colSize);
         }
-
+        Row previousRow(int n = 1) const
+        {
+            return Row(m_dataRow - n, m_rowSize, m_colSize);
+        }
+        Row nextRow(int n = 1) const
+        {
+            return Row(m_dataRow + n, m_rowSize, m_colSize);
+        }
+        Row& moveToPreviousRow(int n = 1)
+        {
+            m_dataRow -= n;
+        }
+        Row& moveToNextRow(int n = 1)
+        {
+            m_dataRow += n;
+        }
     private:
         T* m_dataRow;
         size_t m_rowSize;
@@ -256,7 +313,7 @@ public:
     {
         size_t totalSize = m_sizeX * m_sizeY;
         m_data = new T[totalSize];
-        for(size_t i = 0; i < totalSize; ++i) m_data[i] = arrayCopy.m_data[i];
+        std::copy(arrayCopy.begin(), arrayCopy.end(), m_data);
     }
 
     Array2(Array2<T>&& array) :
@@ -265,6 +322,25 @@ public:
         m_sizeY(array.m_sizeY)
     {
         array.m_data = nullptr;
+    }
+
+    Array2(const std::initializer_list<std::initializer_list<T>>& list)
+    {
+        m_sizeY = list.size();
+        m_sizeX = (*(list.begin())).size();
+        size_t totalSize = m_sizeX * m_sizeY;
+        m_data = new T[totalSize];
+        int y = 0;
+        for(auto& row : list)
+        {
+            int x = 0;
+            for(auto&& v : row)
+            {
+                at(x,y) = v;
+                ++x;
+            }
+            ++y;
+        }
     }
 
     ~Array2()
@@ -281,7 +357,10 @@ public:
     {
         return m_data[x * m_sizeY + y];
     }
-
+    T& at(size_t x, size_t y) const
+    {
+        return m_data[x * m_sizeY + y];
+    }
     Array2& operator= (Array2<T> && array)
     {
         m_data = std::move(array.m_data);
@@ -298,13 +377,13 @@ public:
         return operator=(std::move(Array2(arrayCopy)));
     }
 
-    void fill(T& value)
+    Array2& operator= (const std::initializer_list<std::initializer_list<T>>& list)
     {
-        size_t totalSize = m_sizeX * m_sizeY;
-        for(size_t i = 0; i < totalSize; ++i)
-        {
-            m_data[i] = value;
-        }
+        return operator=(std::move(Array2(list)));
+    }
+    void fill(const T& value)
+    {
+        std::fill(begin(), end(), value);
     }
 
     T* data() const
@@ -368,5 +447,4 @@ private:
     size_t m_sizeX;
     size_t m_sizeY;
 };
-
 #endif // ARRAY2_H
